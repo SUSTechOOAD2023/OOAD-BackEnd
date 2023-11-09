@@ -2,6 +2,8 @@ package com.example.entity;
 
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +24,7 @@ import lombok.NoArgsConstructor;
 public class Notice implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
+    @TableId(value = "notice_id", type = IdType.AUTO)
       private Integer noticeId;
 
     private Integer teacherId;
