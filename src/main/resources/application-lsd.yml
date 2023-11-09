@@ -4,7 +4,7 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     druid:
-      url: jdbc:postgresql://localhost:5432/ooad
+      url: jdbc:postgresql://localhost:5432/postgres
       username: postgres
       password: lsd123456
 mybatis-plus:

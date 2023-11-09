@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-    @Autowired
-    AccountService service;
-    @RequestMapping("/list")
-    public String full_list() {
-        return JSON.toJSONString(service.selectList());
-    }
-
-    @PostMapping("/new")
-    public boolean add_account(Account account) {
-        Account account2 = account;
-        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
-        return service.saveOrUpdate(account2);
-    }
+//    @Autowired
+//    AccountService service;
+//    @RequestMapping("/list")
+//    public String full_list() {
+//        return JSON.toJSONString(service.selectList());
+//    }
+//
+//    @PostMapping("/new")
+//    public boolean add_account(Account account) {
+//        Account account2 = account;
+//        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
+//        return service.saveOrUpdate(account2);
+//    }
 
 //    @PostMapping("/signin")
 //    public String login(Account account) {
