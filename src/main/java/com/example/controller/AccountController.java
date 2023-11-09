@@ -21,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/account")
 public class AccountController {
-//    @Autowired
-//    AccountService service;
-//    @RequestMapping("/list")
-//    public String full_list() {
-//        return JSON.toJSONString(service.selectList());
-//    }
+    @Autowired
+    AccountService service;
+    @RequestMapping("/list")
+    public String full_list() {
+        return JSON.toJSONString(service.selectList());
+    }
 //
 //    @PostMapping("/new")
 //    public boolean add_account(Account account) {
@@ -34,7 +34,7 @@ public class AccountController {
 //        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
 //        return service.saveOrUpdate(account2);
 //    }
-
+//
 //    @PostMapping("/signin")
 //    public String login(Account account) {
 //        if (!service.isAccountNameExists(account.getAccountName())) {

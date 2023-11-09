@@ -2,6 +2,9 @@ package com.example.service;
 
 import com.example.entity.Account;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.User;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-10-24
  */
 public interface AccountService extends IService<Account> {
+    List<Account> selectList();
 
 }
