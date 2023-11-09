@@ -1,6 +1,13 @@
 package com.example.controller;
 
 
+import com.alibaba.fastjson2.JSON;
+import com.example.entity.ConferenceRoom;
+import com.example.entity.Homework;
+import com.example.service.ConferenceRoomService;
+import com.example.service.HomeworkService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +23,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/homework")
 public class HomeworkController {
-
+    @Autowired
+    HomeworkService service;
+    @PostMapping("/list")
+    public String list(Homework homework) {
+        return JSON.toJSONString(service.selectList(homework));
+    }
+    @RequestMapping("/all")
+    public String all() {
+        return JSON.toJSONString(service.selectList(new Homework()));
+    }
+    @PostMapping("/new")
+    public boolean insert(Homework homework){
+        return service.saveOrUpdate(homework);
+    }
+    @RequestMapping("/delete")
+    public int delete(Homework homework){
+        return service.delete(homework);
+    }
 }
 
