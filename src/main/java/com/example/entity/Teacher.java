@@ -21,12 +21,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+
 public class Teacher implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = "teacher_id", type = IdType.AUTO)
-
-      private Integer teacherId;
+    private Integer teacherId;
 
     private Integer accountId;
 

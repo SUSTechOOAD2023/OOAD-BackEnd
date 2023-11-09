@@ -6,6 +6,8 @@ import com.example.entity.User;
 
 import java.util.List;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -17,4 +19,9 @@ import java.util.List;
 public interface AccountService extends IService<Account> {
     List<Account> selectList();
 
+    List<Account> selectList();
+
+    boolean isAccountExist(String accountName);
+
+    boolean isCorrect(String accountName, String password);
 }
