@@ -10,6 +10,7 @@ import com.example.service.StudentService;
 import com.example.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -37,29 +38,30 @@ public class AccountController {
     }
     //
     @PostMapping("/new")
-    public boolean add_account(Account account) {
+    public boolean add_account(@RequestBody Account account) {
         System.out.println(account.toString());
-//        Account account2 = account;
-//        System.out.println(account.toString());
-//        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
-//        service.saveOrUpdate(account2);
-//        int id=account2.getAccountId();
-//        //每当创建一个account，对应创建一个teacher或student对象
-//        if(account2.getAccountType().equals("teacher")){
-//            Teacher teacher=new Teacher();
-//            teacher.setAccountId(id);
-//            service1.saveOrUpdate(teacher);
-//            int ID=teacher.getTeacherId();
-//            account2.setTeacherId(ID);
-//            service.saveOrUpdate(account2);
-//        }else if(account2.getAccountType().equals("student")){
-//            Student student=new Student();
-//            service2.saveOrUpdate(student);
-//            //TODO:在此处添加SA
-//        }else {}
+        Account account2 = account;
+        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
+        service.saveOrUpdate(account2);
+        int id=account2.getAccountId();
+        //每当创建一个account，对应创建一个teacher或student对象
+        if(account2.getAccountType().equals("teacher")){
+            Teacher teacher=new Teacher();
+            teacher.setAccountId(id);
+            service1.saveOrUpdate(teacher);
+            int ID=teacher.getTeacherId();
+            account2.setTeacherId(ID);
+            service.saveOrUpdate(account2);
+        }else if(account2.getAccountType().equals("student")){
+            Student student=new Student();
+            service2.saveOrUpdate(student);
+            //TODO:在此处添加SA
+        }else {}
 //        return service.saveOrUpdate(account2);
         return true;
     }
+
+
 
     @PostMapping("/signin")
     public String login(Account account) {
