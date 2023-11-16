@@ -17,19 +17,19 @@ class HomeworkTest {
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Accpet", "*/*");
+        conn.setRequestProperty("Accept", "*/*");
         conn.setRequestProperty("Connection", "Keep-Alive");
         conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
         OutputStream output = conn.getOutputStream();
         OutputStreamWriter writer = new OutputStreamWriter(output, "UTF-8");
-        writer.write("{\"homeworkContent\":\"aaa\",\"homeworkId\":1,\"homeworkType\":\"type1\"}");
+        writer.write("{\"homeworkContent\":\"aaa\",\"classId\":1,\"homeworkId\":1,\"homeworkType\":\"type1\"}");
         writer.flush();
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String response = "",line;
         while ((line = reader.readLine())!=null)
             response += line;
         System.out.println(response);
-        //assert response.equals("[{\"homeworkContent\":\"aaa\",\"homeworkId\":1,\"homeworkType\":\"type1\"}]");
+        //assert response.equals("[{\"homeworkContent\":\"aaa\",\"classId\":1,\"homeworkId\":1,\"homeworkType\":\"type1\"}]");
         reader.close();
         conn.disconnect();
     }
