@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
-
 /**
  * <p>
  *  前端控制器
@@ -36,6 +35,7 @@ public class HomeworkController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Homework homework){
+        System.out.println(homework.toString());
         return service.saveOrUpdate(homework);
     }
     @RequestMapping("/delete")
