@@ -7,6 +7,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -21,5 +24,14 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     AccountMapper mapper;
 //    @Override
 //    public
+    public List<Account> selectList(){
+        return new ArrayList<Account>();
+    }
+    public boolean isAccountExist(String accountName){
+        return true;
+    }
 
+    public boolean isCorrect(String accountName, String password){
+        return true;
+    }
 }

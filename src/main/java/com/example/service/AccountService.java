@@ -17,7 +17,6 @@ import java.util.List;
  * @since 2023-10-24
  */
 public interface AccountService extends IService<Account> {
-    List<Account> selectList();
 
     List<Account> selectList();
 

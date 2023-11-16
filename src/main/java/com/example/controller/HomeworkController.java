@@ -8,6 +8,7 @@ import com.example.service.ConferenceRoomService;
 import com.example.service.HomeworkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ public class HomeworkController {
     @Autowired
     HomeworkService service;
     @PostMapping("/list")
-    public String list(Homework homework) {
+    public String list(@RequestBody Homework homework) {
         return JSON.toJSONString(service.selectList(homework));
     }
     @RequestMapping("/all")
@@ -34,11 +35,11 @@ public class HomeworkController {
         return JSON.toJSONString(service.selectList(new Homework()));
     }
     @PostMapping("/new")
-    public boolean insert(Homework homework){
+    public boolean insert(@RequestBody Homework homework){
         return service.saveOrUpdate(homework);
     }
     @RequestMapping("/delete")
-    public int delete(Homework homework){
+    public int delete(@RequestBody Homework homework){
         return service.delete(homework);
     }
 }
