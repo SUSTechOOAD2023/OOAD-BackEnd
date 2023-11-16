@@ -22,7 +22,7 @@ class HomeworkTest {
         conn.setRequestProperty("Content-Type", "application/json;charset=utf-8");
         OutputStream output = conn.getOutputStream();
         OutputStreamWriter writer = new OutputStreamWriter(output, "UTF-8");
-        writer.write("[{\"homeworkContent\":\"aaa\",\"homeworkId\":1,\"homeworkType\":\"type1\"}]");
+        writer.write("{\"homeworkContent\":\"aaa\",\"homeworkId\":1,\"homeworkType\":\"type1\"}");
         writer.flush();
         BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String response = "",line;

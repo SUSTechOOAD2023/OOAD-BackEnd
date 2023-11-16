@@ -23,4 +23,5 @@ public interface AccountService extends IService<Account> {
     boolean isAccountExist(String accountName);
 
     boolean isCorrect(String accountName, String password);
+
 }
