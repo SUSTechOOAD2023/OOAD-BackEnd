@@ -18,7 +18,7 @@ public class CodeGenerator {
         // 2、全局配置
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("D:\\OOAD\\Assignment1"+"/src/main/java");
+        gc.setOutputDir("D:\\OOAD\\Project\\OOAD-BackEnd"+"/src/main/java");
 
         gc.setServiceName("%sService");	//去掉Service接口的首字母Iproject
         gc.setAuthor("sending");
@@ -27,10 +27,10 @@ public class CodeGenerator {
 
         // 3、数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:postgresql://localhost:5432/ooad");
+        dsc.setUrl("jdbc:postgresql://10.27.26.94:6432/ooad");
         dsc.setDriverName("org.postgresql.Driver");
         dsc.setUsername("postgres");
-        dsc.setPassword("lsd123456");
+        dsc.setPassword("123456");
         dsc.setDbType(DbType.POSTGRE_SQL);
         mpg.setDataSource(dsc);
 
@@ -46,7 +46,7 @@ public class CodeGenerator {
         // 5、策略配置
         StrategyConfig strategy = new StrategyConfig();
 
-        strategy.setInclude("account","class","course","grade_book","group","homework","notice","student","submission","teacher");
+        strategy.setInclude("invite_code");
 
         strategy.setNaming(NamingStrategy.underline_to_camel);//数据库表映射到实体的命名策略
 

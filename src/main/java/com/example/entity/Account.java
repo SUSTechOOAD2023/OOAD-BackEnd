@@ -40,5 +40,10 @@ public class Account implements Serializable {
 
     private String accountType;
 
+    private Integer cookie;
+
+    private String email;
+
+
 
 }
