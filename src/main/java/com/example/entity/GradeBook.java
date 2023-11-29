@@ -25,7 +25,7 @@ public class GradeBook implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = "gradebook_id", type = IdType.AUTO)
-      private Integer gradebookId;
+    private Integer gradebookId;
 
     private Integer studentId;
 
