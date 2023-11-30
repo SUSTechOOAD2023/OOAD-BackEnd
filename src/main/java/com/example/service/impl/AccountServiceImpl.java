@@ -46,7 +46,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public boolean isCorrect(String accountName, String password){
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_name", accountName);
-        queryWrapper.eq("user_password", password.hashCode()+"");
+        queryWrapper.eq("account_password", password.hashCode()+"");
         return mapper.selectCount(queryWrapper) > 0;
     }
 
@@ -54,7 +54,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public boolean emailIsCorrect(String email, String password){
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email);
-        queryWrapper.eq("user_password", password.hashCode()+"");
+        queryWrapper.eq("account_password", password.hashCode()+"");
         return mapper.selectCount(queryWrapper) > 0;
     }
 

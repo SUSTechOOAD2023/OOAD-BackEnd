@@ -78,7 +78,7 @@ public class AccountController {
 
 
     @PostMapping("/signin")
-    public String login(Account account) {
+    public String login(@RequestBody Account account) {
         if(account.getCookie()!=null){
             return "success!";
         }
