@@ -26,7 +26,7 @@ public class Submission implements Serializable {
     private static final long serialVersionUID = 1L;
     @TableId(value = "submission_id", type = IdType.AUTO)
 
-      private Integer submissionId;
+    private Integer submissionId;
 
     private Integer groupNumber;
 

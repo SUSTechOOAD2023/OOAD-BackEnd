@@ -1,7 +1,10 @@
 package com.example.service;
 
+import com.example.entity.Homework;
 import com.example.entity.Notice;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @since 2023-10-24
  */
 public interface NoticeService extends IService<Notice> {
-
+    List<Notice> selectList(Notice notice);
+    int delete(Notice notice);
 }
