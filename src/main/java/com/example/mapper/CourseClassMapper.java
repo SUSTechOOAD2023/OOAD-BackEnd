@@ -1,6 +1,6 @@
 package com.example.mapper;
 
-import com.example.entity.Class;
+import com.example.entity.CourseClass;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +11,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author sending
  * @since 2023-10-24
  */
-public interface ClassMapper extends BaseMapper<Class> {
+public interface CourseClassMapper extends BaseMapper<CourseClass> {
 
 }

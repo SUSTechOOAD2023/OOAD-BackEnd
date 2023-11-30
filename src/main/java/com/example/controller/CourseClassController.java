@@ -2,8 +2,8 @@ package com.example.controller;
 
 
 import com.alibaba.fastjson2.JSON;
-import com.example.entity.Course;
-import com.example.service.CourseService;
+import com.example.entity.CourseClass;
+import com.example.service.CourseClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,25 +20,26 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2023-10-24
  */
 @RestController
-@RequestMapping("/course")
-public class CourseController {
+@RequestMapping("/class")
+public class CourseClassController {
     @Autowired
-    CourseService service;
+    CourseClassService service;
     @PostMapping("/list")
-    public String list(@RequestBody Course course) {
-        return JSON.toJSONString(service.selectList(course));
+    public String list(@RequestBody CourseClass courseClass) {
+        return JSON.toJSONString(service.selectList(courseClass));
     }
     @RequestMapping("/all")
     public String all() {
-        return JSON.toJSONString(service.selectList(new Course()));
+        return JSON.toJSONString(service.selectList(new CourseClass()));
     }
     @PostMapping("/new")
-    public boolean insert(@RequestBody Course course){
-        return service.saveOrUpdate(course);
+    public boolean insert(@RequestBody CourseClass courseClass){
+        return service.saveOrUpdate(courseClass);
     }
     @RequestMapping("/delete")
-    public int delete(@RequestBody Course course){
-        return service.delete(course);
+    public int delete(@RequestBody CourseClass courseClass){
+        return service.delete(courseClass);
     }
+
 }
 

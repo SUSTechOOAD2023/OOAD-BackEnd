@@ -36,5 +36,5 @@ public class Homework implements Serializable {
 
     private String homeworkType;
 
-
+    private String homeworkTitle;
 }

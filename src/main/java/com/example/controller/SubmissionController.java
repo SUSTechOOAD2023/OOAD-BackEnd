@@ -2,7 +2,13 @@ package com.example.controller;
 
 
 import com.alibaba.fastjson2.JSON;
+import com.alibaba.fastjson2.TypeReference;
+import com.example.entity.GradeBook;
+import com.example.entity.Homework;
 import com.example.entity.Submission;
+import com.example.mapper.HomeworkMapper;
+import com.example.service.GradeBookService;
+import com.example.service.HomeworkService;
 import com.example.service.SubmissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -41,10 +50,26 @@ public class SubmissionController {
         return service.delete(submission);
     }
 
+    GradeBookService gradeBookService;
+    HomeworkService homeworkService;
     @PostMapping("/review")
     public boolean review(@RequestBody Submission submission){
         boolean ret = service.saveOrUpdate(submission);
         // todo: add an entry in grade book
+        Homework homework = new Homework();
+        homework.setHomeworkId(submission.getHomeworkId());
+        List<Homework> result = homeworkService.selectList(homework);
+        GradeBook gradeBook = new GradeBook();
+        gradeBook.setClassId(result.get(0).getClassId());
+        gradeBook.setStudentId(submission.getStudentId());
+        List<GradeBook> result2 = gradeBookService.selectList(gradeBook);
+        gradeBook = result2.get(0);
+        Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
+        });
+        mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
+        System.exit(0);
+        gradeBook.setGradebookContent(JSON.toJSONString(mapGradebook));
+        ret = ret && gradeBookService.saveOrUpdate(gradeBook);
         return ret;
     }
 }
