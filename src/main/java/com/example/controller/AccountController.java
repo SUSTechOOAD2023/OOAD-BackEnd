@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
@@ -45,24 +46,28 @@ public class AccountController {
     }
     //
     @PostMapping("/new")
-    public String add_account(@RequestBody Account account, @RequestBody InviteCode inviteCode) {
-        if(service.isAccountExist(account.getAccountName())){
-            return "SID已存在";
+    public String add_account(@RequestBody Account account, @RequestParam String code, @RequestParam String identity) {
+//        if(service.isAccountExist(account.getAccountName())){
+//            return "SID已存在!";
+//        }
+//        if(service.isEmailExist(account.getEmail())){
+//            return "邮箱已被注册!";
+//        }
+
+        if(!service3.isInviteCodeExist(code)){
+            return "邀请码不存在!";
         }
-        if(service.isEmailExist(account.getEmail())){
-            return "邮箱已被注册";
+        if(service3.isUsed(code)){
+            return "邀请码已被使用!";
         }
-        if(!service3.isInviteCodeExist(inviteCode.getCode())){
-            return "邀请码不存在";
+        if(!service3.isCorrect(code,identity)){
+            return "邀请码与身份不匹配!";
         }
-        if(service3.isUsed(inviteCode.getCode())){
-            return "邀请码已被使用";
-        }
-        if(!service3.isCorrect(inviteCode.getCode(),inviteCode.getIdentity())){
-            return "邀请码与身份不匹配";
-        }
+        InviteCode inviteCode=service3.findID(code);
+        inviteCode.setIsUsed(1);
+        service3.saveOrUpdate(inviteCode);
         System.out.println(account.toString());
-        account.setAccountType(inviteCode.getIdentity());
+        account.setAccountType(identity);
         Account account2 = account;
         account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
         service.saveOrUpdate(account2);
@@ -85,7 +90,7 @@ public class AccountController {
             //TODO:在此处添加SA
         }else {}
 //        return service.saveOrUpdate(account2);
-        return "success!";
+        return "Success!";
     }
 
 

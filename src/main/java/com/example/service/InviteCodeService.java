@@ -20,4 +20,6 @@ public interface InviteCodeService extends IService<InviteCode> {
     boolean isUsed(String inviteCode);
 
     boolean isCorrect(String inviteCode, String identity);
+
+    InviteCode findID(String inviteCode);
 }

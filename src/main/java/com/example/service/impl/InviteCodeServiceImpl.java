@@ -69,4 +69,17 @@ public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteC
         return mapper.selectCount(queryWrapper) > 0;
     }
 
+    @Override
+    public InviteCode findID(String inviteCode) {
+        QueryWrapper<InviteCode> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", inviteCode);
+        // 调用MyBatis Plus的selectObj方法查询单个字段（ID）
+        InviteCode inviteCodeEntity = mapper.selectOne(queryWrapper);
+        if (inviteCodeEntity != null) {
+            return inviteCodeEntity;
+        }
+
+        return null;
+}
+
 }
