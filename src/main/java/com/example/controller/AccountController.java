@@ -77,6 +77,21 @@ public class AccountController {
 
 
 
+    @PostMapping("/emailSignIn")
+    public String emailLogin(@RequestBody Account account) {
+        if(account.getCookie()!=null){
+            return "success!";
+        }
+        if (!service.isEmailExist(account.getEmail())) {
+            return "The email doesn't exist!";
+        } else if (!service.isCorrect(account.getEmail(), account.getAccountPassword())) {
+            return "Wrong email or password!";
+        } else {
+            return "success!";
+        }
+    }
+
+
     @PostMapping("/signin")
     public String login(@RequestBody Account account) {
         if(account.getCookie()!=null){
