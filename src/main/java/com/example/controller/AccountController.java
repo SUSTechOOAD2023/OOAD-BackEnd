@@ -84,7 +84,7 @@ public class AccountController {
         }
         if (!service.isEmailExist(account.getEmail())) {
             return "The email doesn't exist!";
-        } else if (!service.isCorrect(account.getEmail(), account.getAccountPassword())) {
+        } else if (!service.emailIsCorrect(account.getEmail(), account.getAccountPassword())) {
             return "Wrong email or password!";
         } else {
             return "success!";

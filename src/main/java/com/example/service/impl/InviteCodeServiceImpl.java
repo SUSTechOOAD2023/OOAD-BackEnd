@@ -46,8 +46,10 @@ public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteC
 
     @Override
     public boolean isInviteCodeExist(String inviteCode){
+        System.out.println(inviteCode);
         QueryWrapper<InviteCode> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("code",inviteCode);
+        System.out.println(mapper.selectCount(queryWrapper));
         return mapper.selectCount(queryWrapper)>0;
     }
 
