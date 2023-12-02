@@ -14,4 +14,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface InviteCodeService extends IService<InviteCode> {
 
     void generateAndSaveInviteCodes(int count);
+
+    boolean isInviteCodeExist(String inviteCode);
+
+    boolean isUsed(String inviteCode);
+
+    boolean isCorrect(String inviteCode, String identity);
 }

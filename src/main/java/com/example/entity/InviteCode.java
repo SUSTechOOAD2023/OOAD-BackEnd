@@ -31,5 +31,7 @@ public class InviteCode implements Serializable {
 
     private String identity;
 
+    private Integer isUsed;
+
 
 }

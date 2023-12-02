@@ -1,5 +1,6 @@
 package com.example.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.InviteCode;
 import com.example.mapper.InviteCodeMapper;
 import com.example.service.InviteCodeService;
@@ -7,6 +8,9 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -19,7 +23,7 @@ import java.util.UUID;
  */
 @Service
 public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteCode> implements InviteCodeService {
-    @Autowired InviteCodeMapper inviteCodeMapper;
+    @Autowired InviteCodeMapper mapper;
 
 
     @Override
@@ -30,11 +34,37 @@ public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteC
             String code = UUID.randomUUID().toString();
             inviteCode.setCode(code);
             // 分配身份，这里需要根据你的业务逻辑来分配
-
-            inviteCode.setIdentity("User"); // 示例身份
+            List<String> identities = Arrays.asList("teacher", "student", "SA");
+            Random random = new Random();
+            String identity = identities.get(random.nextInt(identities.size()));
+            inviteCode.setIdentity(identity);
+            inviteCode.setIsUsed(0);
             // 保存到数据库
-            inviteCodeMapper.insert(inviteCode);
+            mapper.insert(inviteCode);
         }
+    }
+
+    @Override
+    public boolean isInviteCodeExist(String inviteCode){
+        QueryWrapper<InviteCode> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("code",inviteCode);
+        return mapper.selectCount(queryWrapper)>0;
+    }
+
+    @Override
+    public boolean isUsed(String inviteCode){
+        QueryWrapper<InviteCode> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("code",inviteCode);
+        queryWrapper.eq("is_used",1);
+        return mapper.selectCount(queryWrapper)>0;
+    }
+
+    @Override
+    public boolean isCorrect(String inviteCode, String identity){
+        QueryWrapper<InviteCode> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("code", inviteCode);
+        queryWrapper.eq("identity", identity);
+        return mapper.selectCount(queryWrapper) > 0;
     }
 
 }
