@@ -3,9 +3,11 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.example.entity.Account;
+import com.example.entity.InviteCode;
 import com.example.entity.Student;
 import com.example.entity.Teacher;
 import com.example.service.AccountService;
+import com.example.service.InviteCodeService;
 import com.example.service.StudentService;
 import com.example.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,20 +37,32 @@ public class AccountController {
     TeacherService service1;
     @Autowired
     StudentService service2;
+    @Autowired
+    InviteCodeService service3;
     @RequestMapping("/list")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
     }
     //
     @PostMapping("/new")
-    public String add_account(@RequestBody Account account) {
+    public String add_account(@RequestBody Account account, @RequestBody InviteCode inviteCode) {
         if(service.isAccountExist(account.getAccountName())){
             return "SID已存在";
         }
         if(service.isEmailExist(account.getEmail())){
             return "邮箱已被注册";
         }
+        if(!service3.isInviteCodeExist(inviteCode.getCode())){
+            return "邀请码不存在";
+        }
+        if(service3.isUsed(inviteCode.getCode())){
+            return "邀请码已被使用";
+        }
+        if(!service3.isCorrect(inviteCode.getCode(),inviteCode.getIdentity())){
+            return "邀请码与身份不匹配";
+        }
         System.out.println(account.toString());
+        account.setAccountType(inviteCode.getIdentity());
         Account account2 = account;
         account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
         service.saveOrUpdate(account2);
