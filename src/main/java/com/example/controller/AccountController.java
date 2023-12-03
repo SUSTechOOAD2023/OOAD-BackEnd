@@ -163,10 +163,11 @@ public class AccountController {
 //        }
 //    }
 
-    @PostMapping("/logout")
-    public void logout(Account account) {
-        account.setCookie(null);
-        service.saveOrUpdate(account);
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // 使当前会话失效，实现用户登出
+        session.invalidate();
+        return "登出成功";
     }
 
 }
