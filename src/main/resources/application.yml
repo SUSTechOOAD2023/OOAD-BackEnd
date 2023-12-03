@@ -1,5 +1,8 @@
 server:
   port: 9190
+  servlet:
+    session:
+      timeout: 1800 # 设置会话超时时间为30分钟（30 * 60）
 spring:
   mvc:
     pathmatch:

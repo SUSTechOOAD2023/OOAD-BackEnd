@@ -12,18 +12,14 @@ import com.example.service.StudentService;
 import com.example.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 
 /**
  * <p>
- *  前端控制器
+ * 前端控制器
  * </p>
  *
  * @author sending
@@ -40,91 +36,108 @@ public class AccountController {
     StudentService service2;
     @Autowired
     InviteCodeService service3;
+
     @RequestMapping("/list")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
     }
+
     //
     @PostMapping("/new")
     public String add_account(@RequestBody Account account, @RequestParam String code, @RequestParam String identity) {
-        if(!service3.isInviteCodeExist(code)){
+        if (!service3.isInviteCodeExist(code)) {
             return "邀请码不存在!";
         }
-        if(service3.isUsed(code)){
+        if (service3.isUsed(code)) {
             return "邀请码已被使用!";
         }
-        if(!service3.isCorrect(code,identity)){
+        if (!service3.isCorrect(code, identity)) {
             return "邀请码与身份不匹配!";
         }
 
-        if(service.isAccountExist(identity,account.getAccountName())){
+        if (service.isAccountExist(identity, account.getAccountName())) {
             return "该身份下的账号名已存在!";
         }
-        if(service.isEmailExist(identity,account.getEmail())){
+        if (service.isEmailExist(identity, account.getEmail())) {
             return "该身份下的邮箱已被注册!";
         }
 
-        InviteCode inviteCode=service3.findID(code);
+        InviteCode inviteCode = service3.findID(code);
         inviteCode.setIsUsed(1);
         service3.saveOrUpdate(inviteCode);
         System.out.println(account.toString());
         account.setAccountType(identity);
         Account account2 = account;
-        account2.setAccountPassword(account.getAccountPassword().hashCode()+"");
+        account2.setAccountPassword(account.getAccountPassword().hashCode() + "");
         service.saveOrUpdate(account2);
-        int id=account2.getAccountId();
+        int id = account2.getAccountId();
         //每当创建一个account，对应创建一个teacher或student对象
-        if(account2.getAccountType().equals("teacher")){
-            Teacher teacher=new Teacher();
+        if (account2.getAccountType().equals("teacher")) {
+            Teacher teacher = new Teacher();
             teacher.setAccountId(id);
             service1.saveOrUpdate(teacher);
-            int ID=teacher.getTeacherId();
+            int ID = teacher.getTeacherId();
             account2.setTeacherId(ID);
             service.saveOrUpdate(account2);
-        }else if(account2.getAccountType().equals("student")){
-            Student student=new Student();
+        } else if (account2.getAccountType().equals("student")) {
+            Student student = new Student();
             student.setAccountId(id);
             service2.saveOrUpdate(student);
-            int ID=student.getStudentId();
+            int ID = student.getStudentId();
             account2.setStudentId(ID);
             service.saveOrUpdate(account2);
             //TODO:在此处添加SA
-        }else {}
+        } else {
+
+        }
 //        return service.saveOrUpdate(account2);
         return "Success!";
     }
 
 
-
-
     @PostMapping("/emailSignIn")
-    public String emailLogin(@RequestBody Account account,@RequestParam String identity) {
-        if(account.getCookie()!=null){
+    public String emailLogin(@RequestBody Account account, @RequestParam String identity, HttpSession session) {
+        if (account.getCookie() != null) {
             return "success!";
         }
-        if (!service.isEmailExist(identity,account.getEmail())) {
+        if (!service.isEmailExist(identity, account.getEmail())) {
             return "The email doesn't exist!";
         } else if (!service.emailIsCorrect(account.getEmail(), account.getAccountPassword())) {
             return "Wrong email or password!";
         } else {
+            session.setAttribute("account", account);
             return "success!";
         }
     }
 
 
     @PostMapping("/signin")
-    public String login(@RequestBody Account account,@RequestParam String identity) {
-        if(account.getCookie()!=null){
+    public String login(@RequestBody Account account, @RequestParam String identity, HttpSession session) {
+        if (account.getCookie() != null) {
             return "success!";
         }
-        if (!service.isAccountExist(identity,account.getAccountName())) {
+        if (!service.isAccountExist(identity, account.getAccountName())) {
             return "The account doesn't exist!";
         } else if (!service.isCorrect(account.getAccountName(), account.getAccountPassword())) {
             return "Wrong account name or password!";
         } else {
+            session.setAttribute("account", account);
             return "success!";
         }
     }
+
+
+    @GetMapping("/checkLogin")
+    public String checkLogin(HttpSession session) {
+        // 检查会话中是否存在已登录的用户信息
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            return "存在";
+        } else {
+            return "不存在";
+        }
+    }
+
 
 //    @PostMapping("/login")
 //    public ResponseEntity<?> loginUser(@RequestBody LoginCredentials credentials, HttpServletResponse response) {
