@@ -47,13 +47,6 @@ public class AccountController {
     //
     @PostMapping("/new")
     public String add_account(@RequestBody Account account, @RequestParam String code, @RequestParam String identity) {
-//        if(service.isAccountExist(account.getAccountName())){
-//            return "SID已存在!";
-//        }
-//        if(service.isEmailExist(account.getEmail())){
-//            return "邮箱已被注册!";
-//        }
-
         if(!service3.isInviteCodeExist(code)){
             return "邀请码不存在!";
         }
@@ -63,6 +56,14 @@ public class AccountController {
         if(!service3.isCorrect(code,identity)){
             return "邀请码与身份不匹配!";
         }
+
+        if(service.isAccountExist(identity,account.getAccountName())){
+            return "该身份下的账号名已存在!";
+        }
+        if(service.isEmailExist(identity,account.getEmail())){
+            return "该身份下的邮箱已被注册!";
+        }
+
         InviteCode inviteCode=service3.findID(code);
         inviteCode.setIsUsed(1);
         service3.saveOrUpdate(inviteCode);
@@ -97,11 +98,11 @@ public class AccountController {
 
 
     @PostMapping("/emailSignIn")
-    public String emailLogin(@RequestBody Account account) {
+    public String emailLogin(@RequestBody Account account,@RequestParam String identity) {
         if(account.getCookie()!=null){
             return "success!";
         }
-        if (!service.isEmailExist(account.getEmail())) {
+        if (!service.isEmailExist(identity,account.getEmail())) {
             return "The email doesn't exist!";
         } else if (!service.emailIsCorrect(account.getEmail(), account.getAccountPassword())) {
             return "Wrong email or password!";
@@ -112,11 +113,11 @@ public class AccountController {
 
 
     @PostMapping("/signin")
-    public String login(@RequestBody Account account) {
+    public String login(@RequestBody Account account,@RequestParam String identity) {
         if(account.getCookie()!=null){
             return "success!";
         }
-        if (!service.isAccountExist(account.getAccountName())) {
+        if (!service.isAccountExist(identity,account.getAccountName())) {
             return "The account doesn't exist!";
         } else if (!service.isCorrect(account.getAccountName(), account.getAccountPassword())) {
             return "Wrong account name or password!";
@@ -140,14 +141,14 @@ public class AccountController {
 //    }
 
     //
-    @PostMapping("/accountName")
-    public String name(Account account) {
-        if (!service.isAccountExist(account.getAccountName())) {
-            return "用户名不存在";
-        } else {
-            return "success!";
-        }
-    }
+//    @PostMapping("/accountName")
+//    public String name(Account account) {
+//        if (!service.isAccountExist(account.getAccountName())) {
+//            return "用户名不存在";
+//        } else {
+//            return "success!";
+//        }
+//    }
 
     @PostMapping("/logout")
     public void logout(Account account) {

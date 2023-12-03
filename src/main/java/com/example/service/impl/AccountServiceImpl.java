@@ -29,15 +29,24 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
-    public boolean isAccountExist(String accountName){
+    public List<Account> selectIdentity(String identity){
         QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
+        return mapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public boolean isAccountExist(String identity, String accountName){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
         queryWrapper.eq("account_name",accountName);
         return mapper.selectCount(queryWrapper)>0;
     }
 
     @Override
-    public boolean isEmailExist(String email){
+    public boolean isEmailExist(String identity, String email){
         QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
         queryWrapper.eq("email",email);
         return mapper.selectCount(queryWrapper)>0;
     }

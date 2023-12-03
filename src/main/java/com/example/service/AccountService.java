@@ -20,9 +20,16 @@ public interface AccountService extends IService<Account> {
 
     List<Account> selectList();
 
-    boolean isAccountExist(String accountName);
 
-    boolean isEmailExist(String email);
+    List<Account> selectIdentity(String identity);
+
+//    boolean isAccountExist(String accountName);
+
+//    boolean isEmailExist(String email);
+
+    boolean isAccountExist(String identity, String accountName);
+
+    boolean isEmailExist(String identity, String email);
 
     boolean isCorrect(String accountName, String password);
 
