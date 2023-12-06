@@ -64,6 +64,18 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
+    public Account selectEmailAccount(String identity, String email){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
+        queryWrapper.eq("email",email);
+        if(mapper.selectCount(queryWrapper)>0){
+            return mapper.selectOne(queryWrapper);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
     public boolean isCorrect(String accountName, String password){
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_name", accountName);

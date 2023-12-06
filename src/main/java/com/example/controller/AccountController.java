@@ -105,7 +105,7 @@ public class AccountController {
         } else if (!service.emailIsCorrect(account.getEmail(), account.getAccountPassword())) {
             return "Wrong email or password!";
         } else {
-            session.setAttribute("account", account);
+            session.setAttribute("account", service.selectEmailAccount(identity, account.getEmail()));
             return "success!";
         }
     }
