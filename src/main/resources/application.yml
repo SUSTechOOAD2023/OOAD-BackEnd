@@ -18,6 +18,13 @@ minio:
   accessKey: minioadmin
   secretKey: minioadmin
   bucketName: projecthelper
+  userPath: user-img
+#  buildingPath: builder-img
+#  commentPath: comment-img
+#  restaurantPath: restaurant-img
+#  foodPath: food-img
+#  busPath: bus-json
+#  commodityPath: commodity-img
 mybatis-plus:
   configuration:
     use-generated-keys: true

@@ -121,7 +121,8 @@ public class AccountController {
         } else if (!service.isCorrect(account.getAccountName(), account.getAccountPassword())) {
             return "Wrong account name or password!";
         } else {
-            session.setAttribute("account", account);
+            //TODO:在此处维护会话
+            session.setAttribute("account", service.selectAccount(identity, account.getAccountName()));
             return "success!";
         }
     }
@@ -131,6 +132,7 @@ public class AccountController {
     public String checkLogin(HttpSession session) {
         // 检查会话中是否存在已登录的用户信息
         Account account = (Account) session.getAttribute("account");
+        System.out.println(account);
         if (account != null) {
             return "存在";
         } else {
