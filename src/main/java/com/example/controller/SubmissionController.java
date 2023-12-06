@@ -55,7 +55,6 @@ public class SubmissionController {
     @PostMapping("/review")
     public boolean review(@RequestBody Submission submission){
         boolean ret = service.saveOrUpdate(submission);
-        // todo: add an entry in grade book
         Homework homework = new Homework();
         homework.setHomeworkId(submission.getHomeworkId());
         List<Homework> result = homeworkService.selectList(homework);
