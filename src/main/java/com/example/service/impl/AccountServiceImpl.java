@@ -29,24 +29,57 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     }
 
     @Override
-    public boolean isAccountExist(String accountName){
+    public List<Account> selectIdentity(String identity){
         QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
+        return mapper.selectList(queryWrapper);
+    }
+
+    @Override
+    public boolean isAccountExist(String identity, String accountName){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
         queryWrapper.eq("account_name",accountName);
         return mapper.selectCount(queryWrapper)>0;
     }
 
     @Override
-    public boolean isEmailExist(String email){
+    public Account selectAccount(String identity, String accountName){
         QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
+        queryWrapper.eq("account_name",accountName);
+        if(mapper.selectCount(queryWrapper)>0){
+         return mapper.selectOne(queryWrapper);
+        }else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isEmailExist(String identity, String email){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
         queryWrapper.eq("email",email);
         return mapper.selectCount(queryWrapper)>0;
+    }
+
+    @Override
+    public Account selectEmailAccount(String identity, String email){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_type",identity);
+        queryWrapper.eq("email",email);
+        if(mapper.selectCount(queryWrapper)>0){
+            return mapper.selectOne(queryWrapper);
+        }else {
+            return null;
+        }
     }
 
     @Override
     public boolean isCorrect(String accountName, String password){
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("account_name", accountName);
-        queryWrapper.eq("user_password", password.hashCode()+"");
+        queryWrapper.eq("account_password", password.hashCode()+"");
         return mapper.selectCount(queryWrapper) > 0;
     }
 
@@ -54,7 +87,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public boolean emailIsCorrect(String email, String password){
         QueryWrapper<Account> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email);
-        queryWrapper.eq("user_password", password.hashCode()+"");
+        queryWrapper.eq("account_password", password.hashCode()+"");
         return mapper.selectCount(queryWrapper) > 0;
     }
 
