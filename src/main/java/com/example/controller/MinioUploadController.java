@@ -28,18 +28,18 @@ public class MinioUploadController {
         return AjaxJson.getSuccess();
     }
 
-    @ApiOperation(value = "上传文件", notes = "仅测试使用", tags = "测试类")
-    @PostMapping("/up")
-    public Object upload(MultipartFile[] file) {
-        minioUtilS.upload(file);
-        return AjaxJson.getSuccess();
-    }
-
-    @ApiOperation(value = "压缩并上传文件", notes = "仅测试使用", tags = "测试类")
-    @PostMapping("/uploadAndCompressFile")
-    public Object uploadAndCompressFile(MultipartFile file) {
-        minioUtilS.upload(file, userImgPath, "压缩并上传文件的测试.jpeg");
-        return AjaxJson.getSuccess();
-    }
+//    @ApiOperation(value = "上传文件", notes = "仅测试使用", tags = "测试类")
+//    @PostMapping("/file")
+//    public Object upload(MultipartFile[] file) {
+//        minioUtilS.upload(file);
+//        return AjaxJson.getSuccess();
+//    }
+//
+//    @ApiOperation(value = "压缩并上传文件", notes = "仅测试使用", tags = "测试类")
+//    @PostMapping("/uploadAndCompressFile")
+//    public Object uploadAndCompressFile(MultipartFile file) {
+//        minioUtilS.upload(file, userImgPath, "压缩并上传文件的测试.jpeg");
+//        return AjaxJson.getSuccess();
+//    }
 }
 

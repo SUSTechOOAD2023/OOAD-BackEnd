@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,8 +23,8 @@ public class MinioDownloadController {
 
     @ApiOperation(value = "下载图片", notes = "仅测试使用", tags = "测试类")
     @GetMapping("/userimg")
-    public Object download(Account account){
-        return AjaxJson.getSuccessData(minioUtilS.download(String.format("%s.jpeg", account.getAccountId()),userImgPath));
+    public AjaxJson download(@RequestParam int accountID){
+        return AjaxJson.getSuccessData(minioUtilS.download(String.format("%s.jpeg", accountID),userImgPath));
     }
 
 }
