@@ -7,10 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
@@ -25,14 +22,14 @@ public class MinioUploadController {
     private String userImgPath;
 
     @ApiOperation(value = "上传图片", notes = "仅测试使用", tags = "测试类")
-    @GetMapping("/userimg")
-    public Object upload(MultipartFile file, Account account) {
-        minioUtilS.upload_old(file, userImgPath, String.format("%s.jpeg", account.getAccountId()));
+    @PostMapping("/userimg")
+    public AjaxJson upload(@RequestBody MultipartFile file, @RequestParam int accountID) {
+        minioUtilS.upload(file, userImgPath, String.format("%s.jpeg", accountID));
         return AjaxJson.getSuccess();
     }
 
     @ApiOperation(value = "上传文件", notes = "仅测试使用", tags = "测试类")
-    @GetMapping("/up")
+    @PostMapping("/up")
     public Object upload(MultipartFile[] file) {
         minioUtilS.upload(file);
         return AjaxJson.getSuccess();

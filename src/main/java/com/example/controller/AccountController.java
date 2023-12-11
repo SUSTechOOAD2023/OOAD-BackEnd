@@ -2,6 +2,9 @@ package com.example.controller;
 
 
 import com.alibaba.fastjson2.JSON;
+import com.example.util.AjaxJson;
+import com.example.util.MinioUtils;
+import io.swagger.annotations.ApiOperation;
 import com.example.entity.Account;
 import com.example.entity.InviteCode;
 import com.example.entity.Student;
@@ -10,9 +13,12 @@ import com.example.service.AccountService;
 import com.example.service.InviteCodeService;
 import com.example.service.StudentService;
 import com.example.service.TeacherService;
+import com.example.util.AjaxJson;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
@@ -139,6 +145,24 @@ public class AccountController {
             return "不存在";
         }
     }
+
+//    @ApiOperation(value = "下载用户图片，id为空时下载当前用户头像", tags = "用户类")
+//    @GetMapping("/userimg/download")
+//    public AjaxJson download(String userId) {
+//        if (userId == null) {
+//            userId = (String) StpUtil.getLoginId();
+//        }
+//        return AjaxJson.getSuccessData(minioUtilS.download(String.format("%s.jpeg", userId), userImgPath));
+//    }
+//
+//    @ApiOperation(value = "上传用户图片", tags = "用户类")
+//    @PostMapping("/userimg/upload")
+//    public AjaxJson upload(MultipartFile file) {
+//        minioUtilS.upload(file, userImgPath, String.format("%s.jpeg", StpUtil.getLoginId()));
+//        return AjaxJson.getSuccess();
+//    }
+
+
 
 
 //    @PostMapping("/login")

@@ -14,17 +14,17 @@ spring:
       username: postgres
       password: 123456
 minio:
-  endpoint: http://10.27.26.94:9090
-  accessKey: minioadmin
-  secretKey: minioadmin
+  endpoint: http://10.27.26.94:9000
+  accessKey: admin
+  secretKey: password
   bucketName: projecthelper
   userPath: user-img
-  buildingPath: builder-img
-  commentPath: comment-img
-  restaurantPath: restaurant-img
-  foodPath: food-img
-  busPath: bus-json
-  commodityPath: commodity-img
+#  buildingPath: builder-img
+#  commentPath: comment-img
+#  restaurantPath: restaurant-img
+#  foodPath: food-img
+#  busPath: bus-json
+#  commodityPath: commodity-img
 mybatis-plus:
   configuration:
     use-generated-keys: true
