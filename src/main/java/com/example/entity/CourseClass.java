@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Class implements Serializable {
+public class CourseClass implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = "class_id", type = IdType.AUTO)
@@ -30,6 +30,5 @@ public class Class implements Serializable {
     private Integer courseId;
 
     private String className;
-
 
 }

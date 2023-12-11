@@ -1,6 +1,6 @@
 package com.example.service;
 
-import com.example.entity.Class;
+import com.example.entity.CourseClass;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -13,9 +13,11 @@ import java.util.List;
  * @author sending
  * @since 2023-10-24
  */
-public interface ClassService extends IService<Class> {
+public interface CourseClassService extends IService<CourseClass> {
 
     boolean isClassExist(String className);
 
-    List<Class> selectList();
+    List<CourseClass> selectList(CourseClass courseClass);
+
+    int delete(CourseClass courseClass);
 }
