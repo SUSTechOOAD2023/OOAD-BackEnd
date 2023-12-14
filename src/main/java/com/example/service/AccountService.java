@@ -7,6 +7,7 @@ import com.example.entity.User;
 import java.util.List;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,6 +18,7 @@ import java.util.List;
  * @since 2023-10-24
  */
 public interface AccountService extends IService<Account> {
+
 
     List<Account> selectList();
 
