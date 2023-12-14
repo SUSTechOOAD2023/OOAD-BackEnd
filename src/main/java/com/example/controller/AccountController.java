@@ -134,6 +134,15 @@ public class AccountController {
     }
 
 
+    @GetMapping("/getID")
+    public int getID(HttpSession session) {
+        Account account=(Account) session.getAttribute("account");
+        if(account==null){
+            return -1;
+        }
+        return account.getAccountId();
+    }
+
     @GetMapping("/checkLogin")
     public String checkLogin(HttpSession session) {
         // 检查会话中是否存在已登录的用户信息
