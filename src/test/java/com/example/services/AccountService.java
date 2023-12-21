@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class AccountService {
     public static void insert(Map<String, Object> map) throws Exception {
-        URL url = new URL(httpService.baseurl+"/account/new");
+        URL url = new URL(httpService.baseurl+"/account/new?code=");
         httpService.sendPostRequest(url, map);
     }
     public static Map<String, Object> list(Map<String, Object> map) throws Exception {

@@ -28,8 +28,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public List<Course> selectList(Course course){
         QueryWrapper<Course> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(course.getCourseId()!=null, Course::getCourseId,course.getCourseId())
-                .eq(course.getCourseName()!=null, Course::getCourseName,course.getCourseName())
-                .eq(course.getClass()!=null, Course::getClass,course.getClass());
+                .eq(course.getCourseName()!=null, Course::getCourseName,course.getCourseName());
         return mapper.selectList(queryWrapper);
     }
 
@@ -37,8 +36,7 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course> impleme
     public int delete(Course course){
         QueryWrapper<Course> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(course.getCourseId()!=null, Course::getCourseId,course.getCourseId())
-                .eq(course.getCourseName()!=null, Course::getCourseName,course.getCourseName())
-                .eq(course.getClass()!=null, Course::getClass,course.getClass());
+                .eq(course.getCourseName()!=null, Course::getCourseName,course.getCourseName());
         return mapper.delete(queryWrapper);
     }
 }
