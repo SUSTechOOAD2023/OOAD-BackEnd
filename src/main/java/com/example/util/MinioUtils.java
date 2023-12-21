@@ -228,7 +228,7 @@ public class MinioUtils {
                 e.printStackTrace();
             }
             headers.setContentLength(bytes.length);
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            headers.setContentType(MediaType.IMAGE_JPEG);
             headers.setAccessControlExposeHeaders(Arrays.asList("*"));
             responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
         } catch (Exception e) {
