@@ -38,7 +38,7 @@ public class GroupController {
         return service.saveOrUpdate(group);
     }
     @RequestMapping("/delete")
-    public int delete(@RequestBody Group gradeBook){
+    public int delete(@RequestBody Group group){
         return service.delete(group);
     }
 }
