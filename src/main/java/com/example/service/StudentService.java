@@ -17,9 +17,13 @@ public interface StudentService extends IService<Student> {
 
     List<Student> selectList();
 
-    boolean isStudentExist(String studentName);
+
+    boolean isStudentExist(int studentID);
 
     boolean addStudent(Student student);
 
     boolean deleteStudent(Student student);
+
+
+    Student selectStudent(int studentID);
 }

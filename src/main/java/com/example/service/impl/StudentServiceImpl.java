@@ -29,9 +29,9 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
     @Override
-    public boolean isStudentExist(String studentName){
+    public boolean isStudentExist(int studentID){
         QueryWrapper<Student> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("student_name",studentName);
+        queryWrapper.eq("student_id",studentID);
         return mapper.selectCount(queryWrapper)>0;
     }
 
@@ -47,6 +47,17 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         return mapper.delete(queryWrapper)>0;
     }
 
+
+    @Override
+    public Student selectStudent(int studentID){
+        QueryWrapper<Student> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("student_id",studentID);
+        if(mapper.selectCount(queryWrapper)>0){
+            return mapper.selectOne(queryWrapper);
+        }else {
+            return null;
+        }
+    }
 
 
 
