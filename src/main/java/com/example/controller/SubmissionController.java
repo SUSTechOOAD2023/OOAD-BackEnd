@@ -50,7 +50,9 @@ public class SubmissionController {
         return service.delete(submission);
     }
 
+    @Autowired
     GradeBookService gradeBookService;
+    @Autowired
     HomeworkService homeworkService;
     @PostMapping("/review")
     public boolean review(@RequestBody Submission submission){
@@ -58,6 +60,7 @@ public class SubmissionController {
         Homework homework = new Homework();
         homework.setHomeworkId(submission.getHomeworkId());
         List<Homework> result = homeworkService.selectList(homework);
+        homework = result.get(0);
         GradeBook gradeBook = new GradeBook();
         gradeBook.setClassId(result.get(0).getClassId());
         gradeBook.setStudentId(submission.getStudentId());
@@ -66,7 +69,6 @@ public class SubmissionController {
         Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
         });
         mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
-        System.exit(0);
         gradeBook.setGradebookContent(JSON.toJSONString(mapGradebook));
         ret = ret && gradeBookService.saveOrUpdate(gradeBook);
         return ret;

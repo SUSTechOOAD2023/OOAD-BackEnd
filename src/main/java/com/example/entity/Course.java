@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -23,8 +24,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class Course implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
-    @TableId(value = "course_id", type = IdType.AUTO)
+    @TableId(value = "course_id", type = IdType.INPUT)
       private Integer courseId;
 
     private String courseName;

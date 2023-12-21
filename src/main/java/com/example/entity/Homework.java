@@ -26,7 +26,7 @@ public class Homework implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
-    @TableId(value = "homework_id", type = IdType.INPUT)
+    @TableId(value = "homework_id", type = IdType.AUTO)
 
     private Integer homeworkId;
 
