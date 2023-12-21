@@ -91,5 +91,16 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         return mapper.selectCount(queryWrapper) > 0;
     }
 
+    @Override
+    public Account selectAccount(int accountID){
+        QueryWrapper<Account> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_id",accountID);
+        if(mapper.selectCount(queryWrapper)>0){
+            return mapper.selectOne(queryWrapper);
+        }else {
+            return null;
+        }
+    }
+
 
 }

@@ -43,9 +43,21 @@ public class AccountController {
     @Autowired
     InviteCodeService service3;
 
-    @RequestMapping("/list")
+    @RequestMapping("/listAll")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
+    }
+
+    @ApiOperation(value = "返回某个账号除去密码以外的信息", tags = "账号类")
+    @RequestMapping("/list")
+    public String list(HttpSession session) {
+        if(session.getAttribute("account")==null){
+            return "未登录";
+        }
+        Account account=(Account) session.getAttribute("account");
+        Account account1=account;
+        account1.setAccountPassword("");
+        return JSON.toJSONString(account1);
     }
 
     //
@@ -154,6 +166,9 @@ public class AccountController {
             return "不存在";
         }
     }
+
+
+
 
 //    @ApiOperation(value = "下载用户图片，id为空时下载当前用户头像", tags = "用户类")
 //    @GetMapping("/userimg/download")
