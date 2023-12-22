@@ -20,11 +20,21 @@ public class MinioUploadController {
     private MinioUtils minioUtilS;
     @Value("${minio.userPath}")
     private String userImgPath;
+    @Value("${minio.filePath}")
+    private String filePath;
 
     @ApiOperation(value = "上传图片", notes = "仅测试使用", tags = "测试类")
     @PostMapping("/userimg")
-    public AjaxJson upload(@RequestBody MultipartFile file, @RequestParam int accountID) {
-        minioUtilS.upload(file, userImgPath, String.format("%s.jpeg", accountID));
+    public AjaxJson upload_img(@RequestBody MultipartFile file, @RequestParam int accountID) {
+        minioUtilS.upload_img(file, userImgPath, String.format("%s.jpeg", accountID));
+        return AjaxJson.getSuccess();
+    }
+
+
+    @ApiOperation(value = "上传文件", notes = "仅测试使用", tags = "测试类")
+    @PostMapping("/file")
+    public AjaxJson upload_file(@RequestBody MultipartFile file, @RequestParam int accountID) {
+        minioUtilS.upload_file(file, filePath, String.format("%s", accountID));
         return AjaxJson.getSuccess();
     }
 

@@ -135,8 +135,8 @@ public class MinioUtils {
         return names;
     }
 
-    public String upload_old(MultipartFile multipartFile, String path, String name) {
-        name = path + "/" + name;
+    public String upload_file(MultipartFile multipartFile, String path, String name) {
+        name = path + "/" +name+"/"+multipartFile.getOriginalFilename();
         InputStream in = null;
         try {
             in = multipartFile.getInputStream();
@@ -207,10 +207,10 @@ public class MinioUtils {
      * @return: org.springframework.http.ResponseEntity<byte [ ]>
      */
     public ResponseEntity<byte[]> download(String fileName) {
-        return download(fileName, "");
+        return download_file(fileName, "");
     }
 
-    public ResponseEntity<byte[]> download(String fileName, String path) {
+    public ResponseEntity<byte[]> download_img(String fileName, String path) {
         fileName = path + "/" + fileName;
         ResponseEntity<byte[]> responseEntity = null;
         InputStream in = null;
@@ -233,10 +233,11 @@ public class MinioUtils {
             responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
-            if ((!fileName.endsWith(".jpeg"))) {
+//            || fileName.toLowerCase().endsWith(".jpg")) &&(!fileName.toLowerCase().endsWith(".png"))
+            if (!fileName.toLowerCase().endsWith(".jpeg") ) {
                 throw new RuntimeException("No img found");
             }
-            responseEntity = download("0", path);
+            responseEntity = download_img("0", path);
         } finally {
             try {
                 if (in != null) {
@@ -254,6 +255,56 @@ public class MinioUtils {
             }
         }
         return responseEntity;
+    }
+
+
+
+    public ResponseEntity<byte[]> download_file(String fileName, String path) {
+        fileName = path + "/" + fileName;
+        ResponseEntity<byte[]> responseEntity = null;
+        InputStream in = null;
+        ByteArrayOutputStream out = null;
+        try {
+            in = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).build());
+            out = new ByteArrayOutputStream();
+            IOUtils.copy(in, out);
+            //封装返回值
+            byte[] bytes = out.toByteArray();
+            HttpHeaders headers = new HttpHeaders();
+            try {
+                headers.add("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            headers.setContentLength(bytes.length);
+            // 判断文件类型并设置相应的MediaType
+            MediaType mediaType = determineMediaType(fileName);
+            headers.setContentType(mediaType);
+            headers.setAccessControlExposeHeaders(Arrays.asList("*"));
+            responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error occurred while downloading file: " + fileName, e);
+        } finally {
+            IOUtils.closeQuietly(in); // 使用 IOUtils.closeQuietly 来简化关闭流的代码
+            IOUtils.closeQuietly(out);
+//            try {
+//                if (in != null) {
+//                    try {
+//                        in.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        return responseEntity;
+    }
     }
 
     /**
@@ -279,6 +330,19 @@ public class MinioUtils {
             return null;
         }
         return objectItems;
+    }
+
+
+
+    private MediaType determineMediaType(String fileName) {
+        if (fileName.toLowerCase().endsWith(".jpeg") || fileName.toLowerCase().endsWith(".jpg")) {
+            return MediaType.IMAGE_JPEG;
+        } else if (fileName.toLowerCase().endsWith(".png")) {
+            return MediaType.IMAGE_PNG;
+        } else {
+            // 可以根据需要添加更多文件类型
+            return MediaType.APPLICATION_OCTET_STREAM; // 默认类型
+        }
     }
 
     /**
@@ -307,7 +371,7 @@ public class MinioUtils {
         return "删除文件成功";
     }
 
-    public String upload(MultipartFile multipartFile, String path, String name) {
+    public String upload_img(MultipartFile multipartFile, String path, String name) {
         name = path + "/" + name;
         InputStream in = null;
         try {

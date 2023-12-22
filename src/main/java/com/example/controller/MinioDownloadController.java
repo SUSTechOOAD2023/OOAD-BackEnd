@@ -20,12 +20,21 @@ public class MinioDownloadController {
     private MinioUtils minioUtilS;
     @Value("${minio.userPath}")
     private String userImgPath;
+    @Value("${minio.filePath}")
+    private String filePath;
 
     @ApiOperation(value = "下载图片", notes = "仅测试使用", tags = "测试类")
     @GetMapping("/userimg")
-    public AjaxJson download(@RequestParam int accountID){
-        return AjaxJson.getSuccessData(minioUtilS.download(String.format("%s.jpeg", accountID),userImgPath));
+    public AjaxJson download_img(@RequestParam int accountID){
+        return AjaxJson.getSuccessData(minioUtilS.download_img(String.format("%s.jpeg", accountID),userImgPath));
     }
+
+    @ApiOperation(value = "下载文件", notes = "仅测试使用", tags = "测试类")
+    @GetMapping("/file")
+    public AjaxJson download_file(@RequestParam int accountID,@RequestParam String fileName){
+        return AjaxJson.getSuccessData(minioUtilS.download_file(String.format("%s", accountID)+"/"+fileName,filePath));
+    }
+
 
 }
 
