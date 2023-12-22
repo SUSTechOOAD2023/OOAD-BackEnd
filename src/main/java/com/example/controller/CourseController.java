@@ -34,6 +34,7 @@ public class CourseController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Course course){
+        System.out.printf("%d\n", course.getCourseId());
         return service.saveOrUpdate(course);
     }
     @RequestMapping("/delete")

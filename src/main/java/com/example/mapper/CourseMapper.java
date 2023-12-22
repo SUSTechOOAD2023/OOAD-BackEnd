@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
  * @author sending
  * @since 2023-10-24
  */
-@Repository
 public interface CourseMapper extends BaseMapper<Course> {
 
 }
