@@ -13,4 +13,12 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface TeacherService extends IService<Teacher> {
 
+        boolean isTeacherExist(int teacherID);
+
+        boolean addTeacher(Teacher teacher);
+
+        boolean deleteTeacher(Teacher teacher);
+
+
+    Teacher selectTeacher(int teacherID);
 }

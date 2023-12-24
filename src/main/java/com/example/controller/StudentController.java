@@ -61,6 +61,17 @@ public class StudentController {
         return mergedJson.toJSONString();
     }
 
+    @ApiOperation(value = "返回某个学生的ID", tags = "学生类")
+    @PostMapping("/getStudentID")
+    public int getStudentID(@RequestParam int accountID){
+        Account account=service2.selectAccount(accountID);
+        if(account.getStudentId()!=null){
+            return account.getStudentId();
+        }else {
+            return -1;
+        }
+    }
+
 
 
 }

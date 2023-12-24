@@ -59,6 +59,18 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
     }
 
+    //根据学生的账号ID，查找学生的ID
+    @Override
+    public int selectStudentIdByAccountId(int accountId){
+        QueryWrapper<Student> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("account_id",accountId);
+        if(mapper.selectCount(queryWrapper)>0){
+            return mapper.selectOne(queryWrapper).getStudentId();
+        }else {
+            return -1;
+        }
+    }
+
 
 
 
