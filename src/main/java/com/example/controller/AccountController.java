@@ -167,6 +167,17 @@ public class AccountController {
         }
     }
 
+    @GetMapping("/getIdentity")
+    public String getIdentity(HttpSession session) {
+        // 检查会话中是否存在已登录的用户信息
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            return account.getAccountType();
+        } else {
+            return "不存在";
+        }
+    }
+
 
 
 

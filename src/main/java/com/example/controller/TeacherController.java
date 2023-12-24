@@ -62,8 +62,8 @@ public class TeacherController {
 
     @ApiOperation(value = "返回某个老师的ID", tags = "老师类")
     @PostMapping("/getTeacherID")
-    public int getTeacherID(@RequestParam int accountId){
-        Account account=service2.selectAccount(accountId);
+    public int getTeacherID(@RequestParam int accountID){
+        Account account=service2.selectAccount(accountID);
         if (account.getTeacherId()!=null){
             return account.getTeacherId();
         }else {
