@@ -29,10 +29,12 @@ public class GroupController {
         return JSON.toJSONString(service.selectList());
     }
     @PostMapping("/new")
-    public boolean insert(@RequestBody Group group){
-        System.out.println(group.toString());
-        service.addGroup(group.getGroupName(),group.getClassId());
-        return true;
+    public int insert(@RequestParam String groupName,@RequestParam int classId){
+        Group group=new Group();
+        group.setGroupName(groupName);
+        group.setClassId(classId);
+        service.saveOrUpdate(group);
+        return group.getGroupId();
     }
     @PostMapping("/delete")
     public String delete(@RequestParam int groupId){
