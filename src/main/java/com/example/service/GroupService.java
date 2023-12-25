@@ -14,6 +14,18 @@ import java.util.List;
  * @since 2023-10-24
  */
 public interface GroupService extends IService<Group> {
-    List<Group> selectList(Group group);
-    int delete(Group group);
+
+    List<Group> selectList();
+
+    int addGroup(String groupName, int classId);
+
+    Group selectList(int groupId);
+
+    String delete(int groupId);
+
+    //根据群组id，查看群组是否存在
+    boolean isGroupExist(int groupId);
+
+    //根据群组id，更新群组信息
+    String updateGroup(int groupId, Group group);
 }

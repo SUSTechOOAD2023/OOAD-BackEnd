@@ -26,8 +26,7 @@ public class Group implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @TableId(value = "group_id", type = IdType.AUTO)
-
-      private Integer groupNumber;
+    private Integer groupId;
 
     private Integer teacherId;
 
@@ -40,6 +39,8 @@ public class Group implements Serializable {
     private LocalDateTime groupDeadline;
 
     private String groupTask;
+
+    private Integer groupNumber;
 
 
 }

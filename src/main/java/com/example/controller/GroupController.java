@@ -5,11 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.example.entity.Group;
 import com.example.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -25,21 +21,33 @@ public class GroupController {
     @Autowired
     GroupService service;
     @PostMapping("/list")
-    public String list(@RequestBody Group group) {
-        return JSON.toJSONString(service.selectList(group));
+    public String list(@RequestParam int groupId) {
+        return JSON.toJSONString(service.selectList(groupId));
     }
     @RequestMapping("/all")
     public String all() {
-        return JSON.toJSONString(service.selectList(new Group()));
+        return JSON.toJSONString(service.selectList());
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Group group){
         System.out.println(group.toString());
-        return service.saveOrUpdate(group);
+        service.addGroup(group.getGroupName(),group.getClassId());
+        return true;
     }
-    @RequestMapping("/delete")
-    public int delete(@RequestBody Group group){
-        return service.delete(group);
+    @PostMapping("/delete")
+    public String delete(@RequestParam int groupId){
+        return service.delete(groupId);
     }
+
+    @PostMapping("/update")
+    public String update(@RequestParam int groupId,@RequestBody Group group){
+        if(!service.isGroupExist(groupId)){
+            return "该群组不存在";
+        }
+        service.saveOrUpdate(group);
+        return "更新成功";
+    }
+
+
 }
 
