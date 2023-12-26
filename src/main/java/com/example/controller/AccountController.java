@@ -145,6 +145,35 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/modifyPassword")
+    public String modifyPassword(@RequestParam String oldPassword,@RequestParam String newPassword, HttpSession session) {
+        Account account = (Account) session.getAttribute("account");
+        if (account == null) {
+            return "Not logged in!";
+        }
+        if(account.getAccountPassword().equals(oldPassword.hashCode()+"")){
+            account.setAccountPassword(newPassword.hashCode()+"");
+            service.saveOrUpdate(account);
+            return "Password is modified successfully!";
+        }else {
+            return "Wrong password!";
+        }
+    }
+
+
+    @PostMapping("/forgetPassword")
+    //通过发送邮箱验证码的方式修改密码
+//    TODO:在此处添加邮箱验证码的逻辑
+    public String forgetPassword(@RequestParam String email,@RequestParam String newPassword, HttpSession session) {
+        Account account = service.selectEmailAccount("student",email);
+        if (account == null) {
+            return "The email doesn't exist!";
+        }
+        account.setAccountPassword(newPassword.hashCode()+"");
+        service.saveOrUpdate(account);
+        return "Password is modified successfully!";
+    }
+
 
     @GetMapping("/getID")
     public int getID(HttpSession session) {
