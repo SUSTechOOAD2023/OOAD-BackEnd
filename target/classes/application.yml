@@ -19,6 +19,7 @@ minio:
   secretKey: password
   bucketName: projecthelper
   userPath: user-img
+  filePath: file
 #  buildingPath: builder-img
 #  commentPath: comment-img
 #  restaurantPath: restaurant-img

@@ -1,6 +1,7 @@
 package com.example.entity;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.io.Serializable;
 
@@ -39,7 +40,7 @@ public class Group implements Serializable {
 
     private Integer groupSize;
 
-    private LocalDateTime groupDeadline;
+    private Timestamp groupDeadline;
 
     private String groupTask;
 
