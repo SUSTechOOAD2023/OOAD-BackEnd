@@ -42,8 +42,8 @@ public class GroupController {
     }
 
     @PostMapping("/update")
-    public String update(@RequestParam int groupId,@RequestBody Group group){
-        if(!service.isGroupExist(groupId)){
+    public String update(@RequestBody Group group){
+        if(!service.isGroupExist(group.getGroupId())){
             return "该群组不存在";
         }
         service.saveOrUpdate(group);
