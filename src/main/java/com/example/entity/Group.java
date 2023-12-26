@@ -1,7 +1,7 @@
 package com.example.entity;
 
 import java.sql.Time;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -39,7 +39,7 @@ public class Group implements Serializable {
 
     private Integer groupSize;
 
-    private LocalDateTime groupDeadline;
+    private Timestamp groupDeadline;
 
     private String groupTask;
 
