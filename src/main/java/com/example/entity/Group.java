@@ -46,5 +46,7 @@ public class Group implements Serializable {
 
     private Integer groupNumber;
 
+    private Integer groupVisible;
+
 
 }
