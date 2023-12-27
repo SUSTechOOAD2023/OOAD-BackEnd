@@ -38,6 +38,14 @@ public class MinioUploadController {
         return AjaxJson.getSuccess();
     }
 
+    @ApiOperation(value = "上传多文件", notes = "仅测试使用", tags = "测试类")
+    @PostMapping("/files")
+    public AjaxJson upload_files(@RequestBody MultipartFile[] files, @RequestParam int accountID) {
+//        minioUtilS.upload(files, filePath);
+        //todo:
+        return AjaxJson.getSuccess();
+    }
+
 //    @ApiOperation(value = "上传图片", notes = "仅测试使用", tags = "测试类")
 //    @PostMapping("/userimg")
 //    public AjaxJson upload(@RequestBody MultipartFile file,HttpSession session) {

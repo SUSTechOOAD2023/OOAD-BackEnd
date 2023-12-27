@@ -4,6 +4,19 @@ server:
     session:
       timeout: 1800 # 设置会话超时时间为30分钟（30 * 60）
 spring:
+  mail:
+    host: smtp.qq.com #邮件服务器地址
+    port: 587 #端口号
+    username: 2806187612@qq.com
+    password: qellpwkeefuxdfjd
+    default-encoding: UTF-8 #默认编码格式
+    properties:
+      mail:
+        debug: false #启动debug调试
+        smtp:
+          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory #SSL连接配置
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
