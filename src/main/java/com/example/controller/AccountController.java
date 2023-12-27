@@ -4,6 +4,7 @@ package com.example.controller;
 import com.alibaba.fastjson2.JSON;
 import com.example.util.AjaxJson;
 import com.example.util.MinioUtils;
+import com.example.util.MyMailService;
 import io.swagger.annotations.ApiOperation;
 import com.example.entity.Account;
 import com.example.entity.InviteCode;
@@ -42,7 +43,8 @@ public class AccountController {
     StudentService service2;
     @Autowired
     InviteCodeService service3;
-
+    @Autowired
+    MyMailService mailService;
     @RequestMapping("/listAll")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
@@ -160,7 +162,12 @@ public class AccountController {
         }
     }
 
-
+    @GetMapping("/test/mail")
+    //通过发送邮箱验证码的方式修改密码
+//    TODO:在此处添加邮箱验证码的逻辑
+    public void sendMail() {
+        mailService.sendResetMail("123456", "12111114@mail.sustech.edu.cn");
+    }
     @PostMapping("/forgetPassword")
     //通过发送邮箱验证码的方式修改密码
 //    TODO:在此处添加邮箱验证码的逻辑
