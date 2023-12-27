@@ -73,7 +73,6 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         if (!isGroupExist(groupId)){
             return "该群组不存在";
         }
-
         return "更新成功";
     }
 

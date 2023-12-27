@@ -162,7 +162,7 @@ public class MinioUtils {
         return name;
     }
 
-    public List<String> upload(MultipartFile[] multipartFile, String path) {
+    public List<String> upload_files(MultipartFile[] multipartFile, String path) {
         List<String> names = new ArrayList<>(multipartFile.length);
         for (MultipartFile file : multipartFile) {
             String fileName = file.getOriginalFilename();
