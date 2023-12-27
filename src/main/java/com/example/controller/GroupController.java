@@ -51,6 +51,12 @@ public class GroupController {
         return "更新成功";
     }
 
-
+    @PostMapping("/addStudentToGroup")
+    public String addStudentToGroup(@RequestParam int studentId, @RequestParam int groupId){
+//        System.out.println(group.toString());
+        // todo: addStudentToGroup
+        /*service.selectList()*/
+        return null;
+    }
 }
 
