@@ -197,6 +197,7 @@ public class AccountController {
         }
         account.setAccountPassword(newPassword.hashCode()+"");
         service.saveOrUpdate(account);
+        verifyCodeService.deleteVerifyCode(email,identity,verifyCode);
         return "Password is reset successfully!";
     }
 

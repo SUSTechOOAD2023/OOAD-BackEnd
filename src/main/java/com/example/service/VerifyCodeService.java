@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface VerifyCodeService extends IService<VerifyCode> {
 
     boolean isVerifyCodeExist(String email, String identity, String verifyCode);
+
+    boolean deleteVerifyCode(String email, String identity, String verifyCode);
 }
