@@ -6,6 +6,7 @@ import com.example.entity.RelationshipStudentClassGroup;
 import com.example.service.GroupService;
 import com.example.service.RelationshipStudentClassGroupService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/relationshipStudentClassGroup")
 public class RelationshipStudentClassGroupController {
+    @Autowired
     RelationshipStudentClassGroupService service;
+    @Autowired
     GroupService groupService;
 
 @ApiOperation(value = "添加学生到群组", notes = "添加学生到群组")

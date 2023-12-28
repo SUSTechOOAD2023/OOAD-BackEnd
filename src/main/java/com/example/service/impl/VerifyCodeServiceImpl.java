@@ -28,4 +28,14 @@ public class VerifyCodeServiceImpl extends ServiceImpl<VerifyCodeMapper, VerifyC
         wrapper.eq("verifyCode",verifyCode);
         return mapper.selectCount(wrapper)>0;
     }
+
+    @Override
+    public boolean deleteVerifyCode(String email, String identity, String verifyCode) {
+        QueryWrapper<VerifyCode> wrapper=new QueryWrapper<>();
+        wrapper.eq("email",email);
+        wrapper.eq("identity",identity);
+        wrapper.eq("verifyCode",verifyCode);
+        return mapper.delete(wrapper)>0;
+    }
+
 }
