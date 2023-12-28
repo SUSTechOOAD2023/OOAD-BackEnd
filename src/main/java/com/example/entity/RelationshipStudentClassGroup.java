@@ -22,6 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@TableName("relationship_student_group")
 public class RelationshipStudentClassGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;

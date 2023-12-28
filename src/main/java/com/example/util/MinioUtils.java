@@ -261,6 +261,7 @@ public class MinioUtils {
 
     public ResponseEntity<byte[]> download_file(String fileName, String path) {
         fileName = path + "/" + fileName;
+        System.out.println(fileName);
         ResponseEntity<byte[]> responseEntity = null;
         InputStream in = null;
         ByteArrayOutputStream out = null;
@@ -282,6 +283,7 @@ public class MinioUtils {
             headers.setContentType(mediaType);
             headers.setAccessControlExposeHeaders(Arrays.asList("*"));
             responseEntity = new ResponseEntity<byte[]>(bytes, headers, HttpStatus.OK);
+            return responseEntity;
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Error occurred while downloading file: " + fileName, e);
@@ -303,7 +305,7 @@ public class MinioUtils {
 //                e.printStackTrace();
 //            }
 //        }
-        return responseEntity;
+//        return responseEntity;
     }
     }
 

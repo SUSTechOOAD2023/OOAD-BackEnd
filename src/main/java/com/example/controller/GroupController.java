@@ -51,7 +51,7 @@ public class GroupController {
 
     @PostMapping("/update")
     public String update(@RequestBody Group group){
-//        System.out.println(group.toString());
+        System.out.println(group.toString());
         if(!service.isGroupExist(group.getGroupId())){
             return "该群组不存在";
         }

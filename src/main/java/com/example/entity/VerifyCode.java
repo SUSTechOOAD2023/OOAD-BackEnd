@@ -33,7 +33,6 @@ public class VerifyCode implements Serializable {
 
     private String identity;
 
-    @TableField("verifyCode")
     private String verifyCode;
 
 

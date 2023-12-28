@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface RelationshipStudentClassGroupMapper extends MPJBaseMapper<RelationshipStudentClassGroup> {
 // 自定义针对复合主键的查询方法
-RelationshipStudentClassGroup selectByCompositeKey(@Param("studentId") int studentId, @Param("groupId")  int groupId);
+//RelationshipStudentClassGroup selectByCompositeKey(@Param("studentId") int studentId, @Param("groupId")  int groupId);
 
 }
