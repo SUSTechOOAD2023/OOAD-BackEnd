@@ -18,17 +18,18 @@ public class MyMailService {
 
     public AjaxJson sendResetMail(String verifyCode, String to) {
         String htmlMsg = "<div style='background-color: #e1f5fe; padding: 20px;'>"
-                + "<h2>Welcome to SUSTech Campus!</h2>"
+                + "<h2>Welcome to SUSTech Project Helper!</h2>"
                 + "<p>Thank you for your interest.</p>"//todo:change the html format
                 + "<p><strong>Below is your verification code:</strong></p>"
                 + "<div style='background-color: #ffffff;border: 2px solid #0277bd; padding: 5px; margin: 5px 0; text-align: center;'>"
                 + "<h3>" + verifyCode + "</h3>"
                 + "</div>"
                 + "<p>Please enter the above code to complete your registration.</p>"
-                + "<p>Explore our platform: <a href='http://8.134.53.236:8080/forgetPassword/" + verifyCode + "'>SUSTech Campus</a></p>"//
+                //TODO: change the link
+                + "<p>Explore our platform: <a href='http://8.134.53.236:8080/forgetPassword/" + verifyCode + "'>SUSTech Project Helper</a></p>"//
                 + "<p>If you didn't request this, please ignore this email.</p>"
                 + "</div>";
-        return sendMail(mailSender, to, "SUSTech Campus Verification Code", htmlMsg);
+        return sendMail(mailSender, to, "SUSTech Project Helper Verification Code", htmlMsg);
     }
 
     public AjaxJson sendMail(String from, String to, String subject, String text) {

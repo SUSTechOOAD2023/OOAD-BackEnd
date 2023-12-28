@@ -28,4 +28,6 @@ public interface GroupService extends IService<Group> {
 
     //根据群组id，更新群组信息
     String updateGroup(int groupId, Group group);
+
+    Group selectGroup(int studentId, int classId);
 }

@@ -2,9 +2,11 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.Group;
+import com.example.entity.RelationshipStudentClassGroup;
 import com.example.mapper.GroupMapper;
 import com.example.service.GroupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +76,17 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
             return "该群组不存在";
         }
         return "更新成功";
+    }
+
+    @Override
+    public Group selectGroup(int studentId, int classId){
+        MPJLambdaWrapper<Group> wrapper = new MPJLambdaWrapper<Group>()
+                .selectAll(Group.class)//查询group表全部字段
+                .select(RelationshipStudentClassGroup::getStudentId)//查询studentId字段
+                .leftJoin(RelationshipStudentClassGroup.class,RelationshipStudentClassGroup::getGroupId,Group::getGroupId);
+        wrapper.eq(RelationshipStudentClassGroup::getStudentId,studentId);
+        wrapper.eq(Group::getClassId,classId);
+        return mapper.selectOne(wrapper);
     }
 
 }

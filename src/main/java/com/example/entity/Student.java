@@ -30,7 +30,7 @@ public class Student implements Serializable {
 
     private Integer classId;
 
-    private Integer groupNumber;
+    private Integer groupId;
 
     private Integer accountId;
 

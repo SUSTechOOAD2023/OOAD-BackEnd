@@ -3,7 +3,12 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.example.entity.Group;
+import com.example.entity.RelationshipStudentClassGroup;
+import com.example.entity.Student;
+import com.example.entity.User;
 import com.example.service.GroupService;
+import com.example.service.StudentService;
+import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class GroupController {
     @Autowired
     GroupService service;
+    @Autowired
+    StudentService studentService;
     @PostMapping("/list")
     public String list(@RequestParam int groupId) {
         return JSON.toJSONString(service.selectList(groupId));
@@ -36,6 +43,7 @@ public class GroupController {
         service.saveOrUpdate(group);
         return group.getGroupId();
     }
+
     @PostMapping("/delete")
     public String delete(@RequestParam int groupId){
         return service.delete(groupId);
@@ -50,6 +58,14 @@ public class GroupController {
         service.saveOrUpdate(group);
         return "更新成功";
     }
+
+    @PostMapping("/selectGroup")
+    public String selectGroup(@RequestParam int studentId,@RequestParam int classId) {
+       return JSON.toJSONString(service.selectGroup(studentId,classId));
+    }
+
+
+
 
 
 }

@@ -2,18 +2,12 @@ package com.example.controller;
 
 
 import com.alibaba.fastjson2.JSON;
+import com.example.entity.*;
+import com.example.service.*;
 import com.example.util.AjaxJson;
 import com.example.util.MinioUtils;
 import com.example.util.MyMailService;
 import io.swagger.annotations.ApiOperation;
-import com.example.entity.Account;
-import com.example.entity.InviteCode;
-import com.example.entity.Student;
-import com.example.entity.Teacher;
-import com.example.service.AccountService;
-import com.example.service.InviteCodeService;
-import com.example.service.StudentService;
-import com.example.service.TeacherService;
 import com.example.util.AjaxJson;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
+import java.util.Random;
 
 /**
  * <p>
@@ -45,6 +40,8 @@ public class AccountController {
     InviteCodeService service3;
     @Autowired
     MyMailService mailService;
+    @Autowired
+    VerifyCodeService verifyCodeService;
     @RequestMapping("/listAll")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
@@ -161,24 +158,46 @@ public class AccountController {
             return "Wrong password!";
         }
     }
-
-    @GetMapping("/test/mail")
+@ApiOperation(value = "发送邮箱验证码", tags = "账号类")
+    @PostMapping("/sendMail")
     //通过发送邮箱验证码的方式修改密码
 //    TODO:在此处添加邮箱验证码的逻辑
-    public void sendMail() {
-        mailService.sendResetMail("123456", "12111114@mail.sustech.edu.cn");
+    public void sendMail(@RequestParam String email,@RequestParam String identity) {
+        if (!service.isEmailExist(identity, email)) {
+            System.out.println("The email doesn't exist!");
+        }
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int length=8;
+        StringBuilder captcha = new StringBuilder(length);
+        Random random = new Random();
+        for (int i = 0; i < length; i++) {
+            captcha.append(characters.charAt(random.nextInt(characters.length())));
+        }
+        String verifyCode = captcha.toString();
+        //将验证码存入数据库
+        VerifyCode verifyCode1=new VerifyCode();
+        verifyCode1.setEmail(email);
+        verifyCode1.setIdentity(identity);
+        verifyCode1.setVerifyCode(verifyCode);
+        verifyCodeService.saveOrUpdate(verifyCode1);
+        mailService.sendResetMail(verifyCode, email);
     }
+
+@ApiOperation(value = "通过邮箱验证码修改密码", tags = "账号类")
     @PostMapping("/forgetPassword")
     //通过发送邮箱验证码的方式修改密码
 //    TODO:在此处添加邮箱验证码的逻辑
-    public String forgetPassword(@RequestParam String email,@RequestParam String newPassword, HttpSession session) {
-        Account account = service.selectEmailAccount("student",email);
-        if (account == null) {
+    public String forgetPassword(@RequestParam String email,@RequestParam String identity, @RequestParam String verifyCode,@RequestParam String newPassword) {
+        Account account=service.selectEmailAccount(identity,email);
+        if (account==null){
             return "The email doesn't exist!";
+        }
+        if(!verifyCodeService.isVerifyCodeExist(email,identity,verifyCode)){
+            return "Wrong verify code!";
         }
         account.setAccountPassword(newPassword.hashCode()+"");
         service.saveOrUpdate(account);
-        return "Password is modified successfully!";
+        return "Password is reset successfully!";
     }
 
 
