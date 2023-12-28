@@ -24,6 +24,8 @@ public class VerifyCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private int verifyCodeId;
+
     private String email;
 
     private String identity;
