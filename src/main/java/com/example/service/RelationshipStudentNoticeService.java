@@ -15,8 +15,8 @@ import java.util.List;
  */
 public interface RelationshipStudentNoticeService extends IService<RelationshipStudentNotice> {
 
-    public List<RelationshipStudentNotice> listStudentId(int studentId);
-    public List<RelationshipStudentNotice> listNoticeId(int noticeId);
+    public List<Integer> listStudentId(int studentId);
+    public List<Integer> listNoticeId(int noticeId);
     public boolean insert(int studentId, int noticeId);
     int delete(int studentId, int noticeId);
 }
