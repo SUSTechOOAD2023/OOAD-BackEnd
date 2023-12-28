@@ -1,8 +1,10 @@
 package com.example.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -23,6 +25,7 @@ import lombok.NoArgsConstructor;
 public class VerifyCode implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @TableId(value = "verify_code_id", type = IdType.AUTO)
 
     private int verifyCodeId;
 
