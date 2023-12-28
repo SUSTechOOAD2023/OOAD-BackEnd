@@ -1,8 +1,10 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.entity.CourseClass;
 import com.example.entity.Group;
 import com.example.entity.RelationshipStudentClassGroup;
+import com.example.mapper.CourseClassMapper;
 import com.example.mapper.GroupMapper;
 import com.example.service.GroupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -14,7 +16,7 @@ import java.util.List;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author sending
@@ -24,19 +26,20 @@ import java.util.List;
 public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements GroupService {
     @Autowired
     GroupMapper mapper;
-
+    @Autowired
+    CourseClassMapper courseClassMapper;
 
 
     @Override
-    public List<Group> selectList(){
-        QueryWrapper<Group> queryWrapper=new QueryWrapper<>();
+    public List<Group> selectList() {
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
         return mapper.selectList(queryWrapper);
     }
 
     //加入新的群组，设定名字/所属课程id，返回新群组的id
     @Override
-    public int addGroup(String groupName,int classId){
-        Group group=new Group();
+    public int addGroup(String groupName, int classId) {
+        Group group = new Group();
         group.setGroupName(groupName);
         group.setClassId(classId);
         mapper.insert(group);
@@ -45,16 +48,16 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     //根据群组id，返回群组
     @Override
-    public Group selectList(int groupId){
-        QueryWrapper<Group> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("group_id",groupId);
+    public Group selectList(int groupId) {
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("group_id", groupId);
         return mapper.selectOne(queryWrapper);
     }
 
     //根据群组id，删除群组
     @Override
-    public String delete(int groupId){
-        if (!isGroupExist(groupId)){
+    public String delete(int groupId) {
+        if (!isGroupExist(groupId)) {
             return "该群组不存在";
         }
         mapper.deleteById(groupId);
@@ -63,30 +66,58 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     //根据群组id，查看群组是否存在
     @Override
-    public boolean isGroupExist(int groupId){
-        QueryWrapper<Group> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("group_id",groupId);
-        return mapper.selectCount(queryWrapper)>0;
+    public boolean isGroupExist(int groupId) {
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("group_id", groupId);
+        return mapper.selectCount(queryWrapper) > 0;
     }
 
     //根据群组id，更新群组信息
     @Override
-    public String updateGroup(int groupId,Group group){
-        if (!isGroupExist(groupId)){
+    public String updateGroup(int groupId, Group group) {
+        if (!isGroupExist(groupId)) {
             return "该群组不存在";
         }
         return "更新成功";
     }
 
     @Override
-    public Group selectGroup(int studentId, int classId){
+    public Group selectGroup(int studentId, int classId) {
         MPJLambdaWrapper<Group> wrapper = new MPJLambdaWrapper<Group>()
                 .selectAll(Group.class)//查询group表全部字段
                 .select(RelationshipStudentClassGroup::getStudentId)//查询studentId字段
-                .leftJoin(RelationshipStudentClassGroup.class,RelationshipStudentClassGroup::getGroupId,Group::getGroupId);
-        wrapper.eq(RelationshipStudentClassGroup::getStudentId,studentId);
-        wrapper.eq(Group::getClassId,classId);
+                .leftJoin(RelationshipStudentClassGroup.class, RelationshipStudentClassGroup::getGroupId, Group::getGroupId);
+        wrapper.eq(RelationshipStudentClassGroup::getStudentId, studentId);
+        wrapper.eq(Group::getClassId, classId);
         return mapper.selectOne(wrapper);
+    }
+
+    @Override
+    public List<Group> selectGroupStatus(int classId, int visible, int valid, int expired) {
+        CourseClass courseClass = courseClassMapper.selectById(classId);
+        if (courseClass == null) {
+            return null;
+        }
+        int min = courseClass.getMinimumGroupSize();
+        int max = courseClass.getMaximumGroupSize();
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("class_id", classId);
+        if (visible == 1) {
+            queryWrapper.eq("group_visible", visible);
+        } else {
+            queryWrapper.ne("group_visible", visible);
+        }
+        if (valid == 1) {
+            queryWrapper.between("group_size", min, max);
+        } else {
+            queryWrapper.notBetween("group_size", min, max);
+        }
+        if (expired == 0) {
+            queryWrapper.gt("group_deadline", System.currentTimeMillis());
+        } else {
+            queryWrapper.lt("group_deadline", System.currentTimeMillis());
+        }
+        return mapper.selectList(queryWrapper);
     }
 
 }

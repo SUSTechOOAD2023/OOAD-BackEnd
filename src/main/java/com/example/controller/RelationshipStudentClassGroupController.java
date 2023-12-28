@@ -36,6 +36,7 @@ public class RelationshipStudentClassGroupController {
         relationshipStudentClassGroup.setGroupId(groupId);
         Group group=groupService.selectList(groupId);
         group.setGroupSize(group.getGroupSize()+1);
+        groupService.saveOrUpdate(group);
         return service.saveOrUpdate(relationshipStudentClassGroup);
     }
 

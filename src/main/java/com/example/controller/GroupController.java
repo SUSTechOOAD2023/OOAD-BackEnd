@@ -64,8 +64,10 @@ public class GroupController {
        return JSON.toJSONString(service.selectGroup(studentId,classId));
     }
 
-
-
+    @PostMapping("/selectGroupStatus")
+    public String selectGroupStatus(@RequestParam int classId,@RequestParam int visible, @RequestParam int valid, @RequestParam int expired) {
+       return JSON.toJSONString(service.selectGroupStatus(classId,visible,valid,expired));
+    }
 
 
 }

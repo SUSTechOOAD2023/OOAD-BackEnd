@@ -30,4 +30,6 @@ public interface GroupService extends IService<Group> {
     String updateGroup(int groupId, Group group);
 
     Group selectGroup(int studentId, int classId);
+
+    List<Group> selectGroupStatus(int classId, int visible, int valid, int expired);
 }

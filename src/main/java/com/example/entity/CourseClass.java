@@ -33,4 +33,8 @@ public class CourseClass implements Serializable {
 
     private String className;
 
+    private Integer minimumGroupSize;
+
+    private Integer maximumGroupSize;
+
 }
