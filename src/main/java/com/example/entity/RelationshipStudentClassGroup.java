@@ -25,11 +25,12 @@ import lombok.NoArgsConstructor;
 public class RelationshipStudentClassGroup implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @TableId(value = "student_id", type = IdType.NONE)
+    @TableId(value = "relation_id", type = IdType.AUTO)
+    private Integer RelationshipStudentClassGroupId;
+//    @TableId(value = "student_id", type = IdType.NONE)
     private Integer studentId;
 
-    @TableId(value = "group_id", type = IdType.NONE)
+//    @TableId(value = "group_id", type = IdType.NONE)
     private Integer groupId;
 
 
