@@ -1,6 +1,7 @@
 package com.example.mapper;
 
 import com.example.entity.Group;
+import com.github.yulichang.base.MPJBaseMapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -11,6 +12,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author sending
  * @since 2023-10-24
  */
-public interface GroupMapper extends BaseMapper<Group> {
+public interface GroupMapper  extends MPJBaseMapper<Group>{
 
 }
