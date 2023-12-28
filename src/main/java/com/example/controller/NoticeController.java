@@ -4,12 +4,14 @@ package com.example.controller;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.example.entity.Notice;
+import com.example.entity.RelationshipStudentNotice;
 import com.example.service.NoticeService;
 import com.example.service.RelationshipStudentNoticeService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -33,24 +35,35 @@ public class NoticeController {
     public String list(@RequestBody Notice notice) {
         return JSON.toJSONString(service.selectList(notice));
     }
+    @PostMapping("/studentSearch")
+    public String studentSearch(@RequestParam int classId, @RequestParam int studentId) {
+        List<Integer> listNoticeId = relationshipService.listStudentId(studentId);
+        Notice notice = new Notice();
+        notice.setClassId(classId);
+        List<Notice> listNotice = service.selectList(notice);
+        List<Notice> ret = new ArrayList<Notice>();
+        for (Notice notice1 : listNotice){
+            if (!listNoticeId.contains(notice1.getNoticeId()))
+                ret.add(notice1);
+        }
+        return JSON.toJSONString(ret);
+    }
     @RequestMapping("/all")
     public String all() {
         return JSON.toJSONString(service.selectList(new Notice()));
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Map<String, Object> map){
+        System.out.println(map.toString());
         Notice notice = new Notice();
-        notice.setNoticeId((int)map.get("noticeId"));
         notice.setTeacherId((int)map.get("teacherId"));
         notice.setClassId((int)map.get("classId"));
         notice.setNoticeTitle(map.get("noticeTitle").toString());
         notice.setNoticeContent(map.get("noticeContent").toString());
         boolean ret = service.saveOrUpdate(notice);
         List<Integer> listStudentId= JSONArray.parseArray(map.get("listStudentId").toString(), Integer.class);
-        Iterator<Integer> it = listStudentId.iterator();
         int noticeId = notice.getNoticeId();
-        while (it.hasNext()){
-            int studentId = it.next();
+        for (int studentId : listStudentId) {
             ret &= relationshipService.insert(studentId, noticeId);
         }
         return ret;

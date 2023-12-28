@@ -5,9 +5,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.entity.RelationshipStudentNotice;
 import com.example.mapper.RelationshipStudentNoticeMapper;
 import com.example.service.RelationshipStudentNoticeService;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,16 +26,26 @@ public class RelationshipStudentNoticeServiceImpl extends ServiceImpl<Relationsh
     @Autowired
     RelationshipStudentNoticeMapper mapper;
     @Override
-    public List<RelationshipStudentNotice> listStudentId(int studentId) {
+    public List<Integer> listStudentId(int studentId) {
         QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("student_id",studentId);
-        return mapper.selectList(queryWrapper);
+        List<RelationshipStudentNotice> list = mapper.selectList(queryWrapper);
+        List<Integer> ret = new ArrayList<Integer>();
+        for (RelationshipStudentNotice relationshipStudentNotice : list) {
+            ret.add(relationshipStudentNotice.getNoticeId());
+        }
+        return ret;
     }
     @Override
-    public List<RelationshipStudentNotice> listNoticeId(int noticeId) {
+    public List<Integer> listNoticeId(int noticeId) {
         QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("student_id",noticeId);
-        return mapper.selectList(queryWrapper);
+        queryWrapper.eq("notice_id",noticeId);
+        List<RelationshipStudentNotice> list = mapper.selectList(queryWrapper);
+        List<Integer> ret = new ArrayList<Integer>();
+        for (RelationshipStudentNotice relationshipStudentNotice : list) {
+            ret.add(relationshipStudentNotice.getStudentId());
+        }
+        return ret;
     }
     @Override
     public boolean insert(int studentId, int noticeId){
