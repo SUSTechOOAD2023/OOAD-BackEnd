@@ -31,7 +31,8 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
         queryWrapper.lambda().eq(homework.getHomeworkId()!=null,Homework::getHomeworkId,homework.getHomeworkId())
                 .eq(homework.getHomeworkType()!=null,Homework::getHomeworkType,homework.getHomeworkType())
                 .eq(homework.getHomeworkContent()!=null,Homework::getHomeworkContent,homework.getHomeworkContent())
-                .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId());
+                .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId())
+                .eq(homework.getHomeworkTitle()!=null,Homework::getHomeworkTitle,homework.getHomeworkTitle());
         return mapper.selectList(queryWrapper);
     }
     @Override
@@ -40,7 +41,8 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
         queryWrapper.lambda().eq(homework.getHomeworkId()!=null,Homework::getHomeworkId,homework.getHomeworkId())
                 .eq(homework.getHomeworkType()!=null,Homework::getHomeworkType,homework.getHomeworkType())
                 .eq(homework.getHomeworkContent()!=null,Homework::getHomeworkContent,homework.getHomeworkContent())
-                .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId());
+                .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId())
+                .eq(homework.getHomeworkTitle()!=null,Homework::getHomeworkTitle,homework.getHomeworkTitle());
         return mapper.delete(queryWrapper);
     }
 }

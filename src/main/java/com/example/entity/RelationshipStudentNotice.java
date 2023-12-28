@@ -1,9 +1,5 @@
 package com.example.entity;
 
-import java.io.Serial;
-import java.io.Serializable;
-import java.util.List;
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;
@@ -11,30 +7,30 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 
  * </p>
  *
  * @author sending
- * @since 2023-10-24
+ * @since 2023-12-28
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class Notice implements Serializable {
+public class RelationshipStudentNotice implements Serializable {
 
-    @Serial
     private static final long serialVersionUID = 1L;
-    @TableId(value = "notice_id", type = IdType.AUTO)
-      private Integer noticeId;
+    @TableId(value = "relation_id", type = IdType.AUTO)
 
-    private Integer teacherId;
+    private Integer relationId;
 
-    private Integer classId;
+    private Integer studentId;
 
-    private String noticeContent;
+    private Integer noticeId;
 
-    private String noticeTitle;
+
 }

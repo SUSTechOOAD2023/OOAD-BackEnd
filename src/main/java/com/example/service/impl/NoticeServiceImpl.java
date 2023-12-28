@@ -30,7 +30,8 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
         queryWrapper.lambda().eq(notice.getNoticeId()!=null,Notice::getNoticeId,notice.getNoticeId())
                 .eq(notice.getTeacherId()!=null,Notice::getTeacherId,notice.getTeacherId())
                 .eq(notice.getClassId()!=null,Notice::getClassId,notice.getClassId())
-                .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent());
+                .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent())
+                .eq(notice.getNoticeTitle()!=null,Notice::getNoticeTitle,notice.getNoticeTitle());
         return mapper.selectList(queryWrapper);
     }
     @Override
@@ -39,7 +40,8 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
         queryWrapper.lambda().eq(notice.getNoticeId()!=null,Notice::getNoticeId,notice.getNoticeId())
                 .eq(notice.getTeacherId()!=null,Notice::getTeacherId,notice.getTeacherId())
                 .eq(notice.getClassId()!=null,Notice::getClassId,notice.getClassId())
-                .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent());
+                .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent())
+                .eq(notice.getNoticeTitle()!=null,Notice::getNoticeTitle,notice.getNoticeTitle());
         return mapper.delete(queryWrapper);
     }
 }
