@@ -35,6 +35,12 @@ public class NoticeController {
     public String list(@RequestBody Notice notice) {
         return JSON.toJSONString(service.selectList(notice));
     }
+    @PostMapping("/Search")
+    public String search(@RequestParam int classId) {
+        Notice notice = new Notice();
+        notice.setClassId(classId);
+        return JSON.toJSONString(service.selectList(notice));
+    }
     @PostMapping("/studentSearch")
     public String studentSearch(@RequestParam int classId, @RequestParam int studentId) {
         List<Integer> listNoticeId = relationshipService.listStudentId(studentId);
