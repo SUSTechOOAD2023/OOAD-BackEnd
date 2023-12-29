@@ -19,4 +19,6 @@ public interface RelationshipStudentNoticeService extends IService<RelationshipS
     public List<Integer> listNoticeId(int noticeId);
     public boolean insert(int studentId, int noticeId);
     int delete(int studentId, int noticeId);
+    int deleteStudent(int studentId);
+    int deleteNotice(int noticeId);
 }

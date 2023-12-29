@@ -41,12 +41,17 @@ public class NoticeController {
         Notice notice = new Notice();
         notice.setClassId(classId);
         List<Notice> listNotice = service.selectList(notice);
-        List<Notice> ret = new ArrayList<Notice>();
+        List<Notice> ret = new ArrayList<>();
         for (Notice notice1 : listNotice){
-            if (!listNoticeId.contains(notice1.getNoticeId()))
+            if (listNoticeId.contains(notice1.getNoticeId()))
                 ret.add(notice1);
         }
         return JSON.toJSONString(ret);
+    }
+    @PostMapping("/noticeSearch")
+    public String noticeSearch(@RequestParam int noticeId) {
+        List<Integer> listStudent = relationshipService.listNoticeId(noticeId);
+        return JSON.toJSONString(listStudent);
     }
     @RequestMapping("/all")
     public String all() {
@@ -54,7 +59,6 @@ public class NoticeController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Map<String, Object> map){
-        System.out.println(map.toString());
         Notice notice = new Notice();
         notice.setTeacherId((int)map.get("teacherId"));
         notice.setClassId((int)map.get("classId"));
@@ -68,8 +72,28 @@ public class NoticeController {
         }
         return ret;
     }
+    @PostMapping("/modify")
+    public boolean modify(@RequestBody Map<String, Object> map){
+        Notice notice = new Notice();
+        notice.setNoticeId((int)map.get("noticeId"));
+        relationshipService.deleteNotice(notice.getNoticeId());
+        notice.setTeacherId((int)map.get("teacherId"));
+        notice.setClassId((int)map.get("classId"));
+        notice.setNoticeTitle(map.get("noticeTitle").toString());
+        notice.setNoticeContent(map.get("noticeContent").toString());
+        boolean ret = service.saveOrUpdate(notice);
+        List<Integer> listStudentId= JSONArray.parseArray(map.get("listStudentId").toString(), Integer.class);
+        int noticeId = notice.getNoticeId();
+        for (int studentId : listStudentId) {
+            ret &= relationshipService.insert(studentId, noticeId);
+        }
+        return ret;
+    }
     @RequestMapping("/delete")
-    public int delete(@RequestBody Notice notice){
+    public int delete(@RequestParam int noticeId){
+        relationshipService.deleteNotice(noticeId);
+        Notice notice = new Notice();
+        notice.setNoticeId(noticeId);
         return service.delete(notice);
     }
 }

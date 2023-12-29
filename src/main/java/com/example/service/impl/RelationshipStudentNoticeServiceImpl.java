@@ -30,7 +30,7 @@ public class RelationshipStudentNoticeServiceImpl extends ServiceImpl<Relationsh
         QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("student_id",studentId);
         List<RelationshipStudentNotice> list = mapper.selectList(queryWrapper);
-        List<Integer> ret = new ArrayList<Integer>();
+        List<Integer> ret = new ArrayList<>();
         for (RelationshipStudentNotice relationshipStudentNotice : list) {
             ret.add(relationshipStudentNotice.getNoticeId());
         }
@@ -56,7 +56,20 @@ public class RelationshipStudentNoticeServiceImpl extends ServiceImpl<Relationsh
     public int delete(int studentId, int noticeId) {
         QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("student_id",studentId);
-        queryWrapper.eq("group_id",noticeId);
+        queryWrapper.eq("notice_id",noticeId);
+        return mapper.delete(queryWrapper);
+    }
+    @Override
+    public int deleteStudent(int studentId) {
+        QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("student_id",studentId);
+        return mapper.delete(queryWrapper);
+    }
+
+    @Override
+    public int deleteNotice(int noticeId) {
+        QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("notice_id",noticeId);
         return mapper.delete(queryWrapper);
     }
 }
