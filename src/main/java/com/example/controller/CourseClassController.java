@@ -5,11 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.example.entity.CourseClass;
 import com.example.service.CourseClassService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -33,12 +29,12 @@ public class CourseClassController {
         return JSON.toJSONString(service.selectList(new CourseClass()));
     }
     @PostMapping("/new")
-    public boolean insert(@RequestBody CourseClass courseClass){
-        return service.saveOrUpdate(courseClass);
+    public int addCourse(@RequestParam String courseTitle, @RequestParam String courseName){
+        return service.addCourse(courseTitle,courseName);
     }
     @RequestMapping("/delete")
-    public int delete(@RequestBody CourseClass courseClass){
-        return service.delete(courseClass);
+    public String delete(@RequestBody int classId){
+        return service.delete(classId);
     }
 
     @PostMapping("/update")

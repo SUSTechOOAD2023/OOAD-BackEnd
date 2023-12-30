@@ -29,5 +29,5 @@ public interface CourseClassService extends IService<CourseClass> {
 
 //    int update(CourseClass courseClass);
 
-    int delete(CourseClass courseClass);
+    String delete(int classId);
 }

@@ -62,11 +62,13 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
 
 
     @Override
-    public int delete(CourseClass courseClass){
-        QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().eq(courseClass.getClassId()!=null, CourseClass::getClassId,courseClass.getClassId())
-                .eq(courseClass.getCourseName()!=null, CourseClass::getCourseName,courseClass.getCourseName())
-                .eq(courseClass.getCourseId()!=null, CourseClass::getCourseId,courseClass.getCourseId());
-        return mapper.delete(queryWrapper);
+    public String delete(int classId){
+        if (mapper.selectById(classId)==null){
+            return "该课程不存在";
+        }
+        mapper.deleteById(classId);
+        return "删除成功";
     }
+
+
 }
