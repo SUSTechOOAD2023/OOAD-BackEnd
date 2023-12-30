@@ -28,24 +28,26 @@ public class SubmissionServiceImpl extends ServiceImpl<SubmissionMapper, Submiss
     public List<Submission> selectList(Submission submission){
         QueryWrapper<Submission> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(submission.getSubmissionId()!=null,Submission::getSubmissionId,submission.getSubmissionId())
-                .eq(submission.getGroupNumber()!=null,Submission::getGroupNumber,submission.getGroupNumber())
+                .eq(submission.getGroupId()!=null,Submission::getGroupId,submission.getGroupId())
                 .eq(submission.getStudentId()!=null,Submission::getStudentId,submission.getStudentId())
                 .eq(submission.getHomeworkId()!=null,Submission::getHomeworkId,submission.getHomeworkId())
                 .eq(submission.getSubmissionContent()!=null,Submission::getSubmissionContent,submission.getSubmissionContent())
                 .eq(submission.getSubmissionComment()!=null,Submission::getSubmissionComment,submission.getSubmissionComment())
-                .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore());
+                .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore())
+                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime());
         return mapper.selectList(queryWrapper);
     }
     @Override
     public int delete(Submission submission){
         QueryWrapper<Submission> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(submission.getSubmissionId()!=null,Submission::getSubmissionId,submission.getSubmissionId())
-                .eq(submission.getGroupNumber()!=null,Submission::getGroupNumber,submission.getGroupNumber())
+                .eq(submission.getGroupId()!=null,Submission::getGroupId,submission.getGroupId())
                 .eq(submission.getStudentId()!=null,Submission::getStudentId,submission.getStudentId())
                 .eq(submission.getHomeworkId()!=null,Submission::getHomeworkId,submission.getHomeworkId())
                 .eq(submission.getSubmissionContent()!=null,Submission::getSubmissionContent,submission.getSubmissionContent())
                 .eq(submission.getSubmissionComment()!=null,Submission::getSubmissionComment,submission.getSubmissionComment())
-                .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore());
+                .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore())
+                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime());
         return mapper.delete(queryWrapper);
     }
 }

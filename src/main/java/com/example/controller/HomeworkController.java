@@ -34,8 +34,7 @@ public class HomeworkController {
         return JSON.toJSONString(service.selectList(new Homework()));
     }
     @PostMapping("/new")
-    public boolean insert(@RequestBody Homework homework){
-        System.out.println(homework.toString());
+    public boolean insert(@RequestBody Homework homework) {
         return service.saveOrUpdate(homework);
     }
     @RequestMapping("/delete")

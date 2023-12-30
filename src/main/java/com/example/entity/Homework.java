@@ -2,6 +2,7 @@ package com.example.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -37,4 +38,6 @@ public class Homework implements Serializable {
     private String homeworkType;
 
     private String homeworkTitle;
+
+    private String homeworkDDL;
 }

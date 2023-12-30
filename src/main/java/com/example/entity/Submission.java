@@ -30,7 +30,7 @@ public class Submission implements Serializable {
 
     private Integer submissionId;
 
-    private Integer groupNumber;
+    private Integer groupId;
 
     private Integer studentId;
 
@@ -42,5 +42,5 @@ public class Submission implements Serializable {
 
     private Double submissionScore;
 
-
+    private String submissionTime;
 }
