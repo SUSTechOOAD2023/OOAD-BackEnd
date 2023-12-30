@@ -23,9 +23,9 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
     @Autowired
     CourseClassMapper mapper;
     @Override
-    public boolean isCourseExist(String courseName){
+    public boolean isCourseExist(int classId){
         QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("course_name",courseName);
+        queryWrapper.eq("class_id",classId);
         return mapper.selectCount(queryWrapper)>0;
     }
 

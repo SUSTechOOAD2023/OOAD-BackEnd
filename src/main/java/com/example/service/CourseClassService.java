@@ -15,7 +15,8 @@ import java.util.List;
  */
 public interface CourseClassService extends IService<CourseClass> {
 
-    boolean isCourseExist(String className);
+
+    boolean isCourseExist(int classId);
 
     List<CourseClass> selectList(CourseClass courseClass);
 

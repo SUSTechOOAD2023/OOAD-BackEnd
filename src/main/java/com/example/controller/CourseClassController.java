@@ -33,13 +33,13 @@ public class CourseClassController {
         return service.addCourse(courseTitle,courseName);
     }
     @RequestMapping("/delete")
-    public String delete(@RequestBody int classId){
+    public String delete(@RequestParam int classId){
         return service.delete(classId);
     }
 
     @PostMapping("/update")
     public String update(@RequestBody CourseClass courseClass){
-        if (!service.isCourseExist(courseClass.getCourseName())){
+        if (!service.isCourseExist(courseClass.getClassId())){
             return "该课程不存在";
         }
         service.saveOrUpdate(courseClass);

@@ -25,7 +25,7 @@ public class VerifyCodeServiceImpl extends ServiceImpl<VerifyCodeMapper, VerifyC
         QueryWrapper<VerifyCode> wrapper=new QueryWrapper<>();
         wrapper.eq("email",email);
         wrapper.eq("identity",identity);
-        wrapper.eq("verifyCode",verifyCode);
+        wrapper.eq("verify_code",verifyCode);
         return mapper.selectCount(wrapper)>0;
     }
 
@@ -34,7 +34,7 @@ public class VerifyCodeServiceImpl extends ServiceImpl<VerifyCodeMapper, VerifyC
         QueryWrapper<VerifyCode> wrapper=new QueryWrapper<>();
         wrapper.eq("email",email);
         wrapper.eq("identity",identity);
-        wrapper.eq("verifyCode",verifyCode);
+        wrapper.eq("verify_code",verifyCode);
         return mapper.delete(wrapper)>0;
     }
 
