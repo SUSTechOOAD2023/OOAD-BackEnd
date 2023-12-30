@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface CourseClassService extends IService<CourseClass> {
 
-    boolean isClassExist(String className);
+    boolean isCourseExist(String className);
 
     List<CourseClass> selectList(CourseClass courseClass);
 
@@ -27,7 +27,7 @@ public interface CourseClassService extends IService<CourseClass> {
 //    }
     int addCourse(String courseTitle, String courseName);
 
-    int update(CourseClass courseClass);
+//    int update(CourseClass courseClass);
 
     int delete(CourseClass courseClass);
 }

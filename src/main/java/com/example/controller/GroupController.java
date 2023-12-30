@@ -6,6 +6,7 @@ import com.example.entity.Group;
 import com.example.service.GroupService;
 import com.example.service.StudentService;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -48,7 +49,7 @@ public class GroupController {
 
     @PostMapping("/update")
     public String update(@RequestBody Group group){
-        System.out.println(group.toString());
+//        System.out.println(group.toString());
         if(!service.isGroupExist(group.getGroupId())){
             return "该群组不存在";
         }
@@ -61,6 +62,8 @@ public class GroupController {
        return JSON.toJSONString(service.selectGroup(studentId,classId));
     }
 
+
+    @ApiOperation(value = "按照一定条件返回群组属性", tags = "群组类")
     @PostMapping("/selectGroupStatus")
     public String selectGroupStatus(@RequestParam int classId,@RequestParam int visible, @RequestParam int valid, @RequestParam int expired) {
        return JSON.toJSONString(service.selectGroupStatus(classId,visible,valid,expired));

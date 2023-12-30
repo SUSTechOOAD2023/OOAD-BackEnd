@@ -5,10 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.example.entity.JoinGroupInvitation;
 import com.example.service.JoinGroupInvitationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -31,14 +28,34 @@ public class JoinGroupInvitationController {
     public String all() {
         return JSON.toJSONString(service.selectList(new JoinGroupInvitation()));
     }
-    @PostMapping("/new")
-    public boolean insert(@RequestBody JoinGroupInvitation joinGroupInvitation){
-        System.out.println(joinGroupInvitation.toString());
-        return service.saveOrUpdate(joinGroupInvitation);
-    }
+
     @RequestMapping("/delete")
     public int delete(@RequestBody JoinGroupInvitation joinGroupInvitation){
         return service.delete(joinGroupInvitation);
     }
+
+    @PostMapping("/add")
+    public int addInvitation(@RequestParam int receiveStudentId,@RequestParam int sendStudentId,@RequestParam int groupId){
+        return service.addInvitation(receiveStudentId,sendStudentId,groupId);
+    }
+
+
+    @PostMapping("/searchSend")
+    public String searchSend(@RequestParam int sendStudentId){
+        return JSON.toJSONString(service.searchSend(sendStudentId));
+    }
+
+    @PostMapping("/searchReceive")
+    public String searchReceive(@RequestParam int receiveStudentId){
+        return JSON.toJSONString(service.searchReceive(receiveStudentId));
+    }
+
+
+    @PostMapping("/accept")
+    public String accept(@RequestParam int joinGroupInvitationId){
+        return service.acceptInvitation(joinGroupInvitationId);
+    }
+
+
 }
 

@@ -23,9 +23,9 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
     @Autowired
     CourseClassMapper mapper;
     @Override
-    public boolean isClassExist(String className){
+    public boolean isCourseExist(String courseName){
         QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("class_name",className);
+        queryWrapper.eq("course_name",courseName);
         return mapper.selectCount(queryWrapper)>0;
     }
 
@@ -54,14 +54,11 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
     }
 
 
-    @Override
-    public int update(CourseClass courseClass){
-        QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().eq(courseClass.getClassId()!=null, CourseClass::getClassId,courseClass.getClassId())
-                .eq(courseClass.getCourseName()!=null, CourseClass::getCourseName,courseClass.getCourseName())
-                .eq(courseClass.getCourseId()!=null, CourseClass::getCourseId,courseClass.getCourseId());
-        return mapper.update(courseClass,queryWrapper);
-    }
+//    @Override
+//    public int update(CourseClass courseClass){
+//        QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
+//
+//    }
 
 
     @Override

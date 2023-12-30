@@ -35,7 +35,7 @@ public class JoinGroupInvitation implements Serializable {
 
     private Integer groupId;
 
-    private String invitationContent;
+    private int isAccepted;
 
 
 }

@@ -41,5 +41,14 @@ public class CourseClassController {
         return service.delete(courseClass);
     }
 
+    @PostMapping("/update")
+    public String update(@RequestBody CourseClass courseClass){
+        if (!service.isCourseExist(courseClass.getCourseName())){
+            return "该课程不存在";
+        }
+        service.saveOrUpdate(courseClass);
+        return "更新成功";
+    }
+
 }
 
