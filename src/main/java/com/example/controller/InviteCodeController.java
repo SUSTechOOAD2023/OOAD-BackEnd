@@ -1,10 +1,13 @@
 package com.example.controller;
 
 
+import com.alibaba.fastjson2.JSON;
 import com.example.entity.InviteCode;
 import com.example.service.InviteCodeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -38,6 +41,13 @@ public class InviteCodeController {
             return "邀请码与身份不匹配";
         }
         return "success";
+    }
+
+
+    @PostMapping("/get")
+    //返回k个未被使用的邀请码
+    public String get_inviteCode(@RequestParam int k,@RequestParam String identity){
+        return JSON.toJSONString(service.getInviteCode(k,identity));
     }
 
 }

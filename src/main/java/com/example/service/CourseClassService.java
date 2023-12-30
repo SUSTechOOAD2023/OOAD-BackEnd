@@ -19,5 +19,15 @@ public interface CourseClassService extends IService<CourseClass> {
 
     List<CourseClass> selectList(CourseClass courseClass);
 
+    //更新courseClass，返回courseClass的id
+//    @Override
+//    public int updateCourseClass(CourseClass courseClass){
+//        mapper.insert(courseClass);
+//        return courseClass.getClassId();
+//    }
+    int addCourse(String courseTitle, String courseName);
+
+    int update(CourseClass courseClass);
+
     int delete(CourseClass courseClass);
 }

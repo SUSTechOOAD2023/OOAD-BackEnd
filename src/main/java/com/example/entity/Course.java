@@ -27,7 +27,7 @@ public class Course implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     @TableId(value = "course_id", type = IdType.INPUT)
-      private Integer courseId;
+    private Integer courseId;
 
     private String courseName;
 

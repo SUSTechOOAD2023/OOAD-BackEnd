@@ -34,7 +34,7 @@ public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteC
             String code = UUID.randomUUID().toString();
             inviteCode.setCode(code);
             // 分配身份，这里需要根据你的业务逻辑来分配
-            List<String> identities = Arrays.asList("teacher", "student", "SA");
+            List<String> identities = Arrays.asList("teacher", "student", "SA","admin");
             Random random = new Random();
             String identity = identities.get(random.nextInt(identities.size()));
             inviteCode.setIdentity(identity);
@@ -81,5 +81,15 @@ public class InviteCodeServiceImpl extends ServiceImpl<InviteCodeMapper, InviteC
 
         return null;
 }
+
+    @Override
+    public List<InviteCode> getInviteCode(int k, String identity){
+        QueryWrapper<InviteCode> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("is_used",0);
+        queryWrapper.eq("identity",identity);
+        queryWrapper.last("limit "+k);
+        return mapper.selectList(queryWrapper);
+    }
+
 
 }

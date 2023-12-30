@@ -8,7 +8,6 @@ import com.example.service.CourseClassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,11 +38,37 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
         return mapper.selectList(queryWrapper);
     }
 
+    //更新courseClass，返回courseClass的id
+//    @Override
+//    public int updateCourseClass(CourseClass courseClass){
+//        mapper.insert(courseClass);
+//        return courseClass.getClassId();
+//    }
+    @Override
+    public int addCourse(String courseTitle, String courseName){
+        CourseClass courseClass=new CourseClass();
+        courseClass.setCourseTitle(courseTitle);
+        courseClass.setCourseName(courseName);
+        mapper.insert(courseClass);
+        return courseClass.getClassId();
+    }
+
+
+    @Override
+    public int update(CourseClass courseClass){
+        QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(courseClass.getClassId()!=null, CourseClass::getClassId,courseClass.getClassId())
+                .eq(courseClass.getCourseName()!=null, CourseClass::getCourseName,courseClass.getCourseName())
+                .eq(courseClass.getCourseId()!=null, CourseClass::getCourseId,courseClass.getCourseId());
+        return mapper.update(courseClass,queryWrapper);
+    }
+
+
     @Override
     public int delete(CourseClass courseClass){
         QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(courseClass.getClassId()!=null, CourseClass::getClassId,courseClass.getClassId())
-                .eq(courseClass.getClassName()!=null, CourseClass::getClassName,courseClass.getClassName())
+                .eq(courseClass.getCourseName()!=null, CourseClass::getCourseName,courseClass.getCourseName())
                 .eq(courseClass.getCourseId()!=null, CourseClass::getCourseId,courseClass.getCourseId());
         return mapper.delete(queryWrapper);
     }
