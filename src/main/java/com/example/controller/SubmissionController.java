@@ -44,15 +44,18 @@ public class SubmissionController {
         submission.setHomeworkId(homeworkId);
         List<Submission> listSubmission = service.selectList(submission);
         Map<Integer, Map<String, Object>> retMapStudent = new HashMap<>(), retMapGroup = new HashMap<>();
+
         for (Submission submission1 : listSubmission){
             Map<String, Object> map = new HashMap<>();
-            map.put("score", submission1.getSubmissionScore());
-            map.put("comment", submission1.getSubmissionComment());
-            if (submission1.getStudentId() != null){
-                retMapStudent.put(submission1.getStudentId(), map);
-            }
-            else{
-                retMapGroup.put(submission1.getGroupId(), map);
+            System.out.println(submission1.toString());
+            if (submission1.getSubmissionScore() != null) {
+                map.put("score", submission1.getSubmissionScore());
+                map.put("comment", submission1.getSubmissionComment());
+                if (submission1.getStudentId() != null) {
+                    retMapStudent.put(submission1.getStudentId(), map);
+                } else {
+                    retMapGroup.put(submission1.getGroupId(), map);
+                }
             }
         }
         List<Map<String, Object>> lis = new ArrayList<>();

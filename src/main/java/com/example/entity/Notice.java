@@ -30,8 +30,6 @@ public class Notice implements Serializable {
     @TableId(value = "notice_id", type = IdType.AUTO)
       private Integer noticeId;
 
-    private Integer teacherId;
-
     private Integer classId;
 
     private String noticeContent;
