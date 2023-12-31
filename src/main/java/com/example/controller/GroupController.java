@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+
 /**
  * <p>
  *  前端控制器
@@ -34,10 +36,11 @@ public class GroupController {
         return JSON.toJSONString(service.selectList());
     }
     @PostMapping("/new")
-    public int insert(@RequestParam String groupName,@RequestParam int classId){
+    public int insert(@RequestParam String groupName, @RequestParam int classId, @RequestParam Timestamp groupDeadline){
         Group group=new Group();
         group.setGroupName(groupName);
         group.setClassId(classId);
+        group.setGroupDeadline(groupDeadline);
         service.saveOrUpdate(group);
         return group.getGroupId();
     }
