@@ -44,5 +44,7 @@ public class Account implements Serializable {
 
     private String email;
 
+    private Integer adminId;
+
 
 }

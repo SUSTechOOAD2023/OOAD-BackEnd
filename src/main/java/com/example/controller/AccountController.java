@@ -42,6 +42,8 @@ public class AccountController {
     MyMailService mailService;
     @Autowired
     VerifyCodeService verifyCodeService;
+    @Autowired
+    AdminService adminService;
     @RequestMapping("/listAll")
     public String full_list() {
         return JSON.toJSONString(service.selectList());
@@ -111,6 +113,13 @@ public class AccountController {
             service2.saveOrUpdate(student);
             int ID = student.getStudentId();
             account2.setStudentId(ID);
+            service.saveOrUpdate(account2);
+        }else if (account2.getAccountType().equals("admin")){
+            Admin admin=new Admin();
+            admin.setAccountId(id);
+            adminService.saveOrUpdate(admin);
+            int ID=admin.getAdminId();
+            account2.setAdminId(ID);
             service.saveOrUpdate(account2);
         }
 //        return service.saveOrUpdate(account2);

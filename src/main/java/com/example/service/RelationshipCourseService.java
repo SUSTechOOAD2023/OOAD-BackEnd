@@ -13,11 +13,17 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RelationshipCourseService extends IService<RelationshipCourse> {
 
-    int addRelationshipCourse(RelationshipCourse relationshipCourse);
+//    int addRelationshipCourse(RelationshipCourse relationshipCourse);
 
-    boolean deleteRelationshipCourse(RelationshipCourse relationshipCourse);
+    boolean deleteRelationshipCourse(int relationshipID);
 
     boolean isRelationshipCourseExist(int relationshipID);
 
     RelationshipCourse selectRelationshipCourse(int relationshipID);
+
+    String selectStudentList(int courseId);
+
+    String selectTeacherList(int courseId);
+
+    String selectSaList(int courseId);
 }

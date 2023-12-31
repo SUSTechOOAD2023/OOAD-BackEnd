@@ -4,11 +4,7 @@ package com.example.controller;
 import com.example.entity.RelationshipCourse;
 import com.example.service.RelationshipCourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -33,20 +29,25 @@ public class RelationshipCourseController {
     }
 
     @PostMapping("/delete")
-    public boolean deleteRelationshipCourse(@RequestBody RelationshipCourse relationshipCourse){
-        if (!relationshipCourseService.isRelationshipCourseExist(relationshipCourse.getRelationshipId())){
+    public boolean deleteRelationshipCourse(@RequestParam int relationshipId){
+        if (!relationshipCourseService.isRelationshipCourseExist(relationshipId)){
             return false;
         }
-        return relationshipCourseService.deleteRelationshipCourse(relationshipCourse);
+        return relationshipCourseService.deleteRelationshipCourse(relationshipId);
     }
 
     @PostMapping("/select")
-    public RelationshipCourse selectRelationshipCourse(@RequestBody RelationshipCourse relationshipCourse){
-        if (!relationshipCourseService.isRelationshipCourseExist(relationshipCourse.getRelationshipId())){
+    public RelationshipCourse selectRelationshipCourse(@RequestParam int relationshipId){
+        if (!relationshipCourseService.isRelationshipCourseExist(relationshipId)){
             return null;
         }
-        return relationshipCourseService.selectRelationshipCourse(relationshipCourse.getRelationshipId());
+        return relationshipCourseService.selectRelationshipCourse(relationshipId);
     }
+
+//    @PostMapping("/list")
+//    public String list(@RequestParam int courseId){
+//        return relationshipCourseService.selectList(relationshipCourse).toString();
+//    }
 
 }
 
