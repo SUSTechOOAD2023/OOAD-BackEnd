@@ -31,5 +31,6 @@ public interface GroupService extends IService<Group> {
 
     Group selectGroup(int studentId, int classId);
 
-    List<Group> selectGroupStatus(int classId, int visible, int valid, int expired);
+
+    List<Group> selectGroupStatus(Integer classId, Integer visible, Integer valid, Integer expired);
 }

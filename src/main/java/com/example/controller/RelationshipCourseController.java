@@ -26,7 +26,10 @@ public class RelationshipCourseController {
 
     @PostMapping("/add")
     public int addRelationshipCourse(@RequestBody RelationshipCourse relationshipCourse){
-        return relationshipCourseService.addRelationshipCourse(relationshipCourse);
+//        relationshipCourse.setTeacherId(10);
+//        relationshipCourse.setRelationshipId(10);
+        System.out.println(relationshipCourseService.saveOrUpdate(relationshipCourse));
+        return relationshipCourse.getRelationshipId();
     }
 
     @PostMapping("/delete")

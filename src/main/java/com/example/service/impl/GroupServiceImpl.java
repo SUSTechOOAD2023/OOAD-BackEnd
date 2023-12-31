@@ -12,6 +12,7 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -93,7 +94,7 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
     }
 
     @Override
-    public List<Group> selectGroupStatus(int classId, int visible, int valid, int expired) {
+    public List<Group> selectGroupStatus(Integer classId, Integer visible, Integer valid, Integer expired) {
         CourseClass courseClass = courseClassMapper.selectById(classId);
         if (courseClass == null) {
             return null;
@@ -102,20 +103,26 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         int max = courseClass.getMaximumGroupSize();
         QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("class_id", classId);
-        if (visible == 1) {
-            queryWrapper.eq("group_visible", visible);
-        } else {
-            queryWrapper.ne("group_visible", visible);
+        if (visible != null) {
+            if (visible == 1) {
+                queryWrapper.eq("group_visible", visible);
+            } else {
+                queryWrapper.ne("group_visible", visible);
+            }
         }
-        if (valid == 1) {
-            queryWrapper.between("group_size", min, max);
-        } else {
-            queryWrapper.notBetween("group_size", min, max);
+        if (valid != null) {
+            if (valid == 1) {
+                queryWrapper.between("group_size", min, max);
+            } else {
+                queryWrapper.notBetween("group_size", min, max);
+            }
         }
-        if (expired == 0) {
-            queryWrapper.gt("group_deadline", System.currentTimeMillis());
-        } else {
-            queryWrapper.lt("group_deadline", System.currentTimeMillis());
+        if (expired != null) {
+            if (expired == 0) {
+                queryWrapper.gt("group_deadline", LocalDateTime.now());
+            } else {
+                queryWrapper.lt("group_deadline", LocalDateTime.now());
+            }
         }
         return mapper.selectList(queryWrapper);
     }

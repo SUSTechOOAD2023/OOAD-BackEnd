@@ -65,7 +65,7 @@ public class GroupController {
 
     @ApiOperation(value = "按照一定条件返回群组属性", tags = "群组类")
     @PostMapping("/selectGroupStatus")
-    public String selectGroupStatus(@RequestParam int classId,@RequestParam int visible, @RequestParam int valid, @RequestParam int expired) {
+    public String selectGroupStatus(@RequestParam Integer classId, Integer visible,  Integer valid, Integer expired) {
        return JSON.toJSONString(service.selectGroupStatus(classId,visible,valid,expired));
     }
 
