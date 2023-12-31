@@ -28,7 +28,6 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     public List<Notice> selectList(Notice notice){
         QueryWrapper<Notice> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(notice.getNoticeId()!=null,Notice::getNoticeId,notice.getNoticeId())
-                .eq(notice.getTeacherId()!=null,Notice::getTeacherId,notice.getTeacherId())
                 .eq(notice.getClassId()!=null,Notice::getClassId,notice.getClassId())
                 .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent())
                 .eq(notice.getNoticeTitle()!=null,Notice::getNoticeTitle,notice.getNoticeTitle());
@@ -38,7 +37,6 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     public int delete(Notice notice){
         QueryWrapper<Notice> queryWrapper=new QueryWrapper<>();
         queryWrapper.lambda().eq(notice.getNoticeId()!=null,Notice::getNoticeId,notice.getNoticeId())
-                .eq(notice.getTeacherId()!=null,Notice::getTeacherId,notice.getTeacherId())
                 .eq(notice.getClassId()!=null,Notice::getClassId,notice.getClassId())
                 .eq(notice.getNoticeContent()!=null,Notice::getNoticeContent,notice.getNoticeContent())
                 .eq(notice.getNoticeTitle()!=null,Notice::getNoticeTitle,notice.getNoticeTitle());

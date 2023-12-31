@@ -66,7 +66,6 @@ public class NoticeController {
     @PostMapping("/new")
     public boolean insert(@RequestBody Map<String, Object> map){
         Notice notice = new Notice();
-        notice.setTeacherId((int)map.get("teacherId"));
         notice.setClassId((int)map.get("classId"));
         notice.setNoticeTitle(map.get("noticeTitle").toString());
         notice.setNoticeContent(map.get("noticeContent").toString());
@@ -83,7 +82,6 @@ public class NoticeController {
         Notice notice = new Notice();
         notice.setNoticeId((int)map.get("noticeId"));
         relationshipService.deleteNotice(notice.getNoticeId());
-        notice.setTeacherId((int)map.get("teacherId"));
         notice.setClassId((int)map.get("classId"));
         notice.setNoticeTitle(map.get("noticeTitle").toString());
         notice.setNoticeContent(map.get("noticeContent").toString());
