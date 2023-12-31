@@ -34,7 +34,7 @@ public class GradeBookController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody GradeBook gradeBook){
-        System.out.println(gradeBook.toString());
+        //System.out.println(gradeBook.toString());
         return service.saveOrUpdate(gradeBook);
     }
     @RequestMapping("/delete")
