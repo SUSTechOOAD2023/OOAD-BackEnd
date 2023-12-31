@@ -104,8 +104,14 @@ public class AccountController {
             account2.setStudentId(ID);
             service.saveOrUpdate(account2);
             //TODO:在此处添加SA
-        } else {
-
+        } else if(account2.getAccountType().equals("SA")){
+            Student student = new Student();
+            student.setAccountId(id);
+            student.setIsSa(1);
+            service2.saveOrUpdate(student);
+            int ID = student.getStudentId();
+            account2.setStudentId(ID);
+            service.saveOrUpdate(account2);
         }
 //        return service.saveOrUpdate(account2);
         return "Success!";
