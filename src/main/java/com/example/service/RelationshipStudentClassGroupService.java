@@ -4,6 +4,8 @@ import com.example.entity.RelationshipStudentClassGroup;
 import com.baomidou.mybatisplus.extension.service.IService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -15,4 +17,5 @@ import org.springframework.beans.factory.annotation.Autowired;
 public interface RelationshipStudentClassGroupService extends IService<RelationshipStudentClassGroup> {
 
     int deleteStudentFromGroup(int studentId, int groupId);
+    List<RelationshipStudentClassGroup> selectList(RelationshipStudentClassGroup relationshipStudentClassGroup);
 }

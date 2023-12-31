@@ -11,6 +11,8 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -41,10 +43,19 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
     }
 
     @Override
+    public List<RelationshipCourse> selectList(RelationshipCourse relationshipCourse){
+        QueryWrapper<RelationshipCourse> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(relationshipCourse.getRelationshipId()!=null,RelationshipCourse::getRelationshipId,relationshipCourse.getRelationshipId())
+                .eq(relationshipCourse.getCourseId()!=null,RelationshipCourse::getCourseId,relationshipCourse.getCourseId())
+                .eq(relationshipCourse.getStudentId()!=null,RelationshipCourse::getStudentId,relationshipCourse.getStudentId())
+                .eq(relationshipCourse.getTeacherId()!=null,RelationshipCourse::getTeacherId,relationshipCourse.getTeacherId())
+                .eq(relationshipCourse.getSaId()!=null,RelationshipCourse::getSaId,relationshipCourse.getSaId());
+        return mapper.selectList(queryWrapper);
+    }
+    @Override
     public RelationshipCourse selectRelationshipCourse(int relationshipID){
         return mapper.selectById(relationshipID);
     }
-
     @Override
     public String selectStudentList(int courseId){
         //如果没有这门课程，返回null
@@ -52,11 +63,12 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
             return null;
         }
         MPJLambdaWrapper<RelationshipCourse> wrapper = new MPJLambdaWrapper<RelationshipCourse>()
-                .selectAll(RelationshipCourse.class)//查询group表全部字段
+                .select(RelationshipCourse::getStudentId)//查询group表全部字段
                 .select(Student::getStudentName)//查询studentId字段
                 .leftJoin(Student.class, Student::getStudentId, RelationshipCourse::getStudentId);
         wrapper.eq(RelationshipCourse::getCourseId, courseId);
         wrapper.isNotNull(RelationshipCourse::getStudentId);
+        System.out.println("result: "+mapper.selectList(wrapper).toString());
         return JSON.toJSONString(mapper.selectList(wrapper));
     }
 

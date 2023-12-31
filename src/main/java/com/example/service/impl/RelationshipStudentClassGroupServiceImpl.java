@@ -1,12 +1,15 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.entity.Notice;
 import com.example.entity.RelationshipStudentClassGroup;
 import com.example.mapper.RelationshipStudentClassGroupMapper;
 import com.example.service.RelationshipStudentClassGroupService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -26,5 +29,14 @@ public class RelationshipStudentClassGroupServiceImpl extends ServiceImpl<Relati
         queryWrapper.eq("student_id",studentId);
         queryWrapper.eq("group_id",groupId);
         return mapper.delete(queryWrapper);
+    }
+
+    @Override
+    public List<RelationshipStudentClassGroup> selectList(RelationshipStudentClassGroup relationshipStudentClassGroup){
+        QueryWrapper<RelationshipStudentClassGroup> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(relationshipStudentClassGroup.getStudentId()!=null,RelationshipStudentClassGroup::getStudentId,relationshipStudentClassGroup.getStudentId())
+                .eq(relationshipStudentClassGroup.getGroupId()!=null,RelationshipStudentClassGroup::getGroupId,relationshipStudentClassGroup.getGroupId())
+                .eq(relationshipStudentClassGroup.getRelationId()!=null,RelationshipStudentClassGroup::getRelationId,relationshipStudentClassGroup.getRelationId());
+        return mapper.selectList(queryWrapper);
     }
 }

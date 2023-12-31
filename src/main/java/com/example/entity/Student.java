@@ -28,10 +28,6 @@ public class Student implements Serializable {
 
     private Integer studentId;
 
-    private Integer classId;
-
-    private Integer groupId;
-
     private Integer accountId;
 
     private String studentName;
