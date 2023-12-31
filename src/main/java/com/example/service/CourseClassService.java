@@ -18,6 +18,7 @@ public interface CourseClassService extends IService<CourseClass> {
 
     boolean isCourseExist(int classId);
 
+
     List<CourseClass> selectList(CourseClass courseClass);
 
     //更新courseClass，返回courseClass的id

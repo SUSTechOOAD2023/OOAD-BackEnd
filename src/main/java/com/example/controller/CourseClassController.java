@@ -46,5 +46,13 @@ public class CourseClassController {
         return "更新成功";
     }
 
+//    @PostMapping("/view")
+//    public String view(@RequestBody CourseClass courseClass){
+//        if (!service.isCourseExist(courseClass.getClassId())){
+//            return "该课程不存在";
+//        }
+//        return JSON.toJSONString(service.selectList(courseClass));
+//    }
+
 }
 

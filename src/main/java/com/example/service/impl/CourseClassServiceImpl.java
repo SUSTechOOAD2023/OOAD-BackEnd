@@ -32,9 +32,10 @@ public class CourseClassServiceImpl extends ServiceImpl<CourseClassMapper, Cours
     @Override
     public List<CourseClass> selectList(CourseClass courseClass){
         QueryWrapper<CourseClass> queryWrapper=new QueryWrapper<>();
-        queryWrapper.lambda().eq(courseClass.getClassId()!=null, CourseClass::getClassId,courseClass.getClassId())
-                .eq(courseClass.getCourseName()!=null, CourseClass::getCourseName,courseClass.getCourseName())
-                .eq(courseClass.getCourseId()!=null, CourseClass::getCourseId,courseClass.getCourseId());
+//        queryWrapper.eq("class_id",courseClass.getClassId());
+        queryWrapper.lambda().eq(courseClass.getClassId()!=null,CourseClass::getClassId,courseClass.getClassId())
+                .eq(courseClass.getCourseTitle()!=null,CourseClass::getCourseTitle,courseClass.getCourseTitle())
+                .eq(courseClass.getCourseName()!=null,CourseClass::getCourseName,courseClass.getCourseName());
         return mapper.selectList(queryWrapper);
     }
 
