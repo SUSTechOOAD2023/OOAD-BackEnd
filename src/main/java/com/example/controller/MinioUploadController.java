@@ -41,8 +41,7 @@ public class MinioUploadController {
     @ApiOperation(value = "上传多文件", notes = "仅测试使用", tags = "测试类")
     @PostMapping("/files")
     public AjaxJson upload_files(@RequestBody MultipartFile[] files, @RequestParam int accountID) {
-//        minioUtilS.upload(files, filePath);
-        //todo:
+        minioUtilS.upload_files(files, filePath+"/"+String.format("%s", accountID));
         return AjaxJson.getSuccess();
     }
 

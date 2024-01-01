@@ -2,6 +2,7 @@ package com.example.util;
 
 import io.minio.*;
 import io.minio.errors.*;
+import io.minio.http.Method;
 import io.minio.messages.DeleteError;
 import io.minio.messages.DeleteObject;
 import io.minio.messages.Item;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -333,6 +336,22 @@ public class MinioUtils {
         }
         return objectItems;
     }
+
+    public String getFileUrl(String objectName) {
+        try {
+            String url = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                    .method(Method.GET)
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .expiry(60 * 60) // URL有效时间，单位是秒
+                    .build());
+            return url;
+        } catch (MinioException | IOException | NoSuchAlgorithmException | InvalidKeyException e) {
+            e.printStackTrace();
+            throw new RuntimeException("获取文件URL失败");
+        }
+    }
+
 
 
 

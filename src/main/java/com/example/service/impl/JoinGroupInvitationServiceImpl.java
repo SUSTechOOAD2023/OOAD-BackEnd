@@ -2,10 +2,13 @@ package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.controller.RelationshipStudentClassGroupController;
 import com.example.entity.JoinGroupInvitation;
 import com.example.entity.Student;
 import com.example.mapper.JoinGroupInvitationMapper;
+import com.example.mapper.RelationshipStudentClassGroupMapper;
 import com.example.service.JoinGroupInvitationService;
+import com.example.service.RelationshipStudentClassGroupService;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,8 @@ import java.util.List;
 public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitationMapper, JoinGroupInvitation> implements JoinGroupInvitationService {
     @Autowired
     JoinGroupInvitationMapper mapper;
+    @Autowired
+    RelationshipStudentClassGroupController relationshipStudentClassGroupController;
     @Override
     public List<JoinGroupInvitation> selectList(JoinGroupInvitation joinGroupInvitation){
         QueryWrapper<JoinGroupInvitation> queryWrapper=new QueryWrapper<>();
@@ -108,6 +113,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
         JoinGroupInvitation joinGroupInvitation=selectInvitation(joinGroupInvitationId);
         joinGroupInvitation.setIsAccepted(1);
         mapper.updateById(joinGroupInvitation);
+        relationshipStudentClassGroupController.addStudentToGroup(joinGroupInvitation.getReceiveStudentId(),joinGroupInvitation.getGroupId());
         return "接受邀请";
     }
 
