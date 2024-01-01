@@ -5,10 +5,12 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import com.example.entity.GradeBook;
 import com.example.entity.Homework;
+import com.example.entity.Student;
 import com.example.entity.Submission;
 import com.example.mapper.HomeworkMapper;
 import com.example.service.GradeBookService;
 import com.example.service.HomeworkService;
+import com.example.service.StudentService;
 import com.example.service.SubmissionService;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.ibatis.jdbc.Null;
@@ -34,9 +36,26 @@ import static java.lang.Math.*;
 public class SubmissionController {
     @Autowired
     SubmissionService service;
+    @Autowired
+    StudentService studentService;
     @PostMapping("/list")
     public String list(@RequestBody Submission submission) {
-        return JSON.toJSONString(service.selectList(submission));
+        List<Submission> listSubmission = service.selectList(submission);
+        List<Map<String, Object>> ret = new ArrayList<>();
+        for (Submission submission1: listSubmission){
+            Map<String, Object> map = new HashMap<>();
+            Student student = studentService.selectStudent(submission1.getStudentId());
+            map.put("groupId", submission1.getGroupId());
+            map.put("studentId", submission1.getStudentId());
+            map.put("studentName", student.getStudentName());
+            map.put("homeworkId", submission1.getHomeworkId());
+            map.put("submissionContent", submission1.getSubmissionContent());
+            map.put("submissionComment", submission1.getSubmissionComment());
+            map.put("submissionScore", submission1.getSubmissionScore());
+            map.put("submissionTime", submission1.getSubmissionTime());
+            ret.add(map);
+        }
+        return JSON.toJSONString(ret);
     }
     @PostMapping("/listScore")
     public String listScore(@RequestParam int homeworkId) {
@@ -88,19 +107,27 @@ public class SubmissionController {
     @PostMapping("/queryMaxScore")
     public String queryMaxScore(@RequestBody Submission submission) {
         List<Submission> listSubmission = service.selectList(submission);
-        double ret = 0.0;
-        String comment = "";
+        Map<Integer, Map<String, Object>> ret = new HashMap<>();
         for (Submission submission1 : listSubmission){
-            if (ret < submission1.getSubmissionScore()) {
-                ret = submission1.getSubmissionScore();
-                comment = submission1.getSubmissionComment();
+            if (submission1.getSubmissionScore()==null) continue;
+            Integer studentId = submission1.getStudentId();
+            Map<String, Object> map1;
+            if (ret.get(studentId)==null) {
+                map1 = new HashMap<>();
+                map1.put("score", 0.0);
+                map1.put("comment", "");
             }
+            else
+                map1 = ret.get(studentId);
+            if (Double.parseDouble(map1.get("score").toString()) < submission1.getSubmissionScore()) {
+                map1.put("score", submission1.getSubmissionScore());
+                map1.put("comment", submission1.getSubmissionComment());
+            }
+            ret.put(studentId, map1);
         }
-        Map<String, Object> map = new HashMap<>();
-        map.put("score", ret);
-        map.put("comment", comment);
-        return JSON.toJSONString(map);
+        return JSON.toJSONString(ret.values());
     }
+
 
     @PostMapping("/queryLatestScore")
     public String queryLatestScore(@RequestBody Submission submission) {
