@@ -176,7 +176,7 @@ public class RelationshipCourseController {
             if (map2.get(courseId)!=null) continue;
             map2.put(courseId, 1);
             CourseClass courseClass = new CourseClass();
-            courseClass.setCourseId(courseId);
+            courseClass.setClassId(courseId);
             courseClass = courseClassService.selectList(courseClass).get(0);
             Map<String, Object> map1 = new HashMap<>();
             map1.put("courseId", courseId);

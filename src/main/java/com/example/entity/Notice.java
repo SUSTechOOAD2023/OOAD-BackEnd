@@ -35,4 +35,6 @@ public class Notice implements Serializable {
     private String noticeContent;
 
     private String noticeTitle;
+
+    private String releaseTime;
 }

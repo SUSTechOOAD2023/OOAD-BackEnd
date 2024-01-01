@@ -11,10 +11,7 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -33,7 +30,9 @@ public class NoticeController {
     RelationshipStudentNoticeService relationshipService;
     @PostMapping("/list")
     public String list(@RequestBody Notice notice) {
-        return JSON.toJSONString(service.selectList(notice));
+        List<Notice> lis = service.selectList(notice);
+        lis.sort(Comparator.comparing(Notice::getReleaseTime));
+        return JSON.toJSONString(lis);
     }
     @PostMapping("/Search")
     public String search(@RequestParam int classId) {
