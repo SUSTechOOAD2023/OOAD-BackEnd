@@ -3,20 +3,16 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
-import com.example.entity.GradeBook;
-import com.example.entity.Homework;
-import com.example.entity.Student;
-import com.example.entity.Submission;
+import com.example.entity.*;
 import com.example.mapper.HomeworkMapper;
-import com.example.service.GradeBookService;
-import com.example.service.HomeworkService;
-import com.example.service.StudentService;
-import com.example.service.SubmissionService;
+import com.example.service.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -147,24 +143,49 @@ public class SubmissionController {
         map.put("comment", comment);
         return JSON.toJSONString(map);
     }
-
+    @Autowired
+    RelationshipStudentClassGroupService relationshipStudentClassGroupService;
     @PostMapping("/review")
     public boolean review(@RequestBody Submission submission){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = localDateTime.format(formatter);
+        submission.setReviewTime(currentTime);
         boolean ret = service.saveOrUpdate(submission);
         Homework homework = new Homework();
         homework.setHomeworkId(submission.getHomeworkId());
         List<Homework> result = homeworkService.selectList(homework);
         homework = result.get(0);
-        GradeBook gradeBook = new GradeBook();
-        gradeBook.setClassId(result.get(0).getClassId());
-        gradeBook.setStudentId(submission.getStudentId());
-        List<GradeBook> result2 = gradeBookService.selectList(gradeBook);
-        gradeBook = result2.get(0);
-        Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
-        });
-        mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
-        gradeBook.setGradebookContent(JSON.toJSONString(mapGradebook));
-        ret = ret && gradeBookService.saveOrUpdate(gradeBook);
+        if (submission.getStudentId()!=null) {
+            GradeBook gradeBook = new GradeBook();
+            gradeBook.setClassId(result.get(0).getClassId());
+            gradeBook.setStudentId(submission.getStudentId());
+            List<GradeBook> result2 = gradeBookService.selectList(gradeBook);
+            gradeBook = result2.get(0);
+            Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
+            });
+            mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
+            gradeBook.setGradebookContent(JSON.toJSONString(mapGradebook));
+            ret = ret && gradeBookService.saveOrUpdate(gradeBook);
+        }
+        else{
+            RelationshipStudentClassGroup relationshipStudentClassGroup = new RelationshipStudentClassGroup();
+            relationshipStudentClassGroup.setGroupId(submission.getGroupId());
+            List<RelationshipStudentClassGroup> listRelationshipStudentClassGroup = relationshipStudentClassGroupService.selectList(relationshipStudentClassGroup);
+            for (RelationshipStudentClassGroup relationshipStudentClassGroup1 : listRelationshipStudentClassGroup){
+                Integer studentId = relationshipStudentClassGroup1.getStudentId();
+                GradeBook gradeBook = new GradeBook();
+                gradeBook.setClassId(result.get(0).getClassId());
+                gradeBook.setStudentId(studentId);
+                List<GradeBook> result2 = gradeBookService.selectList(gradeBook);
+                gradeBook = result2.get(0);
+                Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
+                });
+                mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
+                gradeBook.setGradebookContent(JSON.toJSONString(mapGradebook));
+                ret = ret && gradeBookService.saveOrUpdate(gradeBook);
+            }
+        }
         return ret;
     }
 }

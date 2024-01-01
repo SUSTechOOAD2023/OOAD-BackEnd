@@ -34,7 +34,8 @@ public class SubmissionServiceImpl extends ServiceImpl<SubmissionMapper, Submiss
                 .eq(submission.getSubmissionContent()!=null,Submission::getSubmissionContent,submission.getSubmissionContent())
                 .eq(submission.getSubmissionComment()!=null,Submission::getSubmissionComment,submission.getSubmissionComment())
                 .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore())
-                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime());
+                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime())
+                .eq(submission.getReviewTime()!=null,Submission::getReviewTime,submission.getReviewTime());
         return mapper.selectList(queryWrapper);
     }
     @Override
@@ -47,7 +48,8 @@ public class SubmissionServiceImpl extends ServiceImpl<SubmissionMapper, Submiss
                 .eq(submission.getSubmissionContent()!=null,Submission::getSubmissionContent,submission.getSubmissionContent())
                 .eq(submission.getSubmissionComment()!=null,Submission::getSubmissionComment,submission.getSubmissionComment())
                 .eq(submission.getSubmissionScore()!=null,Submission::getSubmissionScore,submission.getSubmissionScore())
-                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime());
+                .eq(submission.getSubmissionTime()!=null,Submission::getSubmissionTime,submission.getSubmissionTime())
+                .eq(submission.getReviewTime()!=null,Submission::getReviewTime,submission.getReviewTime());
         return mapper.delete(queryWrapper);
     }
 }
