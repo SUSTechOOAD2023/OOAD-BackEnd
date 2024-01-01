@@ -173,7 +173,7 @@ public class RelationshipCourseController {
         Map<Integer, Integer> map2 = new HashMap<>();
         for (RelationshipCourse relationshipCourse1:lis){
             Integer courseId = relationshipCourse1.getCourseId();
-            if (map2.get(courseId)==null) continue;
+            if (map2.get(courseId)!=null) continue;
             map2.put(courseId, 1);
             CourseClass courseClass = new CourseClass();
             courseClass.setCourseId(courseId);
