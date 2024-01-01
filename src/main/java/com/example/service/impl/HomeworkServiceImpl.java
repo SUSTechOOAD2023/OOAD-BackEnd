@@ -33,7 +33,8 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
                 .eq(homework.getHomeworkContent()!=null,Homework::getHomeworkContent,homework.getHomeworkContent())
                 .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId())
                 .eq(homework.getHomeworkTitle()!=null,Homework::getHomeworkTitle,homework.getHomeworkTitle())
-                .eq(homework.getHomeworkDdl()!=null,Homework::getHomeworkDdl,homework.getHomeworkDdl());
+                .eq(homework.getHomeworkDdl()!=null,Homework::getHomeworkDdl,homework.getHomeworkDdl())
+                .eq(homework.getAllowResubmit()!=null,Homework::getAllowResubmit,homework.getAllowResubmit());
         return mapper.selectList(queryWrapper);
     }
     @Override
@@ -44,7 +45,8 @@ public class HomeworkServiceImpl extends ServiceImpl<HomeworkMapper, Homework> i
                 .eq(homework.getHomeworkContent()!=null,Homework::getHomeworkContent,homework.getHomeworkContent())
                 .eq(homework.getClassId()!=null,Homework::getClassId,homework.getClassId())
                 .eq(homework.getHomeworkTitle()!=null,Homework::getHomeworkTitle,homework.getHomeworkTitle())
-                .eq(homework.getHomeworkDdl()!=null,Homework::getHomeworkDdl,homework.getHomeworkDdl());
+                .eq(homework.getHomeworkDdl()!=null,Homework::getHomeworkDdl,homework.getHomeworkDdl())
+                .eq(homework.getAllowResubmit()!=null,Homework::getAllowResubmit,homework.getAllowResubmit());
         return mapper.delete(queryWrapper);
     }
 }

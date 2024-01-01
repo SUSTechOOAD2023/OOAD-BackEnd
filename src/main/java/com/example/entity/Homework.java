@@ -40,4 +40,6 @@ public class Homework implements Serializable {
     private String homeworkTitle;
 
     private String homeworkDdl;
+
+    private Integer allowResubmit;
 }
