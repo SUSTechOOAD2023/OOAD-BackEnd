@@ -54,11 +54,11 @@ public class RelationshipCourseController {
 
     @PostMapping("/addStudentList")
     public boolean insertStudentList(@RequestBody Map<String, Object> map){
-        List<Integer> listId = JSONArray.parseArray(map.get("idList").toString(), Integer.class);
-        int courseId = (int) map.get("courseId");
-        for (Integer studentId: listId){
+        List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
+        int courseId = Integer.parseInt(map.get("courseId").toString());
+        for (String studentId: listId){
             RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setStudentId(studentId);
+            relationshipCourse.setStudentId(Integer.parseInt(studentId));
             relationshipCourse.setCourseId(courseId);
             relationshipCourseService.saveOrUpdate(relationshipCourse);
         }
@@ -66,11 +66,11 @@ public class RelationshipCourseController {
     }
     @PostMapping("/addTeacherList")
     public boolean insertTeacherList(@RequestBody Map<String, Object> map){
-        List<Integer> listId = JSONArray.parseArray(map.get("idList").toString(), Integer.class);
-        int courseId = (int) map.get("courseId");
-        for (Integer teacherId: listId){
+        List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
+        int courseId = Integer.parseInt(map.get("courseId").toString());
+        for (String teacherId: listId){
             RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setTeacherId(teacherId);
+            relationshipCourse.setTeacherId(Integer.parseInt(teacherId));
             relationshipCourse.setCourseId(courseId);
             relationshipCourseService.saveOrUpdate(relationshipCourse);
         }
@@ -78,11 +78,11 @@ public class RelationshipCourseController {
     }
     @PostMapping("/addSAList")
     public boolean insertSAList(@RequestBody Map<String, Object> map){
-        List<Integer> listId = JSONArray.parseArray(map.get("idList").toString(), Integer.class);
-        int courseId = (int) map.get("courseId");
-        for (Integer saId: listId){
+        List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
+        int courseId = Integer.parseInt(map.get("courseId").toString());
+        for (String saId: listId){
             RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setSaId(saId);
+            relationshipCourse.setSaId(Integer.parseInt(saId));
             relationshipCourse.setCourseId(courseId);
             relationshipCourseService.saveOrUpdate(relationshipCourse);
         }
@@ -94,7 +94,7 @@ public class RelationshipCourseController {
     public String selectStudent(@RequestBody Map<String, Object> map) {
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         if (map.get("courseId") != null) {
-            relationshipCourse.setCourseId((int) map.get("courseId"));
+            relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -115,7 +115,7 @@ public class RelationshipCourseController {
     public String selectTeacher(@RequestBody Map<String, Object> map) {
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         if (map.get("courseId") != null) {
-            relationshipCourse.setCourseId((int) map.get("courseId"));
+            relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -135,7 +135,7 @@ public class RelationshipCourseController {
     public String selectSA(@RequestBody Map<String, Object> map) {
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         if (map.get("courseId") != null) {
-            relationshipCourse.setCourseId((int) map.get("courseId"));
+            relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -160,13 +160,13 @@ public class RelationshipCourseController {
     public String selectCourse(@RequestBody Map<String, Object> map){
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         if (map.get("studentId") != null) {
-            relationshipCourse.setStudentId((int) map.get("studentId"));
+            relationshipCourse.setStudentId(Integer.parseInt(map.get("studentId").toString()));
         }
         if (map.get("teacherId") != null) {
-            relationshipCourse.setTeacherId((int) map.get("teacherId"));
+            relationshipCourse.setTeacherId(Integer.parseInt(map.get("teacehrId").toString()));
         }
         if (map.get("SAId") != null) {
-            relationshipCourse.setSaId((int) map.get("SAId"));
+            relationshipCourse.setSaId(Integer.parseInt(map.get("SAId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -181,28 +181,32 @@ public class RelationshipCourseController {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("courseId", courseId);
             map1.put("courseName", courseClass.getCourseName());
+            map1.put("teacherId", new ArrayList<Integer>());
+            map1.put("teacherName", new ArrayList<String>());
+            map1.put("SAId", new ArrayList<Integer>());
+            map1.put("SAName", new ArrayList<String>());
             RelationshipCourse relationshipCourse2 = new RelationshipCourse();
             relationshipCourse2.setCourseId(courseId);
-            List<RelationshipCourse> lis1 = relationshipCourseService.selectList(relationshipCourse);
+            List<RelationshipCourse> lis1 = relationshipCourseService.selectList(relationshipCourse2);
             for (RelationshipCourse relationshipCourse3:lis1){
                 if (relationshipCourse3.getTeacherId()!=null) {
                     Teacher teacher = teacherService.selectTeacher(relationshipCourse3.getTeacherId());
-                    map1.put("teacherId", relationshipCourse3.getTeacherId());
-                    map1.put("teacherName", teacher.getTeacherName());
+                    ((List<Integer>)map1.get("teacherId")).add(relationshipCourse3.getTeacherId());
+                    ((List<String>)map1.get("teacherName")).add(teacher.getTeacherName());
                 }
                 if (relationshipCourse3.getSaId()!=null) {
                     Student student = studentService.selectStudent(relationshipCourse3.getSaId());
-                    map1.put("SAId", relationshipCourse3.getSaId());
-                    map1.put("SAName", student.getStudentName());
+                    ((List<Integer>)map1.get("SAId")).add(relationshipCourse3.getSaId());
+                    ((List<String>)map1.get("SAName")).add(student.getStudentName());
                 }
             }
             if (map.get("studentId") != null) {
                 RelationshipStudentClassGroup relationshipStudentClassGroup = new RelationshipStudentClassGroup();
-                relationshipStudentClassGroup.setStudentId((int)map.get("studentId"));
+                relationshipStudentClassGroup.setStudentId(Integer.parseInt(map.get("studentId").toString()));
                 List<RelationshipStudentClassGroup> lis2 = relationshipStudentClassGroupService.selectList(relationshipStudentClassGroup);
                 for (RelationshipStudentClassGroup relationshipStudentClassGroup1: lis2){
                     Integer groupId = relationshipStudentClassGroup1.getGroupId();
-                    if (groupService.selectList(groupId).getClassId()==courseId){
+                    if (groupService.selectList(groupId).getClassId().equals(courseId)){
                         Group group = groupService.selectList(groupId);
                         map1.put("groupName", group.getGroupName());
                     }
