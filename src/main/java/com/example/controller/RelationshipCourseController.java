@@ -222,5 +222,13 @@ public class RelationshipCourseController {
 //        return relationshipCourseService.selectList(relationshipCourse).toString();
 //    }
 
+        @PostMapping("/list")
+        public String list(@RequestParam int courseId){
+            return relationshipCourseService.selectStudentList(courseId);
+        }
+
+//        @PostMapping("/list")
+
+
 }
 
