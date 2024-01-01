@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
 import com.example.entity.*;
 import com.example.service.*;
+import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -169,8 +170,11 @@ public class RelationshipCourseController {
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
         List<Map<String, Object> > ret = new ArrayList<>();
+        Map<Integer, Integer> map2 = new HashMap<>();
         for (RelationshipCourse relationshipCourse1:lis){
             Integer courseId = relationshipCourse1.getCourseId();
+            if (map2.get(courseId)==null) continue;
+            map2.put(courseId, 1);
             CourseClass courseClass = new CourseClass();
             courseClass.setCourseId(courseId);
             courseClass = courseClassService.selectList(courseClass).get(0);
