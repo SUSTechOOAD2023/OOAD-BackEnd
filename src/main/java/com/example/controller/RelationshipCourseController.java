@@ -124,8 +124,8 @@ public class RelationshipCourseController {
             if (teacherId==null) continue;
             Teacher teacher = teacherService.selectTeacher(teacherId);
             Map<String, Object> map1 = new HashMap<>();
-            map1.put("studentId", teacherId);
-            map1.put("studentName", teacher.getTeacherName());
+            map1.put("teacherId", teacherId);
+            map1.put("teacherName", teacher.getTeacherName());
             ret.put(teacherId, map1);
         }
         return JSON.toJSONString(ret.values());
