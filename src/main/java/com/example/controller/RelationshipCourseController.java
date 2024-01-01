@@ -97,7 +97,7 @@ public class RelationshipCourseController {
             relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
-        List<Map<String, Object> > ret = new ArrayList<>();
+        Map<Integer, Map<String, Object> > ret = new HashMap<>();
         for (RelationshipCourse relationshipCourse1:lis){
             Integer studentId = relationshipCourse1.getStudentId();
             if (studentId==null) continue;
@@ -105,9 +105,9 @@ public class RelationshipCourseController {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("studentId", studentId);
             map1.put("studentName", student.getStudentName());
-            ret.add(map1);
+            ret.put(studentId, map1);
         }
-        return JSON.toJSONString(ret);
+        return JSON.toJSONString(ret.values());
     }
     @Autowired
     TeacherService teacherService;
@@ -118,7 +118,7 @@ public class RelationshipCourseController {
             relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
-        List<Map<String, Object> > ret = new ArrayList<>();
+        Map<Integer, Map<String, Object> > ret = new HashMap<>();
         for (RelationshipCourse relationshipCourse1:lis){
             Integer teacherId = relationshipCourse1.getTeacherId();
             if (teacherId==null) continue;
@@ -126,9 +126,9 @@ public class RelationshipCourseController {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("studentId", teacherId);
             map1.put("studentName", teacher.getTeacherName());
-            ret.add(map1);
+            ret.put(teacherId, map1);
         }
-        return JSON.toJSONString(ret);
+        return JSON.toJSONString(ret.values());
     }
 
     @PostMapping("/selectSA")
@@ -138,7 +138,7 @@ public class RelationshipCourseController {
             relationshipCourse.setCourseId(Integer.parseInt(map.get("courseId").toString()));
         }
         List<RelationshipCourse> lis = relationshipCourseService.selectList(relationshipCourse);
-        List<Map<String, Object> > ret = new ArrayList<>();
+        Map<Integer, Map<String, Object> > ret = new HashMap<>();
         for (RelationshipCourse relationshipCourse1:lis){
             Integer studentId = relationshipCourse1.getSaId();
             if (studentId==null) continue;
@@ -146,9 +146,9 @@ public class RelationshipCourseController {
             Map<String, Object> map1 = new HashMap<>();
             map1.put("SAId", studentId);
             map1.put("SAName", student.getStudentName());
-            ret.add(map1);
+            ret.put(studentId, map1);
         }
-        return JSON.toJSONString(ret);
+        return JSON.toJSONString(ret.values());
     }
     @Autowired
     CourseClassService courseClassService;
@@ -180,7 +180,8 @@ public class RelationshipCourseController {
             courseClass = courseClassService.selectList(courseClass).get(0);
             Map<String, Object> map1 = new HashMap<>();
             map1.put("courseId", courseId);
-            map1.put("courseName", courseClass.getCourseName());
+            map1.put("courseShortName", courseClass.getCourseName());
+            map1.put("courseName", courseClass.getCourseTitle());
             map1.put("teacherId", new ArrayList<Integer>());
             map1.put("teacherName", new ArrayList<String>());
             map1.put("SAId", new ArrayList<Integer>());
