@@ -29,8 +29,12 @@ public class CourseClassController {
         return JSON.toJSONString(service.selectList(new CourseClass()));
     }
     @PostMapping("/new")
-    public int addCourse(@RequestParam String courseTitle, @RequestParam String courseName){
-        return service.addCourse(courseTitle,courseName);
+    public int addCourse(@RequestParam String name, @RequestParam String shortName){
+        return service.addCourse(name,shortName);
+    }
+    @PostMapping("/newCourse")
+    public boolean addCourse(@RequestBody CourseClass courseClass){
+        return service.saveOrUpdate(courseClass);
     }
     @RequestMapping("/delete")
     public String delete(@RequestParam int classId){
