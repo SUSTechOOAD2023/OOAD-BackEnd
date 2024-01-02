@@ -45,4 +45,6 @@ public class Homework implements Serializable {
     private Integer allowResubmit;
 
     private String homeworkReleaseTime;
+
+    private Double maxScore;
 }

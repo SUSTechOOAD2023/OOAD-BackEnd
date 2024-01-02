@@ -77,7 +77,6 @@ public class RelationshipStudentClassGroupController {
         return JSON.toJSONString(ret.values());
     }
 
-
     @PostMapping("/checkRelation")
     public boolean checkRelation(@RequestParam int studentId,@RequestParam int groupId){
         return service.checkRelation(studentId,groupId);
