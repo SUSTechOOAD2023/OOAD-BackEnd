@@ -29,4 +29,6 @@ public interface StudentService extends IService<Student> {
 
     //根据学生的账号ID，查找学生的ID
     int selectStudentIdByAccountId(int accountId);
+
+    List<Student> selectList(Student student);
 }

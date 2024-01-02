@@ -72,6 +72,22 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
     }
 
 
+    @Override
+    public List<Student> selectList(Student student){
+        QueryWrapper<Student> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(student.getStudentId()!=null,Student::getStudentId,student.getStudentId())
+                .eq(student.getAccountId()!=null,Student::getAccountId,student.getAccountId())
+                .eq(student.getStudentGender()!=null,Student::getStudentGender,student.getStudentGender())
+                .eq(student.getStudentName()!=null,Student::getStudentName,student.getStudentName())
+                .eq(student.getStudentDepartment()!=null,Student::getStudentDepartment,student.getStudentDepartment())
+                .eq(student.getProgrammingSkills()!=null,Student::getProgrammingSkills,student.getProgrammingSkills())
+                .eq(student.getTechnicalStack()!=null,Student::getTechnicalStack,student.getTechnicalStack())
+                .eq(student.getStudentInformation()!=null,Student::getStudentInformation,student.getStudentInformation())
+                ;
+        return mapper.selectList(queryWrapper);
+    }
+
+
 
 
 

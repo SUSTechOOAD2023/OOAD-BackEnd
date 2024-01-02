@@ -78,6 +78,23 @@ public class StudentController {
         }
     }
 
+    @ApiOperation(value = "返回全部学生的信息", tags = "学生类")
+    @GetMapping("/listAllStudent")
+    public List<Student> listAllStudent(){
+        Student student = new Student();
+        student.setIsSa(0);
+        return service1.selectList(student);
+    }
+
+    @ApiOperation(value = "返回全部SA的信息", tags = "学生类")
+    @GetMapping("/listAllSA")
+    public List<Student> listAllSA(){
+        Student student = new Student();
+        student.setIsSa(1);
+        return service1.selectList(student);
+    }
+
+
     @Autowired
     RelationshipStudentNoticeService relationshipStudentNoticeService;
     @PostMapping("/recentEvent")

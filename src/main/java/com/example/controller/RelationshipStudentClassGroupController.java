@@ -78,5 +78,12 @@ public class RelationshipStudentClassGroupController {
     }
 
 
+    @PostMapping("/checkRelation")
+    public boolean checkRelation(@RequestParam int studentId,@RequestParam int groupId){
+        return service.checkRelation(studentId,groupId);
+    }
+
+
+
 }
 
