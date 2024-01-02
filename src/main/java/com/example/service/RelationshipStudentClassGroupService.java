@@ -18,4 +18,7 @@ public interface RelationshipStudentClassGroupService extends IService<Relations
 
     int deleteStudentFromGroup(int studentId, int groupId);
     List<RelationshipStudentClassGroup> selectList(RelationshipStudentClassGroup relationshipStudentClassGroup);
+
+    //给出studentId,groupId，检查关系是否存在
+    boolean checkRelation(int studentId, int groupId);
 }

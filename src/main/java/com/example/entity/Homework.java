@@ -42,7 +42,7 @@ public class Homework implements Serializable {
 
     private String homeworkDdl;
 
-    private int allowResubmit;
+    private Integer allowResubmit;
 
     private Timestamp homeworkReleaseTime;
 }

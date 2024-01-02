@@ -40,6 +40,9 @@ public class RelationshipStudentClassGroupController {
 @ApiOperation(value = "添加学生到群组", notes = "添加学生到群组")
     @PostMapping("/addStudentToGroup")
     public boolean addStudentToGroup(@RequestParam int studentId,  @RequestParam int groupId){
+        if (service.checkRelation(studentId,groupId)){
+            return false;
+        }
         RelationshipStudentClassGroup relationshipStudentClassGroup=new RelationshipStudentClassGroup();
         relationshipStudentClassGroup.setStudentId(studentId);
         relationshipStudentClassGroup.setGroupId(groupId);

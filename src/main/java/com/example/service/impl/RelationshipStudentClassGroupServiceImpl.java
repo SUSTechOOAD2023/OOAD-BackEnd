@@ -1,7 +1,6 @@
 package com.example.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.entity.Notice;
 import com.example.entity.RelationshipStudentClassGroup;
 import com.example.mapper.RelationshipStudentClassGroupMapper;
 import com.example.service.RelationshipStudentClassGroupService;
@@ -39,4 +38,15 @@ public class RelationshipStudentClassGroupServiceImpl extends ServiceImpl<Relati
                 .eq(relationshipStudentClassGroup.getRelationId()!=null,RelationshipStudentClassGroup::getRelationId,relationshipStudentClassGroup.getRelationId());
         return mapper.selectList(queryWrapper);
     }
+
+    @Override
+    //给出studentId,groupId，检查关系是否存在
+    public boolean checkRelation(int studentId, int groupId){
+        QueryWrapper<RelationshipStudentClassGroup> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(RelationshipStudentClassGroup::getStudentId,studentId)
+                .eq(RelationshipStudentClassGroup::getGroupId,groupId);
+        return !mapper.selectList(queryWrapper).isEmpty();
+    }
+
+
 }
