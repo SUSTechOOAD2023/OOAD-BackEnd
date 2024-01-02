@@ -54,6 +54,48 @@ public class SubmissionController {
         }
         return JSON.toJSONString(ret);
     }
+    @PostMapping("/listLatest")
+    public String listLatest(@RequestBody Submission submission) {
+        List<Submission> listSubmission = service.selectList(submission);
+        List<Map<String, Object>> ret = new ArrayList<>();
+        Map<Integer, String> mapSubmissionTime = new HashMap<>();
+        for (Submission submission1: listSubmission){
+            Map<String, Object> map = new HashMap<>();
+            Student student = studentService.selectStudent(submission1.getStudentId());
+            map.put("submissionId", submission1.getSubmissionId());
+            map.put("groupId", submission1.getGroupId());
+            map.put("studentId", submission1.getStudentId());
+            map.put("studentName", student.getStudentName());
+            map.put("homeworkId", submission1.getHomeworkId());
+            map.put("submissionContent", submission1.getSubmissionContent());
+            map.put("submissionComment", submission1.getSubmissionComment());
+            map.put("submissionScore", submission1.getSubmissionScore());
+            map.put("submissionTime", submission1.getSubmissionTime());
+            if (submission1.getStudentId()!=null) {
+                if (mapSubmissionTime.get(submission1.getStudentId()) == null ||
+                        mapSubmissionTime.get(submission1.getStudentId()).compareTo(submission1.getSubmissionTime()) < 0)
+                    mapSubmissionTime.put(submission1.getStudentId(), submission1.getSubmissionTime());
+            }
+            else{
+                if (mapSubmissionTime.get(submission1.getGroupId()) == null ||
+                        mapSubmissionTime.get(submission1.getGroupId()).compareTo(submission1.getSubmissionTime()) < 0)
+                    mapSubmissionTime.put(submission1.getGroupId(), submission1.getSubmissionTime());
+            }
+            ret.add(map);
+        }
+        List<Map<String, Object>> ret1 = new ArrayList<>();
+        for (Map<String, Object> map1:ret){
+            if (map1.get("studentId")!=null) {
+                if (map1.get("submissionTime").toString().equals(mapSubmissionTime.get(Integer.parseInt(map1.get("studentId").toString()))))
+                    ret1.add(map1);
+            }
+            else{
+                if (map1.get("submissionTime").toString().equals(mapSubmissionTime.get(Integer.parseInt(map1.get("groupId").toString()))))
+                    ret1.add(map1);
+            }
+        }
+        return JSON.toJSONString(ret1);
+    }
     @PostMapping("/listScore")
     public String listScore(@RequestParam int homeworkId) {
         Submission submission = new Submission();
