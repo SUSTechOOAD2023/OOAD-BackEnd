@@ -44,5 +44,5 @@ public class Homework implements Serializable {
 
     private Integer allowResubmit;
 
-    private Timestamp homeworkReleaseTime;
+    private String homeworkReleaseTime;
 }

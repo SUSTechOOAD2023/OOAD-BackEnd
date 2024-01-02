@@ -96,6 +96,10 @@ public class SubmissionController {
         }
         return JSON.toJSONString(ret1);
     }
+    @PostMapping("/recentReview")
+    public String recentReview(){
+        
+    }
     @PostMapping("/listScore")
     public String listScore(@RequestParam int homeworkId) {
         Submission submission = new Submission();
