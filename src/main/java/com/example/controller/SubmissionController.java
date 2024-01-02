@@ -41,6 +41,7 @@ public class SubmissionController {
         for (Submission submission1: listSubmission){
             Map<String, Object> map = new HashMap<>();
             Student student = studentService.selectStudent(submission1.getStudentId());
+            map.put("submissionId", submission1.getSubmissionId());
             map.put("groupId", submission1.getGroupId());
             map.put("studentId", submission1.getStudentId());
             map.put("studentName", student.getStudentName());
