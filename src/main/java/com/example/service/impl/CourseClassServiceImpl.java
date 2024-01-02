@@ -3,6 +3,7 @@ package com.example.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.CourseClass;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.entity.Student;
 import com.example.mapper.CourseClassMapper;
 import com.example.service.CourseClassService;
 import org.springframework.beans.factory.annotation.Autowired;

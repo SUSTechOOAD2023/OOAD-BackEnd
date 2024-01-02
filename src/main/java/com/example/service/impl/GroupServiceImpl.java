@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.CourseClass;
 import com.example.entity.Group;
 import com.example.entity.RelationshipStudentClassGroup;
+import com.example.entity.Student;
 import com.example.mapper.CourseClassMapper;
 import com.example.mapper.GroupMapper;
 import com.example.service.GroupService;
@@ -124,6 +125,22 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
                 queryWrapper.lt("group_deadline", LocalDateTime.now());
             }
         }
+        return mapper.selectList(queryWrapper);
+    }
+
+    //返回某个课程中不在群组中的学生
+    //找到课程中的所有学生，然后找到课程中的所有群组中的学生，然后返回不在群组中的学生
+    @Override
+    public List<Student> selectStudentNotInGroup(int groupId) {
+return null;
+
+    }
+
+    //找到某个课程中的所有群组
+    @Override
+    public List<Group> selectGroupInClass(int classId) {
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("class_id", classId);
         return mapper.selectList(queryWrapper);
     }
 

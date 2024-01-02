@@ -428,4 +428,33 @@ public class MinioUtils {
         }
         return name;
     }
+
+
+    /**
+     * List all files under a specific file name in a given bucket.
+     *
+     * @param bucketName The name of the bucket.
+     * @param fileNamePrefix The file name or prefix to filter objects.
+     * @return List of file names matching the prefix in the specified bucket.
+     */
+    public List<String> listFilesWithPrefix(String bucketName, String fileNamePrefix) {
+        List<String> fileNames = new ArrayList<>();
+        try {
+            Iterable<Result<Item>> results = minioClient.listObjects(
+                    ListObjectsArgs.builder()
+                            .bucket(bucketName)
+                            .prefix(fileNamePrefix)
+                            .build());
+
+            for (Result<Item> result : results) {
+                Item item = result.get();
+                fileNames.add(item.objectName());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+        return fileNames;
+    }
 }
+
