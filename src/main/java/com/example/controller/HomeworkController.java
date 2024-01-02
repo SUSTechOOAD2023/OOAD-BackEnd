@@ -7,6 +7,7 @@ import com.example.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,6 +88,7 @@ public class HomeworkController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Homework homework) {
+        homework.setHomeworkReleaseTime(Timestamp.valueOf(LocalDateTime.now()));
         return service.saveOrUpdate(homework);
     }
     @RequestMapping("/delete")

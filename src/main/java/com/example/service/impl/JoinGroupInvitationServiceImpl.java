@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -58,6 +60,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
         joinGroupInvitation.setSendStudentId(sendStudentId);
         joinGroupInvitation.setGroupId(groupId);
         joinGroupInvitation.setIsAccepted(0);
+        joinGroupInvitation.setSendTime(Timestamp.valueOf(LocalDateTime.now()));
 //        joinGroupInvitation.setInvitationContent(invitationContent);
         mapper.insert(joinGroupInvitation);
         return joinGroupInvitation.getJoinGroupInvitationId();
@@ -112,6 +115,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
         }
         JoinGroupInvitation joinGroupInvitation=selectInvitation(joinGroupInvitationId);
         joinGroupInvitation.setIsAccepted(1);
+        joinGroupInvitation.setAcceptTime(Timestamp.valueOf(LocalDateTime.now()));
         mapper.updateById(joinGroupInvitation);
         relationshipStudentClassGroupController.addStudentToGroup(joinGroupInvitation.getReceiveStudentId(),joinGroupInvitation.getGroupId());
         return "接受邀请";

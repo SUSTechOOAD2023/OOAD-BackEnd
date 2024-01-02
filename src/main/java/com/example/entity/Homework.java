@@ -2,6 +2,7 @@ package com.example.entity;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -42,4 +43,6 @@ public class Homework implements Serializable {
     private String homeworkDdl;
 
     private int allowResubmit;
+
+    private Timestamp homeworkReleaseTime;
 }
