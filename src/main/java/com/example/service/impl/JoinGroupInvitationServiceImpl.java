@@ -74,6 +74,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
                 .select(Student::getStudentName)//查询studentName字段
                 .leftJoin(Student.class, Student::getStudentId, JoinGroupInvitation::getReceiveStudentId);
         wrapper.eq("send_student_id",sendStudentId);
+        wrapper.isNotNull("accept_time");
         return mapper.selectList(wrapper);
     }
 

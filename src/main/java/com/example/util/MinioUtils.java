@@ -380,6 +380,7 @@ public class MinioUtils {
 
     public String removeFile(String path, String fileName) {
         String fileRealName = path + "/" + fileName;
+        System.out.println(fileRealName);
         try {
             minioClient.removeObject(
                     RemoveObjectArgs.builder()

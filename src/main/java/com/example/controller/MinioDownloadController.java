@@ -36,7 +36,7 @@ public class MinioDownloadController {
 
 
     @ApiOperation(value = "删除文件")
-    @PostMapping("/delete")
+    @GetMapping("/delete")
     public AjaxJson delete_file(@RequestParam int accountID, @RequestParam String fileName) {
         return AjaxJson.getSuccessData(minioUtilS.removeFile(filePath, String.format("%s", accountID) + "/" + fileName));
     }
