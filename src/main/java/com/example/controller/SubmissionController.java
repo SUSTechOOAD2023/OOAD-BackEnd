@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import static java.lang.Math.*;
 
 /**
@@ -97,8 +95,18 @@ public class SubmissionController {
         return JSON.toJSONString(ret1);
     }
     @PostMapping("/recentReview")
-    public String recentReview(){
-        return null;
+    public String recentReview(@RequestParam int studentId){
+        Submission submission = new Submission();
+        submission.setStudentId(studentId);
+        List<Submission> listSubmission = service.selectList(submission);
+        List<Submission> ret = new ArrayList<>();
+        for (Submission submission1 : listSubmission){
+            if (submission1.getReviewTime()!=null){
+                ret.add(submission1);
+            }
+        }
+        ret.sort(Comparator.comparing(Submission::getReviewTime));
+        return JSON.toJSONString(ret);
     }
     @PostMapping("/listScore")
     public String listScore(@RequestParam int homeworkId) {
