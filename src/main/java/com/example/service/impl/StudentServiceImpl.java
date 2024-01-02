@@ -83,6 +83,7 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
                 .eq(student.getProgrammingSkills()!=null,Student::getProgrammingSkills,student.getProgrammingSkills())
                 .eq(student.getTechnicalStack()!=null,Student::getTechnicalStack,student.getTechnicalStack())
                 .eq(student.getStudentInformation()!=null,Student::getStudentInformation,student.getStudentInformation())
+                .eq(student.getIsSa()!=null,Student::getIsSa,student.getIsSa())
                 ;
         return mapper.selectList(queryWrapper);
     }
