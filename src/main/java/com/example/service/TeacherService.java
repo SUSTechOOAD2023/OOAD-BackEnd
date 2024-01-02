@@ -3,6 +3,8 @@ package com.example.service;
 import com.example.entity.Teacher;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -19,6 +21,9 @@ public interface TeacherService extends IService<Teacher> {
 
         boolean deleteTeacher(Teacher teacher);
 
+
+
+    List<Teacher> selectList(Teacher teacher);
 
     Teacher selectTeacher(int teacherID);
 }

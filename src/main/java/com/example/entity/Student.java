@@ -44,7 +44,7 @@ public class Student implements Serializable {
 
     private String studentInformation;
 
-    private int isSa;
+    private Integer isSa;
 
 
 }

@@ -117,6 +117,9 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
         joinGroupInvitation.setIsAccepted(1);
         joinGroupInvitation.setAcceptTime(Timestamp.valueOf(LocalDateTime.now()));
         mapper.updateById(joinGroupInvitation);
+        if(relationshipStudentClassGroupController.checkRelation(joinGroupInvitation.getReceiveStudentId(),joinGroupInvitation.getGroupId())){
+            return "已经加入该小组";
+        }
         relationshipStudentClassGroupController.addStudentToGroup(joinGroupInvitation.getReceiveStudentId(),joinGroupInvitation.getGroupId());
         return "接受邀请";
     }

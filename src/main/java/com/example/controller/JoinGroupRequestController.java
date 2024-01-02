@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 /**
  * <p>
  *  前端控制器
@@ -34,6 +37,7 @@ public class JoinGroupRequestController {
     @PostMapping("/new")
     public boolean insert(@RequestBody JoinGroupRequest joinGroupRequest){
         System.out.println(joinGroupRequest.toString());
+        joinGroupRequest.setRequestTime(Timestamp.valueOf(LocalDateTime.now()));
         return service.saveOrUpdate(joinGroupRequest);
     }
     @RequestMapping("/delete")

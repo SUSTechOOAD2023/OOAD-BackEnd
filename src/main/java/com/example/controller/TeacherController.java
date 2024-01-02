@@ -71,6 +71,12 @@ public class TeacherController {
         }
     }
 
+    @ApiOperation(value = "返回全部老师的信息", tags = "老师类")
+    @GetMapping("/listAll")
+    public String listAll(){
+        return JSON.toJSONString(service1.selectList(new Teacher()));
+    }
+
 
 }
 

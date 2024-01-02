@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 /**
  * <p>
@@ -35,5 +36,8 @@ public class JoinGroupRequest implements Serializable {
 
     private String requestContent;
 
+    private Timestamp requestTime;
+
+    private int isAccepted;
 
 }
