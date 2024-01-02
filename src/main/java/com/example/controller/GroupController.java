@@ -73,5 +73,16 @@ public class GroupController {
     }
 
 
+    @ApiOperation(value = "返回所有不在群里面的学生", tags = "群组类")
+
+    @PostMapping("/selectStudentNotInGroup")
+    public String selectStudentNotInGroup(@RequestParam Integer groupId) {
+       return JSON.toJSONString(service.selectStudentNotInGroup(groupId));
+    }
+
+
+
+
+
 }
 

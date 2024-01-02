@@ -2,6 +2,7 @@ package com.example.service;
 
 import com.example.entity.Group;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.entity.Student;
 
 import java.util.List;
 
@@ -33,4 +34,11 @@ public interface GroupService extends IService<Group> {
 
 
     List<Group> selectGroupStatus(Integer classId, Integer visible, Integer valid, Integer expired);
+
+    //返回某个课程中不在群组中的学生
+    //找到课程中的所有学生，然后找到课程中的所有群组中的学生，然后返回不在群组中的学生
+    List<Student> selectStudentNotInGroup(int groupId);
+
+    //找到某个课程中的所有群组
+    List<Group> selectGroupInClass(int classId);
 }

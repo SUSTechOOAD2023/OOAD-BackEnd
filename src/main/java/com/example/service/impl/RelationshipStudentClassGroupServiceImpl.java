@@ -48,5 +48,13 @@ public class RelationshipStudentClassGroupServiceImpl extends ServiceImpl<Relati
         return !mapper.selectList(queryWrapper).isEmpty();
     }
 
+    //返回某个群组中的所有学生
+    @Override
+    public List<RelationshipStudentClassGroup> selectStudentList(int groupId){
+        QueryWrapper<RelationshipStudentClassGroup> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(RelationshipStudentClassGroup::getGroupId,groupId);
+        return mapper.selectList(queryWrapper);
+    }
+
 
 }

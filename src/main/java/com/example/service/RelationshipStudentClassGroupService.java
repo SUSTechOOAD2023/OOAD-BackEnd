@@ -21,4 +21,7 @@ public interface RelationshipStudentClassGroupService extends IService<Relations
 
     //给出studentId,groupId，检查关系是否存在
     boolean checkRelation(int studentId, int groupId);
+
+    //返回某个群组中的所有学生
+    List<RelationshipStudentClassGroup> selectStudentList(int groupId);
 }
