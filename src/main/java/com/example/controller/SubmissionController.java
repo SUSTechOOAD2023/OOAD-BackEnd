@@ -98,7 +98,7 @@ public class SubmissionController {
     }
     @PostMapping("/recentReview")
     public String recentReview(){
-        
+        return null;
     }
     @PostMapping("/listScore")
     public String listScore(@RequestParam int homeworkId) {
