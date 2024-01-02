@@ -43,4 +43,6 @@ public class Submission implements Serializable {
     private Double submissionScore;
 
     private String submissionTime;
+
+    private String reviewTime;
 }
