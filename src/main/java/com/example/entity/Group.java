@@ -44,8 +44,6 @@ public class Group implements Serializable {
 
     private String groupTask;
 
-    private Integer groupNumber;
-
     private Integer groupVisible;
 
 
