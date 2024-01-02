@@ -94,6 +94,8 @@ public class SubmissionController {
         }
         return JSON.toJSONString(ret1);
     }
+    @Autowired
+    GroupService groupService;
     @PostMapping("/recentReview")
     public String recentReview(@RequestParam int studentId){
         Submission submission = new Submission();
@@ -103,6 +105,19 @@ public class SubmissionController {
         for (Submission submission1 : listSubmission){
             if (submission1.getReviewTime()!=null){
                 ret.add(submission1);
+            }
+        }
+        RelationshipStudentClassGroup relationshipStudentClassGroup = new RelationshipStudentClassGroup();
+        relationshipStudentClassGroup.setStudentId(studentId);
+        List<RelationshipStudentClassGroup> listRelationshipStudentClassGroup = relationshipStudentClassGroupService.selectList(relationshipStudentClassGroup);
+        for (RelationshipStudentClassGroup relationshipStudentClassGroup1:listRelationshipStudentClassGroup){
+            Integer groupId = relationshipStudentClassGroup1.getGroupId();
+            submission.setGroupId(groupId);
+            listSubmission = service.selectList(submission);
+            for (Submission submission1 : listSubmission){
+                if (submission1.getReviewTime()!=null){
+                    ret.add(submission1);
+                }
             }
         }
         ret.sort(Comparator.comparing(Submission::getReviewTime));

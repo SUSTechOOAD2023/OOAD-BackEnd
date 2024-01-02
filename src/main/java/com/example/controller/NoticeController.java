@@ -3,8 +3,10 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
+import com.example.entity.CourseClass;
 import com.example.entity.Notice;
 import com.example.entity.RelationshipStudentNotice;
+import com.example.service.CourseClassService;
 import com.example.service.NoticeService;
 import com.example.service.RelationshipStudentNoticeService;
 import io.swagger.models.auth.In;
@@ -30,11 +32,28 @@ public class NoticeController {
     NoticeService service;
     @Autowired
     RelationshipStudentNoticeService relationshipService;
+
+    @Autowired
+    CourseClassService courseClassService;
     @PostMapping("/list")
     public String list(@RequestBody Notice notice) {
         List<Notice> lis = service.selectList(notice);
         lis.sort(Comparator.comparing(Notice::getReleaseTime));
-        return JSON.toJSONString(lis);
+        List<Map<String, Object> > ret = new ArrayList<>();
+        for (Notice notice1:lis){
+            Map<String, Object> map = new HashMap<>();
+            CourseClass courseClass = new CourseClass();
+            courseClass.setClassId(notice1.getClassId());
+            courseClass = courseClassService.selectList(courseClass).get(0);
+            map.put("noticeId", notice1.getNoticeId());
+            map.put("classId", notice1.getClassId());
+            map.put("classShortName", courseClass.getCourseName());
+            map.put("noticeTitle", notice1.getNoticeTitle());
+            map.put("noticeContent", notice1.getNoticeContent());
+            map.put("releaseTime", notice1.getReleaseTime());
+            ret.add(map);
+        }
+        return JSON.toJSONString(ret);
     }
     @PostMapping("/Search")
     public String search(@RequestParam int classId) {
