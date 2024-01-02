@@ -159,6 +159,10 @@ public class SubmissionController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Submission submission){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = localDateTime.format(formatter);
+        submission.setSubmissionTime(currentTime);
         return service.saveOrUpdate(submission);
     }
     @RequestMapping("/delete")

@@ -35,12 +35,13 @@ public class HomeworkController {
     RelationshipStudentClassGroupService relationshipStudentClassGroupService;
     @Autowired
     GroupService groupService;
+    @Autowired
+    CourseClassService courseClassService;
     @PostMapping("/listDDL")
     public String listDDL(@RequestParam Integer studentId){
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = localDateTime.format(formatter);
-        System.out.println(currentTime);
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setStudentId(studentId);
         List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
@@ -77,14 +78,30 @@ public class HomeworkController {
                 }
             }
         }
-        return JSON.toJSONString(ret);
+        List<Map<String, Object> > ret1 = new ArrayList<>();
+        for (Homework homework : ret){
+            Map<String, Object> map = new HashMap<>();
+            CourseClass courseClass = new CourseClass();
+            courseClass.setClassId(homework.getClassId());
+            courseClass = courseClassService.selectList(courseClass).get(0);
+            map.put("homeworkId", homework.getHomeworkId());
+            map.put("classId", homework.getClassId());
+            map.put("courseName", courseClass.getCourseName());
+            map.put("homeworkTitle", homework.getHomeworkTitle());
+            map.put("homeworkContent", homework.getHomeworkContent());
+            map.put("homeworkType", homework.getHomeworkType());
+            map.put("homeworkDdl", homework.getHomeworkDdl());
+            map.put("homeworkReleaseTime", homework.getHomeworkReleaseTime());
+            map.put("maxScore", homework.getMaxScore());
+            ret1.add(map);
+        }
+        return JSON.toJSONString(ret1);
     }
     @PostMapping("/listDDL2")
     public String listDDL2(@RequestParam Integer studentId){
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String currentTime = localDateTime.format(formatter);
-        System.out.println(currentTime);
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setStudentId(studentId);
         List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
@@ -121,7 +138,24 @@ public class HomeworkController {
                 }
             }
         }
-        return JSON.toJSONString(ret);
+        List<Map<String, Object> > ret1 = new ArrayList<>();
+        for (Homework homework : ret){
+            Map<String, Object> map = new HashMap<>();
+            CourseClass courseClass = new CourseClass();
+            courseClass.setClassId(homework.getClassId());
+            courseClass = courseClassService.selectList(courseClass).get(0);
+            map.put("homeworkId", homework.getHomeworkId());
+            map.put("classId", homework.getClassId());
+            map.put("courseName", courseClass.getCourseName());
+            map.put("homeworkTitle", homework.getHomeworkTitle());
+            map.put("homeworkContent", homework.getHomeworkContent());
+            map.put("homeworkType", homework.getHomeworkType());
+            map.put("homeworkDdl", homework.getHomeworkDdl());
+            map.put("homeworkReleaseTime", homework.getHomeworkReleaseTime());
+            map.put("maxScore", homework.getMaxScore());
+            ret1.add(map);
+        }
+        return JSON.toJSONString(ret1);
     }
     @PostMapping("/listTeacher")
     public String listTeacher(@RequestParam Integer teacherId){
@@ -141,14 +175,29 @@ public class HomeworkController {
             Homework homework = new Homework();
             homework.setClassId(courseId);
             List<Homework> listHomework = service.selectList(homework);
-            for (Homework homework1 : listHomework){
-//                if (homework1.getHomeworkDdl().compareTo(currentTime)<0){
-//                    ret.add(homework1);
-//                }
-                ret.add(homework1);
-            }
+            //                if (homework1.getHomeworkDdl().compareTo(currentTime)<0){
+            //                    ret.add(homework1);
+            //                }
+            ret.addAll(listHomework);
         }
-        return JSON.toJSONString(ret);
+        List<Map<String, Object> > ret1 = new ArrayList<>();
+        for (Homework homework : ret){
+            Map<String, Object> map = new HashMap<>();
+            CourseClass courseClass = new CourseClass();
+            courseClass.setClassId(homework.getClassId());
+            courseClass = courseClassService.selectList(courseClass).get(0);
+            map.put("homeworkId", homework.getHomeworkId());
+            map.put("classId", homework.getClassId());
+            map.put("courseName", courseClass.getCourseName());
+            map.put("homeworkTitle", homework.getHomeworkTitle());
+            map.put("homeworkContent", homework.getHomeworkContent());
+            map.put("homeworkType", homework.getHomeworkType());
+            map.put("homeworkDdl", homework.getHomeworkDdl());
+            map.put("homeworkReleaseTime", homework.getHomeworkReleaseTime());
+            map.put("maxScore", homework.getMaxScore());
+            ret1.add(map);
+        }
+        return JSON.toJSONString(ret1);
     }
     @RequestMapping("/recentHomework")
     public String recentHomework(@RequestParam Integer studentId){
