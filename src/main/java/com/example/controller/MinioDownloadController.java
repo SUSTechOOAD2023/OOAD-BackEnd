@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -39,7 +36,7 @@ public class MinioDownloadController {
 
 
     @ApiOperation(value = "删除文件")
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public AjaxJson delete_file(@RequestParam int accountID, @RequestParam String fileName) {
         return AjaxJson.getSuccessData(minioUtilS.removeFile(filePath, String.format("%s", accountID) + "/" + fileName));
     }

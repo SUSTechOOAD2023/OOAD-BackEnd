@@ -24,7 +24,7 @@ public class CourseClassController {
     public String list(@RequestBody CourseClass courseClass) {
         return JSON.toJSONString(service.selectList(courseClass));
     }
-    @RequestMapping("/all")
+    @GetMapping("/all")
     public String all() {
         return JSON.toJSONString(service.selectList(new CourseClass()));
     }

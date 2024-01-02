@@ -28,6 +28,7 @@ public interface JoinGroupInvitationService extends IService<JoinGroupInvitation
 
     JoinGroupInvitation selectInvitation(int joinGroupInvitationId);
 
+
     //接受邀请
     String acceptInvitation(int joinGroupInvitationId);
 }

@@ -3,6 +3,7 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.interfaces.Join;
 import com.example.entity.*;
 import com.example.service.*;
 import io.swagger.annotations.ApiOperation;
@@ -103,6 +104,8 @@ public class StudentController {
     GroupService groupService;
     @Autowired
     SubmissionService submissionService;
+    @Autowired
+    JoinGroupInvitationService joinGroupInvitationService;
     @PostMapping("/recentEvent")
     public String recentEvent(@RequestParam int studentId){
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -172,6 +175,23 @@ public class StudentController {
             }
         }
         // Invitation receive
+        List<JoinGroupInvitation> joinGroupInvitationList=joinGroupInvitationService.searchReceive(studentId);
+        for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
+            Map<String, Object> map = new HashMap<>();
+            map.put("time", joinGroupInvitation.getSendTime());
+            map.put("content", joinGroupInvitation);
+            ret.add(map);
+        }
+
+         joinGroupInvitationList=joinGroupInvitationService.searchSend(studentId);
+
+        for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
+            Map<String, Object> map = new HashMap<>();
+            map.put("time", joinGroupInvitation.getAcceptTime());
+            map.put("content", joinGroupInvitation);
+            ret.add(map);
+        }
+
         // Invitation accepted
         ret.sort(Comparator.comparing(o -> (o.get("time").toString())));
         return JSON.toJSONString(ret);
