@@ -33,17 +33,17 @@ public class MinioUploadController {
 
     @ApiOperation(value = "上传文件", notes = "仅测试使用", tags = "测试类")
     @PostMapping("/file")
-    public AjaxJson upload_file(@RequestBody MultipartFile file) {
+    public AjaxJson upload_file(@RequestBody MultipartFile file,@RequestParam String fileName) {
 //        minioUtilS.upload_file(file, filePath, String.format("%s", accountID));
-        minioUtilS.upload_file(file, filePath, "");
+        minioUtilS.upload_file(file, filePath, fileName);
         return AjaxJson.getSuccess();
     }
 
     @ApiOperation(value = "上传多文件", notes = "仅测试使用", tags = "测试类")
     @PostMapping("/files")
-    public AjaxJson upload_files(@RequestBody MultipartFile[] files) {
+    public AjaxJson upload_files(@RequestBody MultipartFile[] files,@RequestParam String fileName) {
 //        minioUtilS.upload_files(files, filePath+"/"+String.format("%s", accountID));
-        minioUtilS.upload_files(files, filePath);
+        minioUtilS.upload_files(files, filePath+"/"+fileName);
         return AjaxJson.getSuccess();
     }
 
