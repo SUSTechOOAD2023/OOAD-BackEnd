@@ -152,10 +152,6 @@ public class HomeworkController {
     }
     @RequestMapping("/recentHomework")
     public String recentHomework(@RequestParam Integer studentId){
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        String currentTime = localDateTime.format(formatter);
-        System.out.println(currentTime);
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setStudentId(studentId);
         List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
@@ -168,11 +164,7 @@ public class HomeworkController {
             Homework homework = new Homework();
             homework.setClassId(courseId);
             List<Homework> listHomework = service.selectList(homework);
-            for (Homework homework1 : listHomework){
-                if (homework1.getHomeworkDdl().compareTo(currentTime)>0){
-                    ret.add(homework1);
-                }
-            }
+            ret.addAll(listHomework);
         }
         RelationshipStudentClassGroup relationshipStudentClassGroup = new RelationshipStudentClassGroup();
         relationshipStudentClassGroup.setStudentId(studentId);

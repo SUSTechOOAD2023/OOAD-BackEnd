@@ -3,19 +3,13 @@ package com.example.controller;
 
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.example.entity.Account;
-import com.example.entity.RelationshipStudentNotice;
-import com.example.entity.Student;
-import com.example.service.AccountService;
-import com.example.service.RelationshipStudentNoticeService;
-import com.example.service.StudentService;
+import com.example.entity.*;
+import com.example.service.*;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -80,13 +74,90 @@ public class StudentController {
 
     @Autowired
     RelationshipStudentNoticeService relationshipStudentNoticeService;
+    @Autowired
+    NoticeService noticeService;
+    @Autowired
+    RelationshipCourseService relationshipCourseService;
+    @Autowired
+    HomeworkService homeworkService;
+    @Autowired
+    RelationshipStudentClassGroupService relationshipStudentClassGroupService;
+    @Autowired
+    GroupService groupService;
+    @Autowired
+    SubmissionService submissionService;
     @PostMapping("/recentEvent")
     public String recentEvent(@RequestParam int studentId){
+        List<Map<String, Object> > ret = new ArrayList<>();
+        // Notice
         RelationshipStudentNotice relationshipStudentNotice = new RelationshipStudentNotice();
         relationshipStudentNotice.setStudentId(studentId);
-        List<Object> ret = new ArrayList<>(relationshipStudentNoticeService.selectList(relationshipStudentNotice));
-
-        return null;
+        List<RelationshipStudentNotice> listRelationshipStudentNotice = relationshipStudentNoticeService.selectList(relationshipStudentNotice);
+        for (RelationshipStudentNotice relationshipStudentNotice1:listRelationshipStudentNotice){
+            Notice notice = new Notice();
+            notice.setNoticeId(relationshipStudentNotice1.getNoticeId());
+            List<Notice> listNotice = noticeService.selectList(notice);
+            for (Notice notice1: listNotice) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("time", notice1.getReleaseTime());
+                map.put("content", notice1);
+                ret.add(map);
+            }
+        }
+        // Homework
+        RelationshipCourse relationshipCourse = new RelationshipCourse();
+        relationshipCourse.setStudentId(studentId);
+        List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
+        Map<Integer, Integer> map2 = new HashMap<>();
+        for (RelationshipCourse relationshipCourse1:listRelationshipCourse){
+            Integer courseId = relationshipCourse1.getCourseId();
+            if (map2.get(courseId)!=null) continue;
+            map2.put(courseId, 1);
+            Homework homework = new Homework();
+            homework.setClassId(courseId);
+            List<Homework> listHomework = homeworkService.selectList(homework);
+            for (Homework homework1 : listHomework){
+                Map<String, Object> map = new HashMap<>();
+                map.put("time", homework1.getHomeworkReleaseTime());
+                map.put("content", homework1);
+                ret.add(map);
+            }
+        }
+        RelationshipStudentClassGroup relationshipStudentClassGroup = new RelationshipStudentClassGroup();
+        relationshipStudentClassGroup.setStudentId(studentId);
+        List<RelationshipStudentClassGroup> listRelationshipStudentClassGroup = relationshipStudentClassGroupService.selectList(relationshipStudentClassGroup);
+        for (RelationshipStudentClassGroup relationshipStudentClassGroup1:listRelationshipStudentClassGroup){
+            Integer groupId = relationshipStudentClassGroup1.getGroupId();
+            Group group = groupService.selectList(groupId);
+            Integer classId = group.getClassId();
+            if (map2.get(classId)!=null) continue;
+            map2.put(classId, 1);
+            Homework homework = new Homework();
+            homework.setClassId(classId);
+            List<Homework> listHomework = homeworkService.selectList(homework);
+            for (Homework homework1 : listHomework){
+                Map<String, Object> map = new HashMap<>();
+                map.put("time", homework1.getHomeworkReleaseTime());
+                map.put("content", homework1);
+                ret.add(map);
+            }
+        }
+        // Review
+        Submission submission = new Submission();
+        submission.setStudentId(studentId);
+        List<Submission> listSubmission = submissionService.selectList(submission);
+        for (Submission submission1 : listSubmission){
+            if (submission1.getReviewTime()!=null){
+                Map<String, Object> map = new HashMap<>();
+                map.put("time", submission1.getReviewTime());
+                map.put("content", submission1);
+                ret.add(map);
+            }
+        }
+        // Invitation receive
+        // Invitation accepted
+        ret.sort(Comparator.comparing(o -> (o.get("time").toString())));
+        return JSON.toJSONString(ret);
     }
 
 
