@@ -221,7 +221,13 @@ public class SubmissionController {
                 gradeBook.setClassId(result.get(0).getClassId());
                 gradeBook.setStudentId(studentId);
                 List<GradeBook> result2 = gradeBookService.selectList(gradeBook);
-                gradeBook = result2.get(0);
+                if (result2.isEmpty()) {
+                    gradeBook.setGradebookContent("{}");
+                    System.out.println("fuck"+gradeBook);
+                    gradeBookService.saveOrUpdate(gradeBook);
+                }
+                else
+                    gradeBook = result2.get(0);
                 Map<String, Double> mapGradebook = JSON.parseObject(gradeBook.getGradebookContent(), new TypeReference<Map<String, Double>>() {
                 });
                 mapGradebook.put(homework.getHomeworkTitle(), submission.getSubmissionScore());
