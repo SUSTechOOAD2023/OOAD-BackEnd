@@ -11,6 +11,8 @@ import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -64,10 +66,14 @@ public class NoticeController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Map<String, Object> map){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = localDateTime.format(formatter);
         Notice notice = new Notice();
         notice.setClassId((int)map.get("classId"));
         notice.setNoticeTitle(map.get("noticeTitle").toString());
         notice.setNoticeContent(map.get("noticeContent").toString());
+        notice.setReleaseTime(currentTime);
         boolean ret = service.saveOrUpdate(notice);
         List<Integer> listStudentId= JSONArray.parseArray(map.get("listStudentId").toString(), Integer.class);
         int noticeId = notice.getNoticeId();
@@ -99,5 +105,7 @@ public class NoticeController {
         notice.setNoticeId(noticeId);
         return service.delete(notice);
     }
+
+
 }
 
