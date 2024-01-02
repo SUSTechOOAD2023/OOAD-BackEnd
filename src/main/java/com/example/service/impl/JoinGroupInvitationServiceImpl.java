@@ -73,7 +73,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
                 .selectAll(JoinGroupInvitation.class)//查询invitation表全部字段
                 .select(Student::getStudentName)//查询studentName字段
                 .leftJoin(Student.class, Student::getStudentId, JoinGroupInvitation::getReceiveStudentId);
-        wrapper.eq("sendStudentId",sendStudentId);
+        wrapper.eq("send_student_id",sendStudentId);
         return mapper.selectList(wrapper);
     }
 
@@ -84,7 +84,7 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
                 .selectAll(JoinGroupInvitation.class)//查询invitation表全部字段
                 .select(Student::getStudentName)//查询studentName字段
                 .leftJoin(Student.class, Student::getStudentId, JoinGroupInvitation::getSendStudentId);
-        wrapper.eq("receiveStudentId",receiveStudentId);
+        wrapper.eq("receive_student_id",receiveStudentId);
         return mapper.selectList(wrapper);
     }
 

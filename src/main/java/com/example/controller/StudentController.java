@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -174,11 +176,13 @@ public class StudentController {
                 ret.add(map);
             }
         }
+
         // Invitation receive
         List<JoinGroupInvitation> joinGroupInvitationList=joinGroupInvitationService.searchReceive(studentId);
         for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
             Map<String, Object> map = new HashMap<>();
-            map.put("time", joinGroupInvitation.getSendTime());
+            String sendTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getSendTime());
+            map.put("time", sendTime);
             map.put("content", joinGroupInvitation);
             ret.add(map);
         }
@@ -187,7 +191,9 @@ public class StudentController {
 
         for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
             Map<String, Object> map = new HashMap<>();
-            map.put("time", joinGroupInvitation.getAcceptTime());
+            System.out.println(joinGroupInvitation.getAcceptTime().toString());
+            String acceptTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getAcceptTime());
+            map.put("time", acceptTime);
             map.put("content", joinGroupInvitation);
             ret.add(map);
         }
