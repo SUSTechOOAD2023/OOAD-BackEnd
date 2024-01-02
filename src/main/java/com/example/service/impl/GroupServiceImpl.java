@@ -1,10 +1,8 @@
 package com.example.service.impl;
 
+import com.alibaba.fastjson2.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.example.entity.CourseClass;
-import com.example.entity.Group;
-import com.example.entity.RelationshipStudentClassGroup;
-import com.example.entity.Student;
+import com.example.entity.*;
 import com.example.mapper.CourseClassMapper;
 import com.example.mapper.GroupMapper;
 import com.example.service.GroupService;
@@ -14,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -128,12 +127,32 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         return mapper.selectList(queryWrapper);
     }
 
+    @Autowired
+    RelationshipCourseServiceImpl relationshipCourseService;
     //返回某个课程中不在群组中的学生
     //找到课程中的所有学生，然后找到课程中的所有群组中的学生，然后返回不在群组中的学生
     @Override
     public List<Student> selectStudentNotInGroup(int groupId) {
-return null;
-
+        Group group=selectList(groupId);
+        int classId=group.getClassId();
+        String s=relationshipCourseService.selectStudentList(classId);
+        List<Student> studentList= JSON.parseArray(s,Student.class);
+        List<Student> studentInGroup=new ArrayList<>();
+        List<Group> groupList=selectGroupInClass(classId);
+        //遍历该课程下的所有组群，找到所有在群组下的学生
+        for(Group group1:groupList){
+            String s1=relationshipCourseService.selectStudentList(group1.getGroupId());
+            List<Student> studentList1= JSON.parseArray(s1,Student.class);
+            studentInGroup.addAll(studentList1);
+        }
+        //遍历所有学生，找到不在群组中的学生
+        List<Student> studentNotInGroup=new ArrayList<>();
+        for(Student student:studentList){
+            if(!studentInGroup.contains(student)){
+                studentNotInGroup.add(student);
+            }
+        }
+        return studentNotInGroup;
     }
 
     //找到某个课程中的所有群组
