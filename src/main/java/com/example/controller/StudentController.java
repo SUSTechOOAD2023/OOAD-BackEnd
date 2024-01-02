@@ -121,8 +121,9 @@ public class StudentController {
             List<Notice> listNotice = noticeService.selectList(notice);
             for (Notice notice1: listNotice) {
                 Map<String, Object> map = new HashMap<>();
-                map.put("time", notice1.getReleaseTime());
-                map.put("content", notice1);
+                map.put("eventTime", notice1.getReleaseTime());
+                map.put("eventType", "Course notice released");
+                map.put("eventContent", notice1);
                 ret.add(map);
             }
         }
@@ -140,8 +141,9 @@ public class StudentController {
             List<Homework> listHomework = homeworkService.selectList(homework);
             for (Homework homework1 : listHomework){
                 Map<String, Object> map = new HashMap<>();
-                map.put("time", homework1.getHomeworkReleaseTime());
-                map.put("content", homework1);
+                map.put("eventTime", homework1.getHomeworkReleaseTime());
+                map.put("eventType", "Individual homework released");
+                map.put("eventContent", homework1);
                 ret.add(map);
             }
         }
@@ -159,8 +161,9 @@ public class StudentController {
             List<Homework> listHomework = homeworkService.selectList(homework);
             for (Homework homework1 : listHomework){
                 Map<String, Object> map = new HashMap<>();
-                map.put("time", homework1.getHomeworkReleaseTime());
-                map.put("content", homework1);
+                map.put("eventTime", homework1.getHomeworkReleaseTime());
+                map.put("eventType", "Group homework released");
+                map.put("eventContent", homework1);
                 ret.add(map);
             }
         }
@@ -171,35 +174,54 @@ public class StudentController {
         for (Submission submission1 : listSubmission){
             if (submission1.getReviewTime()!=null){
                 Map<String, Object> map = new HashMap<>();
-                map.put("time", submission1.getReviewTime());
-                map.put("content", submission1);
+                map.put("eventTime", submission1.getReviewTime());
+                map.put("eventType", "Individual homework reviewed");
+                map.put("eventContent", submission1);
                 ret.add(map);
             }
         }
-
+        relationshipStudentClassGroup = new RelationshipStudentClassGroup();
+        relationshipStudentClassGroup.setStudentId(studentId);
+        listRelationshipStudentClassGroup = relationshipStudentClassGroupService.selectList(relationshipStudentClassGroup);
+        for (RelationshipStudentClassGroup relationshipStudentClassGroup1:listRelationshipStudentClassGroup){
+            Integer groupId = relationshipStudentClassGroup1.getGroupId();
+            submission.setGroupId(groupId);
+            listSubmission = submissionService.selectList(submission);
+            for (Submission submission1 : listSubmission){
+                if (submission1.getReviewTime()!=null){
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("eventTime", submission1.getReviewTime());
+                    map.put("eventType", "Group homework reviewed");
+                    map.put("eventContent", submission1);
+                    ret.add(map);
+                }
+            }
+        }
         // Invitation receive
         List<JoinGroupInvitation> joinGroupInvitationList=joinGroupInvitationService.searchReceive(studentId);
         for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
             Map<String, Object> map = new HashMap<>();
             String sendTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getSendTime());
-            map.put("time", sendTime);
-            map.put("content", joinGroupInvitation);
+            map.put("eventTime", sendTime);
+            map.put("eventType", "Received invitation");
+            map.put("eventContent", joinGroupInvitation);
             ret.add(map);
         }
 
-         joinGroupInvitationList=joinGroupInvitationService.searchSend(studentId);
+        joinGroupInvitationList=joinGroupInvitationService.searchSend(studentId);
 
         for (JoinGroupInvitation joinGroupInvitation:joinGroupInvitationList){
             Map<String, Object> map = new HashMap<>();
             System.out.println(joinGroupInvitation.getAcceptTime().toString());
             String acceptTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getAcceptTime());
-            map.put("time", acceptTime);
-            map.put("content", joinGroupInvitation);
+            map.put("eventTime", acceptTime);
+            map.put("eventType", "Invitation accepted");
+            map.put("eventContent", joinGroupInvitation);
             ret.add(map);
         }
 
         // Invitation accepted
-        ret.sort(Comparator.comparing(o -> (o.get("time").toString())));
+        ret.sort(Comparator.comparing(o -> (o.get("eventTime").toString())));
         return JSON.toJSONString(ret);
     }
 
