@@ -26,6 +26,14 @@ public class RelationshipStudentNoticeServiceImpl extends ServiceImpl<Relationsh
     @Autowired
     RelationshipStudentNoticeMapper mapper;
     @Override
+    public List<RelationshipStudentNotice> selectList(RelationshipStudentNotice relationshipStudentNotice){
+        QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(relationshipStudentNotice.getRelationId()!=null,RelationshipStudentNotice::getRelationId,relationshipStudentNotice.getRelationId())
+                .eq(relationshipStudentNotice.getNoticeId()!=null,RelationshipStudentNotice::getNoticeId,relationshipStudentNotice.getNoticeId())
+                .eq(relationshipStudentNotice.getStudentId()!=null,RelationshipStudentNotice::getStudentId,relationshipStudentNotice.getStudentId());
+        return mapper.selectList(queryWrapper);
+    }
+    @Override
     public List<Integer> listStudentId(int studentId) {
         QueryWrapper<RelationshipStudentNotice> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("student_id",studentId);

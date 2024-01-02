@@ -4,12 +4,18 @@ package com.example.controller;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.entity.Account;
+import com.example.entity.RelationshipStudentNotice;
 import com.example.entity.Student;
 import com.example.service.AccountService;
+import com.example.service.RelationshipStudentNoticeService;
 import com.example.service.StudentService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -72,6 +78,16 @@ public class StudentController {
         }
     }
 
+    @Autowired
+    RelationshipStudentNoticeService relationshipStudentNoticeService;
+    @PostMapping("/recentEvent")
+    public String recentEvent(@RequestParam int studentId){
+        RelationshipStudentNotice relationshipStudentNotice = new RelationshipStudentNotice();
+        relationshipStudentNotice.setStudentId(studentId);
+        List<Object> ret = new ArrayList<>(relationshipStudentNoticeService.selectList(relationshipStudentNotice));
+
+        return null;
+    }
 
 
 }

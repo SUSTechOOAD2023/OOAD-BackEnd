@@ -102,5 +102,14 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
         wrapper.isNotNull(RelationshipCourse::getSaId);
         return JSON.toJSONString(mapper.selectList(wrapper));
     }
-
+    @Override
+    public int delete(RelationshipCourse relationshipCourse){
+        QueryWrapper<RelationshipCourse> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(relationshipCourse.getRelationshipId()!=null,RelationshipCourse::getRelationshipId,relationshipCourse.getRelationshipId())
+                .eq(relationshipCourse.getCourseId()!=null,RelationshipCourse::getCourseId,relationshipCourse.getCourseId())
+                .eq(relationshipCourse.getStudentId()!=null,RelationshipCourse::getStudentId,relationshipCourse.getStudentId())
+                .eq(relationshipCourse.getTeacherId()!=null,RelationshipCourse::getTeacherId,relationshipCourse.getTeacherId())
+                .eq(relationshipCourse.getSaId()!=null,RelationshipCourse::getSaId,relationshipCourse.getSaId());
+        return mapper.delete(queryWrapper);
+    }
 }

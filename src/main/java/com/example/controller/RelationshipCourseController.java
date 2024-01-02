@@ -56,11 +56,14 @@ public class RelationshipCourseController {
     public boolean insertStudentList(@RequestBody Map<String, Object> map){
         List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
         int courseId = Integer.parseInt(map.get("courseId").toString());
+        RelationshipCourse relationshipCourse = new RelationshipCourse();
+        relationshipCourse.setCourseId(courseId);
+        relationshipCourseService.delete(relationshipCourse);
         for (String studentId: listId){
-            RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setStudentId(Integer.parseInt(studentId));
-            relationshipCourse.setCourseId(courseId);
-            relationshipCourseService.saveOrUpdate(relationshipCourse);
+            RelationshipCourse relationshipCourse1 = new RelationshipCourse();
+            relationshipCourse1.setStudentId(Integer.parseInt(studentId));
+            relationshipCourse1.setCourseId(courseId);
+            relationshipCourseService.saveOrUpdate(relationshipCourse1);
         }
         return true;
     }
@@ -68,11 +71,14 @@ public class RelationshipCourseController {
     public boolean insertTeacherList(@RequestBody Map<String, Object> map){
         List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
         int courseId = Integer.parseInt(map.get("courseId").toString());
+        RelationshipCourse relationshipCourse = new RelationshipCourse();
+        relationshipCourse.setCourseId(courseId);
+        relationshipCourseService.delete(relationshipCourse);
         for (String teacherId: listId){
-            RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setTeacherId(Integer.parseInt(teacherId));
-            relationshipCourse.setCourseId(courseId);
-            relationshipCourseService.saveOrUpdate(relationshipCourse);
+            RelationshipCourse relationshipCourse1 = new RelationshipCourse();
+            relationshipCourse1.setTeacherId(Integer.parseInt(teacherId));
+            relationshipCourse1.setCourseId(courseId);
+            relationshipCourseService.saveOrUpdate(relationshipCourse1);
         }
         return true;
     }
@@ -80,11 +86,14 @@ public class RelationshipCourseController {
     public boolean insertSAList(@RequestBody Map<String, Object> map){
         List<String> listId = JSONArray.parseArray(map.get("id").toString(), String.class);
         int courseId = Integer.parseInt(map.get("courseId").toString());
+        RelationshipCourse relationshipCourse = new RelationshipCourse();
+        relationshipCourse.setCourseId(courseId);
+        relationshipCourseService.delete(relationshipCourse);
         for (String saId: listId){
-            RelationshipCourse relationshipCourse = new RelationshipCourse();
-            relationshipCourse.setSaId(Integer.parseInt(saId));
-            relationshipCourse.setCourseId(courseId);
-            relationshipCourseService.saveOrUpdate(relationshipCourse);
+            RelationshipCourse relationshipCourse1 = new RelationshipCourse();
+            relationshipCourse1.setSaId(Integer.parseInt(saId));
+            relationshipCourse1.setCourseId(courseId);
+            relationshipCourseService.saveOrUpdate(relationshipCourse1);
         }
         return true;
     }

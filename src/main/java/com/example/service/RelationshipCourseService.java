@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.entity.RelationshipCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -29,4 +30,6 @@ public interface RelationshipCourseService extends IService<RelationshipCourse> 
     String selectTeacherList(int courseId);
 
     String selectSaList(int courseId);
+
+    int delete(RelationshipCourse relationshipCourse);
 }

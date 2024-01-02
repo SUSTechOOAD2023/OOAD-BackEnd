@@ -14,10 +14,10 @@ import java.util.List;
  * @since 2023-12-28
  */
 public interface RelationshipStudentNoticeService extends IService<RelationshipStudentNotice> {
-
-    public List<Integer> listStudentId(int studentId);
-    public List<Integer> listNoticeId(int noticeId);
-    public boolean insert(int studentId, int noticeId);
+    List<RelationshipStudentNotice> selectList(RelationshipStudentNotice relationshipStudentNotice);
+    List<Integer> listStudentId(int studentId);
+    List<Integer> listNoticeId(int noticeId);
+    boolean insert(int studentId, int noticeId);
     int delete(int studentId, int noticeId);
     int deleteStudent(int studentId);
     int deleteNotice(int noticeId);
