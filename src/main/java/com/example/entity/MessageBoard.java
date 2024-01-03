@@ -32,7 +32,7 @@ public class MessageBoard implements Serializable {
 
     private String message;
 
-    private Timestamp messageTime;
+    private String messageTime;
 
 
 }
