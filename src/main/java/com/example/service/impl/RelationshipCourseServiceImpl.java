@@ -25,6 +25,8 @@ import java.util.List;
 public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCourseMapper, RelationshipCourse> implements RelationshipCourseService {
     @Autowired
     RelationshipCourseMapper mapper;
+    @Autowired
+    CourseClassServiceImpl courseClassService;
 
 //    @Override
 //    public int addRelationshipCourse(RelationshipCourse relationshipCours){
@@ -52,6 +54,7 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
                 .eq(relationshipCourse.getSaId()!=null,RelationshipCourse::getSaId,relationshipCourse.getSaId());
         return mapper.selectList(queryWrapper);
     }
+
     @Override
     public RelationshipCourse selectRelationshipCourse(int relationshipID){
         return mapper.selectById(relationshipID);
@@ -59,7 +62,13 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
     @Override
     public String selectStudentList(int courseId){
         //如果没有这门课程，返回null
-        if (mapper.selectById(courseId)==null){
+        if (!courseClassService.isCourseExist(courseId)){
+            return null;
+        }
+        //如果没有学生选这门课，返回null
+        QueryWrapper<RelationshipCourse> queryWrapper=new QueryWrapper<>();
+        queryWrapper.lambda().eq(RelationshipCourse::getCourseId,courseId);
+        if (mapper.selectCount(queryWrapper)==0){
             return null;
         }
         MPJLambdaWrapper<RelationshipCourse> wrapper = new MPJLambdaWrapper<RelationshipCourse>()
@@ -68,7 +77,7 @@ public class RelationshipCourseServiceImpl extends ServiceImpl<RelationshipCours
                 .leftJoin(Student.class, Student::getStudentId, RelationshipCourse::getStudentId);
         wrapper.eq(RelationshipCourse::getCourseId, courseId);
         wrapper.isNotNull(RelationshipCourse::getStudentId);
-        System.out.println("result: "+mapper.selectList(wrapper).toString());
+//        System.out.println("result: "+mapper.selectList(wrapper).toString());
         return JSON.toJSONString(mapper.selectList(wrapper));
     }
 

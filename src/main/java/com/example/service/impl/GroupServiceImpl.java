@@ -129,21 +129,34 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
 
     @Autowired
     RelationshipCourseServiceImpl relationshipCourseService;
+    @Autowired
+    RelationshipStudentClassGroupServiceImpl relationshipStudentClassGroupService;
+    @Autowired
+    StudentServiceImpl studentService;
     //返回某个课程中不在群组中的学生
     //找到课程中的所有学生，然后找到课程中的所有群组中的学生，然后返回不在群组中的学生
     @Override
     public List<Student> selectStudentNotInGroup(int groupId) {
         Group group=selectList(groupId);
         int classId=group.getClassId();
+        //把某个班的所有学生筛选出来
+        if(relationshipCourseService.selectStudentList(classId)==null){
+            return null;
+        }
         String s=relationshipCourseService.selectStudentList(classId);
         List<Student> studentList= JSON.parseArray(s,Student.class);
         List<Student> studentInGroup=new ArrayList<>();
         List<Group> groupList=selectGroupInClass(classId);
         //遍历该课程下的所有组群，找到所有在群组下的学生
         for(Group group1:groupList){
-            String s1=relationshipCourseService.selectStudentList(group1.getGroupId());
-            List<Student> studentList1= JSON.parseArray(s1,Student.class);
-            studentInGroup.addAll(studentList1);
+            List<RelationshipStudentClassGroup> relationshipStudentClassGroups= relationshipStudentClassGroupService.selectStudentList(group1.getGroupId());
+            //遍历该关系，把学生提取出来
+            for (RelationshipStudentClassGroup relationshipStudentClassGroup:relationshipStudentClassGroups){
+                Integer studentId=relationshipStudentClassGroup.getStudentId();
+                Student student=new Student();
+                student.setStudentId(studentId);
+                studentInGroup.add(student);
+            }
         }
         //遍历所有学生，找到不在群组中的学生
         List<Student> studentNotInGroup=new ArrayList<>();
@@ -152,7 +165,11 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
                 studentNotInGroup.add(student);
             }
         }
-        return studentNotInGroup;
+        List<Integer> studentIdList=new ArrayList<>();
+        for(Student student:studentNotInGroup){
+            studentIdList.add(student.getStudentId());
+        }
+        return studentService.selectStudentList(studentIdList);
     }
 
     //找到某个课程中的所有群组

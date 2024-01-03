@@ -71,6 +71,14 @@ public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> impl
         }
     }
 
+    //给出学生的IDlist，批量返回学生的信息
+    @Override
+    public List<Student> selectStudentList(List<Integer> studentIdList){
+        QueryWrapper<Student> queryWrapper=new QueryWrapper<>();
+        queryWrapper.in("student_id",studentIdList);
+        return mapper.selectList(queryWrapper);
+    }
+
 
     @Override
     public List<Student> selectList(Student student){
