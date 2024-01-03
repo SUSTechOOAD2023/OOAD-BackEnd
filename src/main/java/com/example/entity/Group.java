@@ -50,5 +50,7 @@ public class Group implements Serializable {
 
     private Timestamp presentationTime;
 
+    private String instructor;
+
 
 }
