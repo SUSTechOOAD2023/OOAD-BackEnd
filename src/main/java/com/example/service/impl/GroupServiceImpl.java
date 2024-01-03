@@ -122,9 +122,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         queryWrapper.eq("class_id", classId);
         if (visible != null) {
             if (visible == 1) {
-                queryWrapper.eq("group_visible", visible);
+                queryWrapper.eq("group_visible", 1);
             } else {
-                queryWrapper.ne("group_visible", visible);
+                queryWrapper.eq("group_visible", 0);
             }
         }
         if (valid != null) {
