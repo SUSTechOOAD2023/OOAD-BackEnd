@@ -56,6 +56,11 @@ public class JoinGroupInvitationController {
         return service.acceptInvitation(joinGroupInvitationId);
     }
 
+    @PostMapping("/reject")
+    public String reject(@RequestParam int joinGroupInvitationId){
+        return service.rejectInvitation(joinGroupInvitationId);
+    }
+
 
     //返回某个学生的所有加群邀请，并将收到邀请的时间和接受邀请时间的先后顺序排序
 
