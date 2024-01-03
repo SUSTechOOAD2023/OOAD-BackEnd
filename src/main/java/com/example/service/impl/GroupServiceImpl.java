@@ -186,6 +186,9 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         for(Student student:studentNotInGroup){
             studentIdList.add(student.getStudentId());
         }
+        if(studentIdList.isEmpty()){
+            return null;
+        }
         return studentService.selectStudentList(studentIdList);
     }
 
