@@ -172,7 +172,7 @@ public class RelationshipCourseController {
             relationshipCourse.setStudentId(Integer.parseInt(map.get("studentId").toString()));
         }
         if (map.get("teacherId") != null) {
-            relationshipCourse.setTeacherId(Integer.parseInt(map.get("teacehrId").toString()));
+            relationshipCourse.setTeacherId(Integer.parseInt(map.get("teacherId").toString()));
         }
         if (map.get("SAId") != null) {
             relationshipCourse.setSaId(Integer.parseInt(map.get("SAId").toString()));
