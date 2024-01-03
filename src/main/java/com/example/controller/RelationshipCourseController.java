@@ -58,7 +58,11 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        //relationshipCourseService.delete(relationshipCourse);
+        List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
+        for (RelationshipCourse relationshipCourse1:listRelationshipCourse){
+            if (relationshipCourse1.getStudentId()!=null)
+                relationshipCourseService.delete(relationshipCourse1);
+        }
         for (String studentId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setStudentId(Integer.parseInt(studentId));
@@ -73,7 +77,11 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        //relationshipCourseService.delete(relationshipCourse);
+        List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
+        for (RelationshipCourse relationshipCourse1:listRelationshipCourse){
+            if (relationshipCourse1.getTeacherId()!=null)
+                relationshipCourseService.delete(relationshipCourse1);
+        }
         for (String teacherId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setTeacherId(Integer.parseInt(teacherId));
@@ -88,7 +96,11 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        //relationshipCourseService.delete(relationshipCourse);
+        List<RelationshipCourse> listRelationshipCourse = relationshipCourseService.selectList(relationshipCourse);
+        for (RelationshipCourse relationshipCourse1:listRelationshipCourse){
+            if (relationshipCourse1.getSaId()!=null)
+                relationshipCourseService.delete(relationshipCourse1);
+        }
         for (String saId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setSaId(Integer.parseInt(saId));
