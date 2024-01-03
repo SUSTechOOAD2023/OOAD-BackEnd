@@ -1,5 +1,6 @@
 package com.example.entity;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -24,6 +25,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = false)
 public class MessageBoard implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 1L;
     @TableId(value = "message_id", type = IdType.AUTO)
     private Integer messageId;

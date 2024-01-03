@@ -44,6 +44,7 @@ public class MessageBoardController {
             map.put("messageTime", messageBoard1.getMessageTime());
             ret.add(map);
         }
+        ret.sort(Comparator.comparing(o -> o.get("messageTime").toString()));
         return JSON.toJSONString(ret);
     }
     @RequestMapping("/all")
@@ -60,6 +61,7 @@ public class MessageBoardController {
             map.put("messageTime", messageBoard1.getMessageTime());
             ret.add(map);
         }
+        ret.sort(Comparator.comparing(o -> o.get("messageTime").toString()));
         return JSON.toJSONString(ret);
     }
     @PostMapping("/new")
