@@ -58,7 +58,7 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        relationshipCourseService.delete(relationshipCourse);
+        //relationshipCourseService.delete(relationshipCourse);
         for (String studentId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setStudentId(Integer.parseInt(studentId));
@@ -73,7 +73,7 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        relationshipCourseService.delete(relationshipCourse);
+        //relationshipCourseService.delete(relationshipCourse);
         for (String teacherId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setTeacherId(Integer.parseInt(teacherId));
@@ -88,7 +88,7 @@ public class RelationshipCourseController {
         int courseId = Integer.parseInt(map.get("courseId").toString());
         RelationshipCourse relationshipCourse = new RelationshipCourse();
         relationshipCourse.setCourseId(courseId);
-        relationshipCourseService.delete(relationshipCourse);
+        //relationshipCourseService.delete(relationshipCourse);
         for (String saId: listId){
             RelationshipCourse relationshipCourse1 = new RelationshipCourse();
             relationshipCourse1.setSaId(Integer.parseInt(saId));
