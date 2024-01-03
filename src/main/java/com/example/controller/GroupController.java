@@ -31,6 +31,11 @@ public class GroupController {
     public String list(@RequestParam int groupId) {
         return JSON.toJSONString(service.selectList(groupId));
     }
+
+    @PostMapping("/listVisible")
+    public String listVisible(@RequestParam int groupId) {
+        return JSON.toJSONString(service.selectVisibleList(groupId));
+    }
     @RequestMapping("/all")
     public String all() {
         return JSON.toJSONString(service.selectList());
@@ -64,6 +69,8 @@ public class GroupController {
     public String selectGroup(@RequestParam int studentId,@RequestParam int classId) {
        return JSON.toJSONString(service.selectGroup(studentId,classId));
     }
+
+
 
 
     @ApiOperation(value = "按照一定条件返回群组属性", tags = "群组类")

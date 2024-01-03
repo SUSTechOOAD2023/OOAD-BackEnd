@@ -52,5 +52,7 @@ public class Group implements Serializable {
 
     private String instructor;
 
+    private String groupInfo;
+
 
 }
