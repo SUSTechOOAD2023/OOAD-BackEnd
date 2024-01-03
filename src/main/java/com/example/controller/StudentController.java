@@ -97,6 +97,8 @@ public class StudentController {
     @Autowired
     NoticeService noticeService;
     @Autowired
+    CourseClassService courseClassService;
+    @Autowired
     RelationshipCourseService relationshipCourseService;
     @Autowired
     HomeworkService homeworkService;
@@ -108,6 +110,8 @@ public class StudentController {
     SubmissionService submissionService;
     @Autowired
     JoinGroupInvitationService joinGroupInvitationService;
+    @Autowired
+    StudentService studentService;
     @PostMapping("/recentEvent")
     public String recentEvent(@RequestParam int studentId){
         List<Map<String, Object> > ret = new ArrayList<>();
@@ -123,7 +127,16 @@ public class StudentController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("eventTime", notice1.getReleaseTime());
                 map.put("eventType", "Course notice released");
-                map.put("eventContent", notice1);
+                Map<String, Object> map1 = new HashMap<>();
+                CourseClass courseClass = new CourseClass();
+                courseClass = courseClassService.selectList(courseClass).get(0);
+                map1.put("noticeId", notice1.getNoticeId());
+                map1.put("classId", notice1.getClassId());
+                map1.put("classShortName", courseClass.getCourseName());
+                map1.put("noticeTitle", notice1.getNoticeTitle());
+                map1.put("noticeContent", notice1.getNoticeContent());
+                map1.put("releaseTime", notice1.getReleaseTime());
+                map.put("eventContent", map1);
                 ret.add(map);
             }
         }
@@ -143,7 +156,20 @@ public class StudentController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("eventTime", homework1.getHomeworkReleaseTime());
                 map.put("eventType", "Individual homework released");
-                map.put("eventContent", homework1);
+                Map<String, Object> map1 = new HashMap<>();
+                CourseClass courseClass = new CourseClass();
+                courseClass.setClassId(homework1.getClassId());
+                courseClass = courseClassService.selectList(courseClass).get(0);
+                map1.put("homeworkId", homework1.getHomeworkId());
+                map1.put("classId", homework1.getClassId());
+                map1.put("courseName", courseClass.getCourseName());
+                map1.put("homeworkTitle", homework1.getHomeworkTitle());
+                map1.put("homeworkContent", homework1.getHomeworkContent());
+                map1.put("homeworkType", homework1.getHomeworkType());
+                map1.put("homeworkDdl", homework1.getHomeworkDdl());
+                map1.put("homeworkReleaseTime", homework1.getHomeworkReleaseTime());
+                map1.put("maxScore", homework1.getMaxScore());
+                map.put("eventContent", map1);
                 ret.add(map);
             }
         }
@@ -163,7 +189,20 @@ public class StudentController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("eventTime", homework1.getHomeworkReleaseTime());
                 map.put("eventType", "Group homework released");
-                map.put("eventContent", homework1);
+                Map<String, Object> map1 = new HashMap<>();
+                CourseClass courseClass = new CourseClass();
+                courseClass.setClassId(homework1.getClassId());
+                courseClass = courseClassService.selectList(courseClass).get(0);
+                map1.put("homeworkId", homework1.getHomeworkId());
+                map1.put("classId", homework1.getClassId());
+                map1.put("courseName", courseClass.getCourseName());
+                map1.put("homeworkTitle", homework1.getHomeworkTitle());
+                map1.put("homeworkContent", homework1.getHomeworkContent());
+                map1.put("homeworkType", homework1.getHomeworkType());
+                map1.put("homeworkDdl", homework1.getHomeworkDdl());
+                map1.put("homeworkReleaseTime", homework1.getHomeworkReleaseTime());
+                map1.put("maxScore", homework1.getMaxScore());
+                map.put("eventContent", map1);
                 ret.add(map);
             }
         }
@@ -176,7 +215,19 @@ public class StudentController {
                 Map<String, Object> map = new HashMap<>();
                 map.put("eventTime", submission1.getReviewTime());
                 map.put("eventType", "Individual homework reviewed");
-                map.put("eventContent", submission1);
+                Map<String, Object> map1 = new HashMap<>();
+                Student student = studentService.selectStudent(submission1.getStudentId());
+                map1.put("submissionId", submission1.getSubmissionId());
+                map1.put("groupId", submission1.getGroupId());
+                map1.put("studentId", submission1.getStudentId());
+                map1.put("studentName", student.getStudentName());
+                map1.put("homeworkId", submission1.getHomeworkId());
+                map1.put("submissionContent", submission1.getSubmissionContent());
+                map1.put("submissionComment", submission1.getSubmissionComment());
+                map1.put("submissionScore", submission1.getSubmissionScore());
+                map1.put("submissionTime", submission1.getSubmissionTime());
+                map1.put("reviewTime", submission1.getReviewTime());
+                map.put("eventContent", map1);
                 ret.add(map);
             }
         }
@@ -192,7 +243,19 @@ public class StudentController {
                     Map<String, Object> map = new HashMap<>();
                     map.put("eventTime", submission1.getReviewTime());
                     map.put("eventType", "Group homework reviewed");
-                    map.put("eventContent", submission1);
+                    Map<String, Object> map1 = new HashMap<>();
+                    Student student = studentService.selectStudent(submission1.getStudentId());
+                    map1.put("submissionId", submission1.getSubmissionId());
+                    map1.put("groupId", submission1.getGroupId());
+                    map1.put("studentId", submission1.getStudentId());
+                    map1.put("studentName", student.getStudentName());
+                    map1.put("homeworkId", submission1.getHomeworkId());
+                    map1.put("submissionContent", submission1.getSubmissionContent());
+                    map1.put("submissionComment", submission1.getSubmissionComment());
+                    map1.put("submissionScore", submission1.getSubmissionScore());
+                    map1.put("submissionTime", submission1.getSubmissionTime());
+                    map1.put("reviewTime", submission1.getReviewTime());
+                    map.put("eventContent", map1);
                     ret.add(map);
                 }
             }
