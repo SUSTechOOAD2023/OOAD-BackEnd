@@ -267,7 +267,19 @@ public class StudentController {
             String sendTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getSendTime());
             map.put("eventTime", sendTime);
             map.put("eventType", "Received invitation");
-            map.put("eventContent", joinGroupInvitation);
+            Map<String, Object> map1 = new HashMap<>();
+            Group group = groupService.selectList(joinGroupInvitation.getGroupId());
+            Student student = studentService.selectStudent(joinGroupInvitation.getSendStudentId());
+            map1.put("joinGroupInvitationId", joinGroupInvitation.getJoinGroupInvitationId());
+            map1.put("groupId", joinGroupInvitation.getGroupId());
+            map1.put("groupName", group.getGroupName());
+            map1.put("sendStudentId", joinGroupInvitation.getSendStudentId());
+            map1.put("sendStudentName", student.getStudentName());
+            map1.put("receiveStudentId", joinGroupInvitation.getReceiveStudentId());
+            map1.put("sendTime", joinGroupInvitation.getSendTime());
+            map1.put("isAccepted", joinGroupInvitation.getIsAccepted());
+            map1.put("acceptTime", joinGroupInvitation.getAcceptTime());
+            map.put("eventContent", map1);
             ret.add(map);
         }
 
@@ -279,7 +291,19 @@ public class StudentController {
             String acceptTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(joinGroupInvitation.getAcceptTime());
             map.put("eventTime", acceptTime);
             map.put("eventType", "Invitation accepted");
-            map.put("eventContent", joinGroupInvitation);
+            Map<String, Object> map1 = new HashMap<>();
+            Group group = groupService.selectList(joinGroupInvitation.getGroupId());
+            Student student = studentService.selectStudent(joinGroupInvitation.getReceiveStudentId());
+            map1.put("joinGroupInvitationId", joinGroupInvitation.getJoinGroupInvitationId());
+            map1.put("groupId", joinGroupInvitation.getGroupId());
+            map1.put("groupName", group.getGroupName());
+            map1.put("sendStudentId", joinGroupInvitation.getSendStudentId());
+            map1.put("receiveStudentId", joinGroupInvitation.getReceiveStudentId());
+            map1.put("receiveStudentName", student.getStudentName());
+            map1.put("sendTime", joinGroupInvitation.getSendTime());
+            map1.put("isAccepted", joinGroupInvitation.getIsAccepted());
+            map1.put("acceptTime", joinGroupInvitation.getAcceptTime());
+            map.put("eventContent", map1);
             ret.add(map);
         }
 
