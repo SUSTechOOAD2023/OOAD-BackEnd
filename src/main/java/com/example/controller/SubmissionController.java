@@ -48,6 +48,7 @@ public class SubmissionController {
             map.put("submissionComment", submission1.getSubmissionComment());
             map.put("submissionScore", submission1.getSubmissionScore());
             map.put("submissionTime", submission1.getSubmissionTime());
+            map.put("reviewTime", submission1.getReviewTime());
             ret.add(map);
         }
         return JSON.toJSONString(ret);
@@ -69,6 +70,7 @@ public class SubmissionController {
             map.put("submissionComment", submission1.getSubmissionComment());
             map.put("submissionScore", submission1.getSubmissionScore());
             map.put("submissionTime", submission1.getSubmissionTime());
+            map.put("reviewTime", submission1.getReviewTime());
             if (submission1.getStudentId()!=null) {
                 if (mapSubmissionTime.get(submission1.getStudentId()) == null ||
                         mapSubmissionTime.get(submission1.getStudentId()).compareTo(submission1.getSubmissionTime()) < 0)
@@ -159,6 +161,10 @@ public class SubmissionController {
     }
     @PostMapping("/new")
     public boolean insert(@RequestBody Submission submission){
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = localDateTime.format(formatter);
+        submission.setSubmissionTime(currentTime);
         return service.saveOrUpdate(submission);
     }
     @RequestMapping("/delete")
