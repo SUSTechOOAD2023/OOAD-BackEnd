@@ -31,4 +31,7 @@ public interface JoinGroupInvitationService extends IService<JoinGroupInvitation
 
     //接受邀请
     String acceptInvitation(int joinGroupInvitationId);
+
+
+    String rejectInvitation(int joinGroupInvitationId);
 }

@@ -125,7 +125,17 @@ public class JoinGroupInvitationServiceImpl extends ServiceImpl<JoinGroupInvitat
         return "接受邀请";
     }
 
-
+    @Override
+    public String rejectInvitation(int joinGroupInvitationId){
+        if (!isInvitationExist(joinGroupInvitationId)){
+            return "该邀请不存在";
+        }
+        JoinGroupInvitation joinGroupInvitation=selectInvitation(joinGroupInvitationId);
+        joinGroupInvitation.setIsAccepted(-1);
+        joinGroupInvitation.setAcceptTime(Timestamp.valueOf(LocalDateTime.now()));
+        mapper.updateById(joinGroupInvitation);
+        return "拒绝邀请";
+    }
 
 
 }
