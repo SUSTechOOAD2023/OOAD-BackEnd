@@ -22,6 +22,8 @@ public interface GroupService extends IService<Group> {
 
     Group selectList(int groupId);
 
+    Group selectVisibleList(int groupId);
+
     String delete(int groupId);
 
     //根据群组id，查看群组是否存在

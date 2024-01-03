@@ -55,6 +55,23 @@ public class GroupServiceImpl extends ServiceImpl<GroupMapper, Group> implements
         return mapper.selectOne(queryWrapper);
     }
 
+
+    @Override
+    public Group selectVisibleList(int groupId) {
+        QueryWrapper<Group> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("group_id", groupId);
+        Group group=mapper.selectOne(queryWrapper);
+        if(group.getGroupVisible()!=1){
+            Group group1=new Group();
+            group1.setGroupId(groupId);
+            group1.setClassId(group.getClassId());
+            group1.setGroupName("Invisible");
+            return group1;
+        }else {
+            return group;
+        }
+    }
+
     //根据群组id，删除群组
     @Override
     public String delete(int groupId) {
