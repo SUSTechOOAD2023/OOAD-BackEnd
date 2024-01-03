@@ -39,11 +39,15 @@ public class SubmissionController {
         for (Submission submission1: listSubmission){
             Map<String, Object> map = new HashMap<>();
             Student student = studentService.selectStudent(submission1.getStudentId());
+            Homework homework = new Homework();
+            homework.setHomeworkId(submission1.getHomeworkId());
+            homework = homeworkService.selectList(homework).get(0);
             map.put("submissionId", submission1.getSubmissionId());
             map.put("groupId", submission1.getGroupId());
             map.put("studentId", submission1.getStudentId());
             map.put("studentName", student.getStudentName());
             map.put("homeworkId", submission1.getHomeworkId());
+            map.put("homeworkName", homework.getHomeworkTitle());
             map.put("submissionContent", submission1.getSubmissionContent());
             map.put("submissionComment", submission1.getSubmissionComment());
             map.put("submissionScore", submission1.getSubmissionScore());
@@ -61,11 +65,15 @@ public class SubmissionController {
         for (Submission submission1: listSubmission){
             Map<String, Object> map = new HashMap<>();
             Student student = studentService.selectStudent(submission1.getStudentId());
+            Homework homework = new Homework();
+            homework.setHomeworkId(submission1.getHomeworkId());
+            homework = homeworkService.selectList(homework).get(0);
             map.put("submissionId", submission1.getSubmissionId());
             map.put("groupId", submission1.getGroupId());
             map.put("studentId", submission1.getStudentId());
             map.put("studentName", student.getStudentName());
             map.put("homeworkId", submission1.getHomeworkId());
+            map.put("homeworkName", homework.getHomeworkTitle());
             map.put("submissionContent", submission1.getSubmissionContent());
             map.put("submissionComment", submission1.getSubmissionComment());
             map.put("submissionScore", submission1.getSubmissionScore());
