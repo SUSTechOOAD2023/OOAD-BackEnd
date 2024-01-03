@@ -46,5 +46,9 @@ public class Group implements Serializable {
 
     private Integer groupVisible;
 
+    private String groupPresentation;
+
+    private Timestamp presentationTime;
+
 
 }
